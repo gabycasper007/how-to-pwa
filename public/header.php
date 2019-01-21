@@ -43,7 +43,7 @@
             <i class="material-icons">menu</i>
           </button>
           <ul class="nav navbar-nav">
-            <li class="nav-item"><h1 class="primaryTitle">How to PWA</h1></li>
+            <li class="nav-item"><h1 class="primaryTitle"><a  href="<?php echo ROOT; ?>">How to PWA</a></h1></li>
           </ul>
 
           <div class="dropdown pull-xs-right">
@@ -76,11 +76,11 @@
       </header>
       
       <div id="dw-s2" class="bmd-layout-drawer bg-faded">
-        <header><a class="navbar-brand">How to PWA</a></header>
+        <header><a class="navbar-brand" >How to PWA</a></header>
         <ul class="list-group">
           <a href="<?php echo ROOT ?>" class="list-group-item">1. Introduction</a>
           <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Web App Manifest</a>
-          <a class="list-group-item">3. Service Workers</a>
+          <a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Service Workers</a>
           <a class="list-group-item">4. Caching</a>
           <a class="list-group-item">5. IndexedDB</a>
           <a class="list-group-item">6. Background Sync</a>

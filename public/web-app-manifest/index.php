@@ -380,7 +380,7 @@
                         </a>
                     </li>
                     <li class="page-item forward">
-                        <a class="page-link" href="<?php echo ROOT ?>web-app-manifest/" aria-label="Next">
+                        <a class="page-link" href="<?php echo ROOT ?>service-workers/" aria-label="Next">
                             <span class="paginationDesc">Service Workers</span>
                             <span aria-hidden="true">&raquo;</span>
                         </a>

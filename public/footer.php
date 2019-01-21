@@ -1,6 +1,6 @@
 
     <footer>
-      © Copyright
+      © Copyright <?php echo date('Y') ?>
     </footer>
 
     <script

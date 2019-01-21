@@ -32,6 +32,13 @@ p {
   position: relative;
   margin: 0;
 }
+.primaryTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+.primaryTitle .ripple-container {
+  display: none;
+}
 .bmd-layout-content {
   margin-top: 1.8rem;
 }
@@ -124,4 +131,7 @@ footer {
 pre[class*="language-"] > code {
   border-left: 10px solid #3181bb;
   box-shadow: -1px 0px 0px 0px #3181bb, 0px 0px 0px 1px #dfdfdf;
+}
+.snackbar-content {
+  background-color: #3181bb;
 }
