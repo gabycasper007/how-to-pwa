@@ -40,3 +40,15 @@ p {
   color: hsla(0, 0%, 100%, 0.5);
   border-color: hsla(0, 0%, 100%, 0.5);
 }
+.figure-caption {
+  text-align: center;
+}
+
+.bmd-layout-drawer > .list-group .list-group-item {
+  padding-right: 2.5rem;
+  padding-left: 1.5rem;
+}
+
+.bmd-layout-drawer > header .navbar-brand {
+  padding-left: 0.5rem;
+}
