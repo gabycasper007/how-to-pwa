@@ -1,3 +1,4 @@
+<?php define(ROOT, '/PWA/how-to-pwa/public/') ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +21,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="<?php echo ROOT; ?>css/style.css" />
 
     <title>How to PWA</title>
   </head>
@@ -74,8 +75,8 @@
       <div id="dw-s2" class="bmd-layout-drawer bg-faded">
         <header><a class="navbar-brand">How to PWA</a></header>
         <ul class="list-group">
-          <a class="list-group-item">1. Introduction</a>
-          <a class="list-group-item">2. Web App Manifest</a>
+          <a href="<?php echo ROOT ?>" class="list-group-item">1. Introduction</a>
+          <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Web App Manifest</a>
           <a class="list-group-item">3. Service Workers</a>
           <a class="list-group-item">4. Caching</a>
           <a class="list-group-item">5. IndexedDB</a>

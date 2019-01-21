@@ -6,23 +6,16 @@
         <div class="col">
           <h2>1. Introduction</h2>
           <p>
-            <strong>Progressive Web Apps</strong> are experiences that
-            combine the best of the web and the best of apps. They are
-            useful to users from the very first visit in a browser tab, no
-            install required.
+            <strong>Progressive Web Apps</strong> are websites that can be installed to a device’s homescreen without an app store, along with other capabilities like working offline and receiving push notifications.
           </p>
           <p>
             <div class="alert alert-primary" role="alert">
                 <i class="material-icons"> info </i>
                 
-                As the user progressively builds a relationship with the app
-                over time, it becomes more and more powerful.
-            </div>
-          </p>
-          <p>
-            It loads quickly, even on flaky networks, sends relevant push
+                It loads quickly, even on flaky networks, sends relevant push
             notifications, has an icon on the home screen, and loads as a
             top-level, full screen experience.
+            </div>
           </p>
 
           <figure class="figure">
