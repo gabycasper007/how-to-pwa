@@ -1,7 +1,8 @@
 
-    <footer>
-      © Copyright <?php echo date('Y') ?>
-    </footer>
+      <footer>
+        © Copyright <?php echo date('Y') ?>
+      </footer>
+    </main>
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -29,8 +29,7 @@
     <title>How to PWA</title>
   </head>
   <body>
-
-  <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
       <header class="bmd-layout-header">
         <div class="navbar navbar-dark bg-primary sticky-top">
           <button
@@ -76,15 +75,16 @@
       </header>
       
       <div id="dw-s2" class="bmd-layout-drawer bg-faded">
-        <header><a class="navbar-brand" >How to PWA</a></header>
+        <header><a class="navbar-brand" ><h5>How to PWA</h5></a></header>
         <ul class="list-group">
           <a href="<?php echo ROOT ?>" class="list-group-item">1. Introduction</a>
           <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Web App Manifest</a>
           <a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Service Workers</a>
-          <a class="list-group-item">4. Caching</a>
-          <a class="list-group-item">5. IndexedDB</a>
-          <a class="list-group-item">6. Background Sync</a>
-          <a class="list-group-item">7. Push Notifications</a>
-          <a class="list-group-item">8. Native Device Features</a>
+          <a href="<?php echo ROOT ?>caching/" class="list-group-item">4. Caching</a>
+          <a href="<?php echo ROOT ?>indexed-db/" class="list-group-item">5. IndexedDB</a>
+          <a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Background Sync</a>
+          <a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Push Notifications</a>
+          <a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Native Device Features</a>
         </ul>
       </div>
+      <main class="bmd-layout-content">

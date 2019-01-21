@@ -1,8 +1,9 @@
 body {
   font-family: "Open Sans", sans-serif;
   line-height: 1.7;
+  --white: #fafafa;
+  --blue: #3181bb;
 }
-
 h1,
 h2,
 h3,
@@ -12,8 +13,12 @@ h6 {
   font-weight: bold;
   font-family: "Vollkorn";
 }
+h2 {
+  margin-bottom: 20px;
+}
 h4 {
-  margin: 40px 0 20px;
+  padding-top: 20px;
+  margin: 0 0 20px;
 }
 p {
   margin-bottom: 1.5rem;
@@ -21,7 +26,12 @@ p {
 .material-icons {
   position: relative;
   top: 6px;
+}
+.alert-primary .material-icons {
   color: #009688;
+}
+.alert-danger .material-icons {
+  color: #b00020;
 }
 .navbar .material-icons {
   top: 2px;
@@ -40,11 +50,13 @@ p {
   display: none;
 }
 .bmd-layout-content {
-  margin-top: 1.8rem;
+  height: 94vh;
+  min-height: 94vh;
+  padding-top: 1.8rem;
 }
 .navbar-dark .primaryTitle,
 .navbar-dark .material-icons {
-  color: #fafafa;
+  color: var(--white, white);
 }
 .navbar-dark .navbar-toggler {
   color: hsla(0, 0%, 100%, 0.5);
@@ -66,8 +78,8 @@ p {
   font-size: 1rem;
 }
 .card .card-header {
-  background: #3181bb;
-  color: #fafafa;
+  background: var(--blue);
+  color: var(--white, white);
 }
 .card .card-header span {
   float: right;
@@ -89,9 +101,9 @@ p {
 }
 footer {
   text-align: center;
-  margin: 0 15px 25px;
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
+  border-top: 1px solid #e1e1e1;
+  padding: 20px 15px 25px;
+  background: #f2f2f2;
   color: #555;
   font-size: 14px;
 }
@@ -129,9 +141,14 @@ footer {
   border-color: #dee2e6;
 }
 pre[class*="language-"] > code {
-  border-left: 10px solid #3181bb;
-  box-shadow: -1px 0px 0px 0px #3181bb, 0px 0px 0px 1px #dfdfdf;
+  border-left: 10px solid var(--blue, lightblue);
+  box-shadow: -1px 0px 0px 0px var(--blue, lightblue), 0px 0px 0px 1px #dfdfdf;
 }
 .snackbar-content {
-  background-color: #3181bb;
+  background-color: var(--blue, lightblue);
+}
+.navbar-brand h5 {
+  font-size: 22px;
+  margin: 30px 0 0;
+  padding: 0;
 }
