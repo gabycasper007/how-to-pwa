@@ -1,0 +1,22 @@
+{
+  "name": "how-to-pwa",
+  "version": "1.0.0",
+  "description": "A tutorial for creating Progressive Web Apps",
+  "main": "index.php",
+  "scripts": {
+    "start": "http-server -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabycasper007/how-to-pwa.git"
+  },
+  "author": "Gabriel Vasile",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabycasper007/how-to-pwa/issues"
+  },
+  "homepage": "https://github.com/gabycasper007/how-to-pwa#readme",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
