@@ -37,7 +37,7 @@ p {
 }
 .navbar-dark .primaryTitle,
 .navbar-dark .material-icons {
-  color: #fff;
+  color: #fafafa;
 }
 .navbar-dark .navbar-toggler {
   color: hsla(0, 0%, 100%, 0.5);
@@ -54,4 +54,74 @@ p {
 
 .bmd-layout-drawer > header .navbar-brand {
   padding-left: 0.5rem;
+}
+.card {
+  font-size: 1rem;
+}
+.card .card-header {
+  background: #3181bb;
+  color: #fafafa;
+}
+.card .card-header span {
+  float: right;
+  font-size: 25px;
+  position: absolute;
+  right: 14px;
+  top: 8px;
+}
+.listWithPadding strong {
+  display: inline-block;
+  margin: 15px 0 7px;
+}
+.listWithPadding li:first-child strong {
+  margin-top: 0;
+}
+
+.listWithPadding ul {
+  margin-top: 20px;
+}
+footer {
+  text-align: center;
+  margin: 0 15px 25px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+.pagination {
+  display: block;
+  margin: 0 0 25px;
+}
+.forward {
+  float: right;
+}
+.backward {
+  display: inline-block;
+}
+.page-item .page-link {
+  padding: 0 40px;
+}
+.pagination .page-item .page-link {
+  padding: 9px 14px;
+  border-radius: 0.3rem;
+}
+.paginationDesc {
+  margin: 0 5px;
+}
+
+.page-link {
+  color: #004e47;
+  background-color: #cceae7;
+  border-color: #b8e2de;
+}
+.page-link:hover {
+  color: #004a43;
+  text-decoration: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+pre[class*="language-"] > code {
+  border-left: 10px solid #3181bb;
+  box-shadow: -1px 0px 0px 0px #3181bb, 0px 0px 0px 1px #dfdfdf;
 }

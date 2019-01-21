@@ -47,6 +47,17 @@
             <li>Installable</li>
             <li>Linkable</li>
           </ul>
+
+          <nav aria-label="Page navigation example">
+                <ul class="pagination clearfix">
+                    <li class="page-item forward">
+                        <a class="page-link" href="<?php echo ROOT ?>web-app-manifest/" aria-label="Next">
+                            <span class="paginationDesc">Web App Manifest</span>
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
       </div>
     </div>
