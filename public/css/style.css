@@ -12,6 +12,9 @@ h6 {
   font-weight: bold;
   font-family: "Vollkorn";
 }
+h4 {
+  margin: 40px 0 20px;
+}
 p {
   margin-bottom: 1.5rem;
 }

@@ -17,6 +17,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="<?php echo ROOT; ?>js/prism.js"></script>
+
     <script>
       $(document).ready(function() {
         $("body").bootstrapMaterialDesign();

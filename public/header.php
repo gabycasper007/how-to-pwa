@@ -20,6 +20,9 @@
       href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|PT+Serif|Roboto:300,400,500,700|Material+Icons|Ubuntu|Vollkorn"
       rel="stylesheet"
     />
+    
+    <link href="<?php echo ROOT; ?>css/prism.css" rel="stylesheet" />
+
 
     <link rel="stylesheet" href="<?php echo ROOT; ?>css/style.css" />
 
