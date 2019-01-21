@@ -1,0 +1,54 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  font-family: "Vollkorn";
+}
+p {
+  margin-bottom: 1.5rem;
+}
+.material-icons {
+  position: relative;
+  top: 6px;
+  color: #009688;
+}
+.navbar .material-icons {
+  top: 2px;
+}
+.primaryTitle {
+  top: 3px;
+  font-size: 26px;
+  position: relative;
+  margin: 0;
+}
+.bmd-layout-content {
+  margin-top: 1.8rem;
+}
+.navbar-dark .primaryTitle,
+.navbar-dark .material-icons {
+  color: #fff;
+}
+.navbar-dark .navbar-toggler {
+  color: hsla(0, 0%, 100%, 0.5);
+  border-color: hsla(0, 0%, 100%, 0.5);
+}
+.figure-caption {
+  text-align: center;
+}
+
+.bmd-layout-drawer > .list-group .list-group-item {
+  padding-right: 2.5rem;
+  padding-left: 1.5rem;
+}
+
+.bmd-layout-drawer > header .navbar-brand {
+  padding-left: 0.5rem;
+}
