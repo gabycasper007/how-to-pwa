@@ -24,11 +24,6 @@
     ></script>
 
     <script src="<?php echo ROOT; ?>js/prism.js"></script>
-
-    <script>
-      $(document).ready(function() {
-        $("body").bootstrapMaterialDesign();
-      });
-    </script>
+    <script src="<?php echo ROOT; ?>js/scripts.js"></script>
     </body>
 </html>
