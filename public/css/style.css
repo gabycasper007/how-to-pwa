@@ -23,13 +23,15 @@ h6 {
   font-family: "Vollkorn";
 }
 h2 {
-  margin-bottom: 20px;
+  margin: 15px 0 30px;
   letter-spacing: 1px;
 }
 h4 {
-  padding-top: 20px;
+  padding-top: 30px;
   margin: 0 0 20px;
   letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--primary-dark);
+  padding-bottom: 12px;
 }
 p {
   margin-bottom: 1.5rem;
@@ -161,19 +163,19 @@ footer {
 
 .page-link {
   color: var(--white);
-  background-color: var(--primary-light);
-  border-color: var(--primary);
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
 }
 .page-link:hover {
   color: var(--white);
   text-decoration: none;
-  background-color: var(--primary);
-  border-color: var(--primary-dark);
+  background-color: var(--secondary);
+  border-color: var(--secondary-dark);
 }
 .page-link:focus {
   z-index: 2;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(156, 39, 176, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(0, 105, 192, 0.25);
 }
 pre[class*="language-"] > code {
   border-left: 10px solid var(--secondary-dark, lightblue);
@@ -198,4 +200,15 @@ pre[class*="language-"] > code {
 }
 .btn.btn-raised.btn-primary:hover {
   background: var(--secondary) !important;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  h4 {
+    padding-right: 50px;
+    display: inline-block;
+  }
+  pre[class*="language-"] {
+    margin-bottom: 30px;
+  }
 }

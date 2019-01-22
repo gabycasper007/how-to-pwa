@@ -14,12 +14,14 @@
       </ul>
       <h4 id="what-is-a-service-worker">What is a service worker</h4>
       <p>A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. Today, they already include features like push notifications and background sync. </p>
-      <div class="alert alert-primary" role="alert">
-            <i class="material-icons"> info </i>
+      <p>Service workers run on a separate thread from the main JavaScript code of our page, and don't have any access to the DOM structure. The API is non-blocking, and can send and receive communication between different contexts.</p>
+      <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
             
             In the future, service workers might support other things like periodic sync or geofencing. The core feature discussed here is the ability to intercept and handle network requests, including programmatically managing a cache of responses.
       </div>
       <p>The reason this is such an exciting API is that it allows you to support offline experiences, giving developers complete control over the experience.</p>
+      <p>Service workers can do a lot more than "just" offering offline capabilities, including handling notifications, performing heavy calculations on a separate thread, etc. Service workers are quite powerful as they can take control over network requests, modify them, serve custom responses retrieved from the cache, or synthesize responses completely.</p>
 
       <h4 id="register-a-service-worker">Register a Service Worker</h4>
 
@@ -37,6 +39,7 @@ if ('serviceWorker' in navigator) {
     );
   });
 }
+
 </code></pre>
 
         <h4 id="install-a-service-worker">Install a Service Worker</h4>
@@ -66,6 +69,7 @@ self.addEventListener('install', function(event) {
       })
   );
 });
+
 </code></pre>
       <p>This is a chain of promises (caches.open() and cache.addAll()). The event.waitUntil() method takes a promise and uses it to know how long installation takes, and whether it succeeded or not.</p>
       <div class="alert alert-danger" role="alert">

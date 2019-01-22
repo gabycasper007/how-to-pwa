@@ -9,8 +9,8 @@
         <em>(such as its name, author, icon, and description)</em> in a JSON text file. 
         </p>
         <p>
-            <div class="alert alert-primary" role="alert">
-            <i class="material-icons"> info </i>
+            <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
             The manifest informs details for websites installed on the homescreen of a device, providing users with quicker access and a richer experience
             </div>  
         </p>
@@ -161,23 +161,23 @@
                     <div class="card-body">
                         <pre><code class="language-javascript">
 "icons": [
-{
-"src": "icon/lowres.webp",
-"sizes": "48x48",
-"type": "image/webp"
-},
-{
-"src": "icon/lowres",
-"sizes": "48x48"
-},
-{
-"src": "icon/hd_hi.ico",
-"sizes": "72x72 96x96 128x128 256x256"
-},
-{
-"src": "icon/hd_hi.svg",
-"sizes": "72x72"
-}
+    {
+        "src": "icon/lowres.webp",
+        "sizes": "48x48",
+        "type": "image/webp"
+    },
+    {
+        "src": "icon/lowres",
+        "sizes": "48x48"
+    },
+    {
+        "src": "icon/hd_hi.ico",
+        "sizes": "72x72 96x96 128x128 256x256"
+    },
+    {
+        "src": "icon/hd_hi.svg",
+        "sizes": "72x72"
+    }
 ]
                         </code></pre>
                         <p>Specifies an array of image files that can serve as application icons, depending on context. For example, they can be used to represent the web application amongst a list of other applications, or to integrate the web application with an OS's task switcher and/or system preferences.</p>

@@ -7,8 +7,8 @@
           <strong>Progressive Web Apps (PWAs)</strong> are websites that can be installed to a device’s homescreen without an app store, along with other capabilities like working offline and receiving push notifications.
         </p>
         <p>Progressive web apps use modern web APIs along with traditional progressive enhancement strategy to create cross-platform web applications. These apps work everywhere and provide several features that give them the same user experience advantages as native apps. </p>
-        <div class="alert alert-primary" role="alert">
-            <i class="material-icons"> info </i>
+        <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
             
             A PWA loads quickly, even on flaky networks, sends relevant push
         notifications, has an icon on the home screen, and loads as a
@@ -17,17 +17,34 @@
 
         <h4>PWA advantages</h4>
 
-        <p>PWAs should be discoverable, installable, linkable, network independent, progressive, re-engageable, responsive, and safe. To find out more about what these mean, read Progressive web app advantages. To find out how to implement PWAs, consult the guides listed in the below section.</p>
         <p>PWAs are developed using a number of specific technologies and standard patterns to allow them to take advantage of both web and native app features. For example, web apps are more discoverable — it's a lot easier and faster to visit a website than install an application, and you can also share web apps via a link.</p>
         <p>On the other hand, native apps are better integrated with the operating system and therefore offer a more seamless experience for the users. You can install a native app so that it works offline, and users love tapping their homescreen icons to easily access their favorite apps, rather than navigating to it using a browser.</p>
         <p>PWAs give us the ability to create web apps that can enjoy these same advantages.</p>
+
+        <h4>PWAs should be:</h4>
+        <ul>
+          <li>Progressive, so it's still usable on a basic level on older browsers, but fully-functional on the latest ones.</li>
+          <li>Responsive, so it's usable on any device with a screen and a browser — mobile phones, tablets, laptops, TVs, fridges, etc.</li>
+          <li>Network independent, so it works offline or with a poor network connection.</li>
+          <li>App-like feel</li>
+          <li>Fresh, so it has up-to-date information</li>
+          <li>Safe, so the connection between you and the app is secured against any third parties trying to get access to your sensitive data.</li>
+          <li>Discoverable, so the contents can be found through search engines.</li>
+          <li>Re-engageable, so it's able to send notifications whenever there's new content available.</li>
+          <li>Installable, so it's available on the device's home screen.</li>
+          <li>Linkable, so you can share it by simply sending a URL.</li>
+        </ul>
 
         <h4>What makes an app a PWA?</h4>
 
         <p>PWAs are not created with a single technology. They represent a new philosophy for building web apps, involving some specific patterns, APIs, and other features. It's not that obvious if a web app is a PWA or not from first glance. </p>
         <p>An app could be considered a PWA when it meets certain requirements, or implements a set of given features: works offline, is installable, is easy to synchronize, can send push notifications, etc.</p>
 
-        <p>There are tools to measure the completeness of an app in percentages (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a>). By implementing various technological advantages, we can make an app more progressive, thus ending up with a higher Lighthouse score.</p>
+        <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
+            
+            There are tools to measure the completeness of an app in percentages (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a>). By implementing various technological advantages, we can make an app more progressive, thus ending up with a higher Lighthouse score.
+        </div>
 
         <h4>PWA Benefits</h4>
 
@@ -46,16 +63,21 @@
 
         <p>The key ingredient required for PWAs is service worker support. Thankfully service workers are now supported on all major browsers on desktop and mobile.</p>
 
-        <p>Other features such as Web App Manifest, Push, Notifications, and Add to Home Screen functionality have wide support too. Currently Safari has limited support for Web App Manifest and Add to Home Screen and no support for web push notifications.</p>
-        
         <p>
             <div class="alert alert-danger" role="alert">
             <i class="material-icons"> warning </i>
             It’ll be a while before all browsers support background sync, especially as Safari and Edge don’t yet support service workers. 
             </div>  
         </p>
+        
+        <p>Other features such as Web App Manifest, Push, Notifications, and Add to Home Screen functionality have wide support too. Currently Safari has limited support for Web App Manifest and Add to Home Screen and no support for web push notifications.</p>
+        <p>
+          <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
+            Browser support for different functionalities can be checked using <a href="https://caniuse.com" target="_blank">Can I use</a> website. Example below.
+            </div>  
+        </p>
 
-        <p>Even though some functionalities are not supported in all browsers yet, bit by bit successful patterns are brought from Android/iOS onto the web, while still retaining what makes the web great!</p>
 
         <figure class="figure">
           <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">
@@ -63,29 +85,21 @@
           <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Web App Manifest Browser Support</a></figcaption>
         </figure>
 
-        <button
-          type="button"
-          class="btn btn-primary btn-raised"
-          data-toggle="snackbar"
-          data-content="Free fried chicken here! <a href='https://example.org' class='btn btn-info'>Check it out</a>"
-          data-html-allowed="true"
-          data-timeout="0"
-        >
-          Snackbar
-        </button>
+        <p>Even though some functionalities are not supported in all browsers yet, bit by bit successful patterns are brought from Android/iOS onto the web, while still retaining what makes the web great!</p>
 
-        <ul>
-          <li>Progressive</li>
-          <li>Responsive</li>
-          <li>Connectivity independent</li>
-          <li>App-like</li>
-          <li>Fresh</li>
-          <li>Safe</li>
-          <li>Discoverable</li>
-          <li>Re-engageable</li>
-          <li>Installable</li>
-          <li>Linkable</li>
-        </ul>
+        <h4>Methodology</h4>
+
+        <p>A PWA is improving the user experiance by loading a minimal user interface as soon as possible and then caching it so it is available offline for subsequent visits before then loading all the contents of the app.</p>
+
+        <p>
+          <div class="alert alert-info" role="alert">
+            <i class="material-icons"> done </i>
+            That way, the next time someone visits the app from the device, the UI loads from the cache immediately and any new content is requested from the server (if it isn’t available in the cache already).
+            </div>  
+        </p>
+
+        <p>This feels fast as the user sees "something" instantly, instead of a loading spinner or a blank page. It also allows the website to be accessible offline if the network connection is not available.</p>
+        <p>We can control what is requested from the server and what is retrieved from the cache with a service worker. This caches the app shell and manages the dynamic content in a way that greatly improves the performance.</p>
 
         <nav aria-label="Page navigation example">
               <ul class="pagination clearfix">
