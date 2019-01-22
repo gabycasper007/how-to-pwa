@@ -34,11 +34,8 @@ self.addEventListener("fetch", function(event) {
       return fetch(event.request)
         .then(function(response) {
           // Check if we received a valid response
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type !== "basic"
-          ) {
+
+          if (!response || response.status !== 200) {
             return response;
           }
 
@@ -49,6 +46,7 @@ self.addEventListener("fetch", function(event) {
           var responseToCache = response.clone();
 
           caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
+            console.log("PUT", event.request.url);
             cache.put(event.request, responseToCache);
           });
 
