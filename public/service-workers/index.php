@@ -117,7 +117,7 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request).then(
           function(response) {
             // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
+            if(!response || response.status !== 200 || response.type === "error") {
               return response;
             }
 
@@ -144,7 +144,7 @@ self.addEventListener('fetch', function(event) {
     <ul>
         <li>Ensure the response is valid.</li>
         <li>Check the status is 200 on the response.</li>
-        <li>Make sure the response type is basic, which indicates that it's a request from our origin. This means that requests to third party assets aren't cached as well.</p></li>
+        <li>If you make sure the response type is basic (which indicates that it's a request from our origin), the requests to third party assets will not be cached.</p></li>
     </ul>
     <p>If we pass the checks, we clone the response so we can send one to the browser and one to the cache. The reason for this is that because the response is a Stream, the body can only be consumed once.</p>
 
