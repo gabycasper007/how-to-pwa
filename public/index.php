@@ -13,6 +13,9 @@
         notifications, has an icon on the home screen, and loads as a
         top-level, full screen experience.
         </div>
+        
+        <p>It’ll be a while before all browsers support background sync, especially as Safari and Edge don’t yet support service workers. But progressive enhancement helps here:</p>
+        <p>Bit by bit we’re bringing successful patterns from Android/iOS onto the web, while still retaining what makes the web great!</p>
 
         <figure class="figure">
           <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">

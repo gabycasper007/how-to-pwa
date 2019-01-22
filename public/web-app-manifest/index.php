@@ -365,11 +365,12 @@
                 </div>
 
                 <div id="collapse14" class="collapse" aria-labelledby="heading14" data-parent="#accordion">
-                <div class="card-body">
-                    <pre><code class="language-javascript">
-"theme_color": "aliceblue"
-                    </code></pre>
-                    <p>Defines the default theme color for an application. This sometimes affects how the OS displays the site (e.g., on Android's task switcher, the theme color surrounds the site).</p>
+                    <div class="card-body">
+                        <pre><code class="language-javascript">
+    "theme_color": "aliceblue"
+                        </code></pre>
+                        <p>Defines the default theme color for an application. This sometimes affects how the OS displays the site (e.g., on Android's task switcher, the theme color surrounds the site).</p>
+                    </div>
                 </div>
             </div>
         </div>
