@@ -25,6 +25,7 @@
 
 
     <link rel="stylesheet" href="<?php echo ROOT; ?>css/style.css" />
+    <link rel="manifest" href="<?php echo ROOT; ?>pwa.webmanifest">
 
     <title>How to PWA</title>
   </head>

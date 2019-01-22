@@ -16,9 +16,9 @@
         </p>
         <hr>
         <h4>Linking the manifest file</h4>
-        <p>Web app manifests are deployed in your HTML pages using a <link> element in the <head> of a document:</p>
+        <p>Web app manifests are deployed in your HTML pages using a &lt;link> element in the &lt;head> of a document:</p>
         <pre><code class="language-html">
-&lt;link rel="manifest" href="/manifest.json">
+&lt;link rel="manifest" href="/pwa.webmanifest">
             </code></pre>
         <h4>Example manifest</h4>    
         <pre><code class="language-javascript">{
