@@ -1,4 +1,5 @@
 var CACHE_NAME = "pwa-cache";
+var DYNAMIC_CACHE_NAME = "dynamic-pwa-cache";
 var ROOT = "/PWA/how-to-pwa/public";
 var urlsToCache = [
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css",
@@ -10,8 +11,7 @@ var urlsToCache = [
   ROOT + "/",
   ROOT + "/css/style.css",
   ROOT + "/css/prism.css",
-  ROOT + "/js/prism.js",
-  ROOT + "/js/scripts.js"
+  ROOT + "/js/prism.js"
 ];
 
 self.addEventListener("install", function(event) {
@@ -30,7 +30,31 @@ self.addEventListener("fetch", function(event) {
       if (response) {
         return response;
       }
-      return fetch(event.request);
+
+      return fetch(event.request)
+        .then(function(response) {
+          // Check if we received a valid response
+          if (
+            !response ||
+            response.status !== 200 ||
+            response.type !== "basic"
+          ) {
+            return response;
+          }
+
+          // IMPORTANT: Clone the response. A response is a stream
+          // and because we want the browser to consume the response
+          // as well as the cache consuming the response, we need
+          // to clone it so we have two streams.
+          var responseToCache = response.clone();
+
+          caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
+            cache.put(event.request, responseToCache);
+          });
+
+          return response;
+        })
+        .catch(function(err) {});
     })
   );
 });
