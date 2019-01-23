@@ -17,10 +17,15 @@ var urlsToCache = [
 self.addEventListener("install", function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
-      console.log("Opened cache");
+      console.log("[SW] Opened cache");
       return cache.addAll(urlsToCache);
     })
   );
+});
+
+self.addEventListener("activate", function(event) {
+  console.log("[SW] Activated");
+  return self.clients.claim();
 });
 
 self.addEventListener("fetch", function(event) {
@@ -50,7 +55,7 @@ self.addEventListener("fetch", function(event) {
           var responseToCache = response.clone();
 
           caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
-            console.log("PUT", event.request.url);
+            console.log("[SW] Cache PUT", event.request.url);
             cache.put(event.request, responseToCache);
           });
 

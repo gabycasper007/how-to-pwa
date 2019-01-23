@@ -201,7 +201,13 @@ pre[class*="language-"] > code {
 .btn.btn-raised.btn-primary:hover {
   background: var(--secondary) !important;
 }
-
+#InstallPWA {
+  display: none;
+}
+.dropdown-menu-right {
+  left: auto;
+  right: 0;
+}
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   h4 {
