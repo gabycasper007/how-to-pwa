@@ -4,6 +4,7 @@
     <div class="col">
       <h2>3. Service Workers</h2>
       <p>Rich offline experiences, periodic background syncs, push notifications—functionality that would normally require a native application—are coming to the web. Service workers provide the technical foundation that all these features rely on.</p>
+      <p>With service workers you can easily make your web app work 100% offline, achieve insane performance boosts, deliver native-feeling experiences</p>
       <ul>
           <li><a href="#what-is-a-service-worker">What is a service worker</a></li>
           <li><a href="#register-a-service-worker">Register a Service Worker</a></li>

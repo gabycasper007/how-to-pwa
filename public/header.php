@@ -30,8 +30,8 @@
     <link rel="icon" sizes="192x192" href="img/icons/icon-192x192.png">
 
     <meta name="msapplication-TileImage" content="img/icons/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#6a0080">
-    <meta name="theme-color" content="#9c27b0">
+    <meta name="msapplication-TileColor" content="#9c27b0">
+    <meta name="theme-color" content="#6a0080">
 
     <link
       rel="stylesheet"
