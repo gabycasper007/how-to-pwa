@@ -1,11 +1,14 @@
 {
   "name": "How to PWA",
   "short_name": "PWA",
-  "start_url": "/PWA/how-to-pwa/public/index.php",
+  "start_url": "/PWA/how-to-pwa/public/",
   "display": "standalone",
-  "background_color": "#6a0080",
   "orientation": "any",
+  "scope": ".",
+  "dir": "ltr",
+  "lang": "en-US",
   "description": "Progressive Web App that teaches how to create a Progressive Web App",
+  "background_color": "#6a0080",
   "theme_color": "#9c27b0",
   "icons": [
     {

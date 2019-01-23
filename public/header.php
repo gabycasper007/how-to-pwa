@@ -9,6 +9,24 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
+    <!-- You must provide a single page application solution offering back buttons inside the UI -or use location.href instead of normal <a> links if you don’t want them to be opened in the browser instead of your app’s container-. -->
+      <!-- https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb -->
+      <!-- PWA tips: -->
+      <!-- https://deanhume.com/a-big-list-of-progressive-web-app-tips/ -->
+      
+    <meta name=”apple-mobile-web-app-capable” content=”yes”>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="How to PWA">
+    <link rel="apple-touch-icon" href="img/icons/icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="img/icons/icon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="img/icons/icon-128x128.png" sizes="128x128">
+    <link rel="apple-touch-icon" href="img/icons/icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="img/icons/icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png" sizes="192x192">
+
+    <meta name="msapplication-TileImage" content="img/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#6a0080">
+    <meta name="theme-color" content="#9c27b0">
     <link
       rel="stylesheet"
       href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
