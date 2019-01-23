@@ -6,6 +6,10 @@ $(document).ready(function() {
   $("body").bootstrapMaterialDesign();
 });
 
+if (!window.Promise) {
+  window.Promise = Promise;
+}
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register(ROOT + "sw.js").then(
