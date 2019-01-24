@@ -9,6 +9,7 @@ var urlsToCache = [
   "https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js",
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js",
   ROOT + "/",
+  ROOT + "/offline.php",
   ROOT + "/css/style.css",
   ROOT + "/css/prism.css",
   ROOT + "/js/prism.js"
@@ -75,7 +76,11 @@ self.addEventListener("fetch", function(event) {
 
           return response;
         })
-        .catch(function(err) {});
+        .catch(function(err) {
+          return caches.open(CACHE_NAME).then(function(cache) {
+            return cache.match(ROOT + "/offline.php");
+          });
+        });
     })
   );
 });
