@@ -18,18 +18,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="How to PWA">
 
-    <link rel="apple-touch-startup-image" href="img/icons/icon-152x152.png">
-    <link rel="apple-touch-icon" href="img/icons/icon-152x152.png">
-    <link rel="apple-touch-icon" href="img/icons/icon-72x72.png" sizes="72x72">
-    <link rel="apple-touch-icon" href="img/icons/icon-96x96.png" sizes="96x96">
-    <link rel="apple-touch-icon" href="img/icons/icon-128x128.png" sizes="128x128">
-    <link rel="apple-touch-icon" href="img/icons/icon-144x144.png" sizes="144x144">
-    <link rel="apple-touch-icon" href="img/icons/icon-152x152.png" sizes="152x152">
-    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png" sizes="192x192">
+    <link rel="apple-touch-startup-image" href="<?php echo ROOT; ?>img/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-128x128.png" sizes="128x128">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-192x192.png" sizes="192x192">
 
-    <link rel="icon" sizes="192x192" href="img/icons/icon-192x192.png">
+    <link rel="icon" sizes="192x192" href="<?php echo ROOT; ?>img/icons/icon-192x192.png">
 
-    <meta name="msapplication-TileImage" content="img/icons/icon-144x144.png">
+    <meta name="msapplication-TileImage" content="<?php echo ROOT; ?>img/icons/icon-144x144.png">
     <meta name="msapplication-TileColor" content="#9c27b0">
     <meta name="theme-color" content="#6a0080">
 
