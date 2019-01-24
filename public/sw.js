@@ -1,5 +1,5 @@
-var CACHE_NAME = "pwa-cache";
-var DYNAMIC_CACHE_NAME = "dynamic-pwa-cache";
+var CACHE_NAME = "static-pwa";
+var DYNAMIC_CACHE_NAME = "dynamic-pwa";
 var ROOT = "/PWA/how-to-pwa/public";
 var urlsToCache = [
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css",
@@ -15,6 +15,7 @@ var urlsToCache = [
 ];
 
 self.addEventListener("install", function(event) {
+  // Add to static cache
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       console.log("[SW] Opened cache");
@@ -36,10 +37,10 @@ self.addEventListener("fetch", function(event) {
         return response;
       }
 
+      // Dynamic Caching
       return fetch(event.request)
         .then(function(response) {
           // Check if we received a valid response
-
           if (
             !response ||
             response.status !== 200 ||

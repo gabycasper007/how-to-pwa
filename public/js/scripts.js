@@ -2,14 +2,17 @@ var ROOT = "/PWA/how-to-pwa/public/";
 var installBtn = document.querySelector("#InstallPWA");
 var deferredPrompt;
 
+// Load Material Bootstrap
 $(document).ready(function() {
   $("body").bootstrapMaterialDesign();
 });
 
+// Promise Polyfill
 if (!window.Promise) {
   window.Promise = Promise;
 }
 
+// Register ServiceWorker
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register(ROOT + "sw.js").then(
@@ -23,6 +26,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+// Defer App's Install Banner
 window.addEventListener("beforeinstallprompt", function(event) {
   console.log("beforeinstallprompt fired");
   installBtn.style.display = "block";
@@ -31,6 +35,7 @@ window.addEventListener("beforeinstallprompt", function(event) {
   return false;
 });
 
+// Show the App's Install Banner on click
 installBtn.addEventListener("click", function() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
