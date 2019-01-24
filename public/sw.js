@@ -26,6 +26,19 @@ self.addEventListener("install", function(event) {
 
 self.addEventListener("activate", function(event) {
   console.log("[SW] Activated");
+  // Remove old Caches
+  event.waitUntil(
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.map(function(key) {
+          if (![CACHE_NAME, DYNAMIC_CACHE_NAME].includes(key)) {
+            console.log("[SW] Removing old cache", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
   return self.clients.claim();
 });
 
