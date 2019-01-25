@@ -4,6 +4,9 @@
     <div class="col">
         <h2>4. Caching</h2>
 
+        <p>A major advantage of the service worker cache API is that it gives you more detailed control than the built-in browser cache does. For example, your service worker can cache multiple requests when the user first runs your web app, including assets that they have not yet visited.</p>
+        <p>This will speed up subsequent requests. You can also implement your own cache control logic, ensuring that assets that are considered important are kept in the cache while deleting less-used data.</p>
+
         <p>It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:</p>
 
         <h4>Cache only</h4>
