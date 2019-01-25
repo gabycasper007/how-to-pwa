@@ -15,6 +15,16 @@ var urlsToCache = [
   ROOT + "/js/prism.js"
 ];
 
+function trimCache(cacheName, maxItems) {
+  caches.open(cacheName).then(function(cache) {
+    return cache.keys().then(function(keys) {
+      if (keys.length > maxItems) {
+        cache.delete(keys[0]).then(trimCache(cacheName, maxItems));
+      }
+    });
+  });
+}
+
 self.addEventListener("install", function(event) {
   // Add to static cache
   event.waitUntil(
@@ -71,6 +81,7 @@ self.addEventListener("fetch", function(event) {
 
           caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
             console.log("[SW] Cache PUT", event.request.url);
+            trimCache(DYNAMIC_CACHE_NAME, 30);
             cache.put(event.request, responseToCache);
           });
 
