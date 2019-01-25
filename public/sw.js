@@ -28,10 +28,15 @@ function trimCache(cacheName, maxItems) {
 self.addEventListener("install", function(event) {
   // Add to static cache
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      console.log("[SW] Opened cache");
-      return cache.addAll(urlsToCache);
-    })
+    caches
+      .open(CACHE_NAME)
+      .then(function(cache) {
+        console.log("[SW] Opened cache");
+        return cache.addAll(urlsToCache);
+      })
+      .then(function() {
+        return self.skipWaiting();
+      })
   );
 });
 
