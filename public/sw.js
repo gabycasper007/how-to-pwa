@@ -78,7 +78,9 @@ self.addEventListener("fetch", function(event) {
         })
         .catch(function(err) {
           return caches.open(CACHE_NAME).then(function(cache) {
-            return cache.match(ROOT + "/offline.php");
+            if (event.request.headers.get("accept").includes("text/html")) {
+              return cache.match(ROOT + "/offline.php");
+            }
           });
         });
     })
