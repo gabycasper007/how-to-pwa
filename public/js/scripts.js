@@ -54,3 +54,44 @@ installBtn.addEventListener("click", function() {
     deferredPrompt = null;
   }
 });
+
+const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
+
+fetch(POSTS_URL)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(showcards);
+
+// Show all the cards
+function showcards(data) {
+  for (key in data) {
+    createCard(data[key]);
+  }
+}
+
+// Create a single card
+function createCard(data) {
+  var cards = document.querySelector("#cards");
+  var card = document.createElement("div");
+  var img = document.createElement("img");
+  var cardBody = document.createElement("div");
+  var cardTitle = document.createElement("h5");
+  var cardText = document.createElement("p");
+
+  card.className = "card";
+
+  img.className = "card-img-top";
+  img.setAttribute("src", data.image);
+  img.setAttribute("alt", data.location);
+
+  cardBody.className = "card-body";
+  cardTitle.className = "card-title";
+  cardTitle.textContent = data.location;
+  cardText.className = "card-text";
+  cardText.textContent = data.title;
+
+  cards.appendChild(card).appendChild(img);
+  card.appendChild(cardBody).appendChild(cardTitle);
+  cardBody.appendChild(cardText);
+}
