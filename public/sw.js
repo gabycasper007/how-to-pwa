@@ -84,11 +84,7 @@ self.addEventListener("fetch", function(event) {
       return fetch(event.request)
         .then(function(response) {
           // Check if we received a valid response
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type === "error"
-          ) {
+          if (!response || response.type === "error") {
             return response;
           }
 
