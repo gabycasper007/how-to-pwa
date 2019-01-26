@@ -1,5 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
+const cards = document.querySelector("#cards");
 var networkDataReceived = false;
 let deferredPrompt;
 
@@ -18,7 +19,7 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register(ROOT + "sw.js").then(
       function(reg) {
-        console.log("SW Registed", reg.scope);
+        // console.log("SW Registed", reg.scope);
       },
       function(err) {
         console.log("SW failed: ", err);
@@ -65,18 +66,23 @@ fetch(POSTS_URL)
     showcards(data);
   });
 
-getFromLocalForage("posts").then(function(data) {
-  if (data && !networkDataReceived) {
-    console.log("From IndexedDB", data);
-    showcards(data);
+localforage.iterate(function(value, key) {
+  if (!networkDataReceived) {
+    createCard(value);
   }
 });
 
+function clearCards() {
+  while (cards.hasChildNodes()) {
+    cards.removeChild(cards.lastChild);
+  }
+}
 // Show all the cards
 function showcards(data) {
+  clearCards();
   for (key in data) {
     if (networkDataReceived) {
-      addWithLocalForage("posts", data[key]);
+      addWithLocalForage(key, data[key]);
     }
     createCard(data[key]);
   }
@@ -84,7 +90,6 @@ function showcards(data) {
 
 // Create a single card
 function createCard(data) {
-  var cards = document.querySelector("#cards");
   var card = document.createElement("div");
   var img = document.createElement("img");
   var cardBody = document.createElement("div");

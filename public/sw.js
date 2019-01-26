@@ -40,7 +40,7 @@ self.addEventListener("install", function(event) {
     caches
       .open(CACHE_NAME)
       .then(function(cache) {
-        console.log("[SW] Opened cache");
+        // console.log("[SW] Opened cache");
         return cache.addAll(urlsToCache);
       })
       .then(function() {
@@ -51,7 +51,7 @@ self.addEventListener("install", function(event) {
 });
 
 self.addEventListener("activate", function(event) {
-  console.log("[SW] Activated");
+  // console.log("[SW] Activated");
   // Remove old Caches using Versioning
   event.waitUntil(
     caches.keys().then(function(keys) {
@@ -70,51 +70,72 @@ self.addEventListener("activate", function(event) {
 });
 
 self.addEventListener("fetch", function(event) {
-  // we return the assets from Cache if they exist
-  // If they're not found in the cache, we fallback
-  // to make a network request
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
+  if (event.request.url.indexOf(POSTS_URL) > -1) {
+    // Network than Cache for Firebase data
+    event.respondWith(
+      fetch(event.request).then(function(response) {
+        let clonedRes = response.clone();
 
-      // Request from network
-      return fetch(event.request)
-        .then(function(response) {
-          // Check if we received a valid response
-          if (!response || response.type === "error") {
-            return response;
-          }
-
-          // IMPORTANT: Clone the response. A response is a stream
-          // and because we want the browser to consume the response
-          // as well as the cache consuming the response, we need
-          // to clone it so we have two streams.
-          let responseToCache = response.clone();
-
-          // Dynamic Caching
-          caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
-            console.log("[SW] Cache PUT", event.request.url);
-            // Keep maximum 30 items in the Dynamic Cache Storage
-            trimCache(DYNAMIC_CACHE_NAME, 30);
-
-            // Add to Dynamic Cache Storage
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        })
-        .catch(function(err) {
-          // Resource not found in cache and network request
-          // Fallback to show an offline page
-          return caches.open(CACHE_NAME).then(function(cache) {
-            if (event.request.headers.get("accept").includes("text/html")) {
-              return cache.match(ROOT + "/offline.php");
+        localforage
+          .clear()
+          .then(function() {
+            return clonedRes.json();
+          })
+          .then(function(data) {
+            for (let key in data) {
+              addWithLocalForage(key, data[key]);
             }
           });
-        });
-    })
-  );
+        return response;
+      })
+    );
+  } else {
+    // we return the assets from Cache if they exist
+    // If they're not found in the cache, we fallback
+    // to make a network request
+    event.respondWith(
+      caches.match(event.request).then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+
+        // Request from network
+        return fetch(event.request)
+          .then(function(response) {
+            // Check if we received a valid response
+            if (!response || response.type === "error") {
+              return response;
+            }
+
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
+            let responseToCache = response.clone();
+
+            // Dynamic Caching
+            caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
+              // console.log("[SW] Cache PUT", event.request.url);
+              // Keep maximum 30 items in the Dynamic Cache Storage
+              trimCache(DYNAMIC_CACHE_NAME, 30);
+
+              // Add to Dynamic Cache Storage
+              cache.put(event.request, responseToCache);
+            });
+
+            return response;
+          })
+          .catch(function(err) {
+            // Resource not found in cache and network request
+            // Fallback to show an offline page
+            return caches.open(CACHE_NAME).then(function(cache) {
+              if (event.request.headers.get("accept").includes("text/html")) {
+                return cache.match(ROOT + "/offline.php");
+              }
+            });
+          });
+      })
+    );
+  }
 });
