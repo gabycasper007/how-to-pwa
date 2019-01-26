@@ -1,7 +1,12 @@
-var CACHE_NAME = "static-pwa";
-var DYNAMIC_CACHE_NAME = "dynamic-pwa";
-var ROOT = "/PWA/how-to-pwa/public";
-var urlsToCache = [
+const ROOT = "/PWA/how-to-pwa/public";
+const CACHE_NAME = "static-pwa";
+const DYNAMIC_CACHE_NAME = "dynamic-pwa";
+const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
+
+importScripts(ROOT + "/js/localforage.min.js");
+
+// We will add these assets to our static Cache Storage.
+let urlsToCache = [
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css",
   "https://fonts.googleapis.com/css?family=Lato|Open+Sans|PT+Serif|Roboto:300,400,500,700|Material+Icons|Ubuntu|Vollkorn",
   "https://code.jquery.com/jquery-3.3.1.slim.min.js",
@@ -17,8 +22,15 @@ var urlsToCache = [
   ROOT + "/js/scripts.js"
 ];
 
-importScripts(ROOT + "/js/localforage.min.js");
+// Set and persist localForage options.
+// This must be called before any other calls to localForage are made,
+localforage.config({
+  name: "How to PWA",
+  storeName: "pwa-cards",
+  version: "1.0"
+});
 
+// Prevent the Cache from using too much memory
 function trimCache(cacheName, maxItems) {
   caches.open(cacheName).then(function(cache) {
     return cache.keys().then(function(keys) {
@@ -30,7 +42,7 @@ function trimCache(cacheName, maxItems) {
 }
 
 self.addEventListener("install", function(event) {
-  // Add to static cache
+  // Add assets to static Cache Storage
   event.waitUntil(
     caches
       .open(CACHE_NAME)
@@ -39,6 +51,7 @@ self.addEventListener("install", function(event) {
         return cache.addAll(urlsToCache);
       })
       .then(function() {
+        // Activate the Service Worker
         return self.skipWaiting();
       })
   );
@@ -46,7 +59,7 @@ self.addEventListener("install", function(event) {
 
 self.addEventListener("activate", function(event) {
   console.log("[SW] Activated");
-  // Remove old Caches
+  // Remove old Caches using Versioning
   event.waitUntil(
     caches.keys().then(function(keys) {
       return Promise.all(
@@ -59,50 +72,87 @@ self.addEventListener("activate", function(event) {
       );
     })
   );
+  // Claim Activation for current Service Worker in current opened browser tabs
   return self.clients.claim();
 });
 
 self.addEventListener("fetch", function(event) {
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
+  // For Dynamic Data from Firebase
+  // We execute the request and we cache it in IndexedDB
+  if (event.request.url.indexOf(POSTS_URL) > -1) {
+    event.respondWith(
+      fetch(event.request).then(function(response) {
+        let clonedResponse = response.clone();
 
-      // Dynamic Caching
-      return fetch(event.request)
-        .then(function(response) {
-          // Check if we received a valid response
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type === "error"
-          ) {
-            return response;
+        // Add Dynamic Data to IndexedDB using localforage.js
+        clonedResponse.json().then(function(data) {
+          for (let key in data) {
+            localforage
+              .setItem("posts", data[key])
+              .then(function(value) {
+                console.log(value);
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
           }
-
-          // IMPORTANT: Clone the response. A response is a stream
-          // and because we want the browser to consume the response
-          // as well as the cache consuming the response, we need
-          // to clone it so we have two streams.
-          var responseToCache = response.clone();
-
-          caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
-            console.log("[SW] Cache PUT", event.request.url);
-            trimCache(DYNAMIC_CACHE_NAME, 30);
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        })
-        .catch(function(err) {
-          return caches.open(CACHE_NAME).then(function(cache) {
-            if (event.request.headers.get("accept").includes("text/html")) {
-              return cache.match(ROOT + "/offline.php");
-            }
-          });
         });
-    })
-  );
+        return response;
+      })
+    );
+  }
+  // For the rest of the request
+  // we return the assets from Cache if they exist
+  // If they're not found in the cache, we fallback
+  // to make a network request
+  else {
+    event.respondWith(
+      caches.match(event.request).then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+
+        // Request from network
+        return fetch(event.request)
+          .then(function(response) {
+            // Check if we received a valid response
+            if (
+              !response ||
+              response.status !== 200 ||
+              response.type === "error"
+            ) {
+              return response;
+            }
+
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
+            let responseToCache = response.clone();
+
+            // Dynamic Caching
+            caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
+              console.log("[SW] Cache PUT", event.request.url);
+              // Keep maximum 30 items in the Dynamic Cache Storage
+              trimCache(DYNAMIC_CACHE_NAME, 30);
+
+              // Add to Dynamic Cache Storage
+              cache.put(event.request, responseToCache);
+            });
+
+            return response;
+          })
+          .catch(function(err) {
+            // Resource not found in cache and network request
+            // Fallback to show an offline page
+            return caches.open(CACHE_NAME).then(function(cache) {
+              if (event.request.headers.get("accept").includes("text/html")) {
+                return cache.match(ROOT + "/offline.php");
+              }
+            });
+          });
+      })
+    );
+  }
 });

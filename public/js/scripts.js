@@ -1,6 +1,7 @@
-var ROOT = "/PWA/how-to-pwa/public/";
-var installBtn = document.querySelector("#InstallPWA");
-var deferredPrompt;
+const ROOT = "/PWA/how-to-pwa/public/";
+const installBtn = document.querySelector("#InstallPWA");
+const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
+let deferredPrompt;
 
 // Load Material Bootstrap
 $(document).ready(function() {
@@ -55,8 +56,6 @@ installBtn.addEventListener("click", function() {
   }
 });
 
-const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
-
 fetch(POSTS_URL)
   .then(function(response) {
     return response.json();
@@ -95,9 +94,3 @@ function createCard(data) {
   card.appendChild(cardBody).appendChild(cardTitle);
   cardBody.appendChild(cardText);
 }
-
-localforage.config({
-  name: "How to PWA",
-  storeName: "pwa-cards",
-  version: "1.0"
-});
