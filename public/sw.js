@@ -12,8 +12,12 @@ var urlsToCache = [
   ROOT + "/offline.php",
   ROOT + "/css/style.css",
   ROOT + "/css/prism.css",
-  ROOT + "/js/prism.js"
+  ROOT + "/js/localforage.min.js",
+  ROOT + "/js/prism.js",
+  ROOT + "/js/scripts.js"
 ];
+
+importScripts(ROOT + "/js/localforage.min.js");
 
 function trimCache(cacheName, maxItems) {
   caches.open(cacheName).then(function(cache) {

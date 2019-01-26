@@ -18,5 +18,6 @@
   "homepage": "https://github.com/gabycasper007/how-to-pwa#readme",
   "devDependencies": {
     "http-server": "^0.10.0"
-  }
+  },
+  "dependencies": {}
 }

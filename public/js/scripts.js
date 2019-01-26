@@ -95,3 +95,9 @@ function createCard(data) {
   card.appendChild(cardBody).appendChild(cardTitle);
   cardBody.appendChild(cardText);
 }
+
+localforage.config({
+  name: "How to PWA",
+  storeName: "pwa-cards",
+  version: "1.0"
+});
