@@ -27,6 +27,7 @@
     <script src="<?php echo ROOT; ?>js/fetch.js"></script>
     <script src="<?php echo ROOT; ?>js/prism.js"></script>
     <script src="<?php echo ROOT; ?>js/localforage.min.js"></script>
+    <script src="<?php echo ROOT; ?>js/indexedDB.js"></script>
     <script src="<?php echo ROOT; ?>js/scripts.js"></script>
     </body>
 </html>

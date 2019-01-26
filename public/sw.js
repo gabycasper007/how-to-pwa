@@ -1,9 +1,9 @@
 const ROOT = "/PWA/how-to-pwa/public";
 const CACHE_NAME = "static-pwa";
 const DYNAMIC_CACHE_NAME = "dynamic-pwa";
-const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
 
 importScripts(ROOT + "/js/localforage.min.js");
+importScripts(ROOT + "/js/indexedDB.js");
 
 // We will add these assets to our static Cache Storage.
 let urlsToCache = [
@@ -17,18 +17,11 @@ let urlsToCache = [
   ROOT + "/offline.php",
   ROOT + "/css/style.css",
   ROOT + "/css/prism.css",
-  ROOT + "/js/localforage.min.js",
   ROOT + "/js/prism.js",
+  ROOT + "/js/localforage.min.js",
+  ROOT + "/js/indexedDB.js",
   ROOT + "/js/scripts.js"
 ];
-
-// Set and persist localForage options.
-// This must be called before any other calls to localForage are made,
-localforage.config({
-  name: "How to PWA",
-  storeName: "pwa-cards",
-  version: "1.0"
-});
 
 // Prevent the Cache from using too much memory
 function trimCache(cacheName, maxItems) {
@@ -87,14 +80,7 @@ self.addEventListener("fetch", function(event) {
         // Add Dynamic Data to IndexedDB using localforage.js
         clonedResponse.json().then(function(data) {
           for (let key in data) {
-            localforage
-              .setItem("posts", data[key])
-              .then(function(value) {
-                console.log(value);
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
+            addWithLocalForage("posts", data[key]);
           }
         });
         return response;

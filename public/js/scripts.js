@@ -1,6 +1,5 @@
 const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
-const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
 let deferredPrompt;
 
 // Load Material Bootstrap
