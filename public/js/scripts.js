@@ -1,5 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
+var networkDataReceived = false;
 let deferredPrompt;
 
 // Load Material Bootstrap
@@ -59,11 +60,24 @@ fetch(POSTS_URL)
   .then(function(response) {
     return response.json();
   })
-  .then(showcards);
+  .then(function(data) {
+    networkDataReceived = true;
+    showcards(data);
+  });
+
+getFromLocalForage("posts").then(function(data) {
+  if (data && !networkDataReceived) {
+    console.log("From IndexedDB", data);
+    showcards(data);
+  }
+});
 
 // Show all the cards
 function showcards(data) {
   for (key in data) {
+    if (networkDataReceived) {
+      addWithLocalForage("posts", data[key]);
+    }
     createCard(data[key]);
   }
 }

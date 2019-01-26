@@ -17,9 +17,22 @@ function addWithLocalForage(key, data) {
   localforage
     .setItem(key, data)
     .then(function(value) {
-      console.log(value);
+      console.log("LocalForage adding: ", value);
     })
     .catch(function(err) {
       console.log(err);
+    });
+}
+
+// Get from IndexedDB Storage
+function getFromLocalForage(key) {
+  return localforage
+    .getItem(key)
+    .then(function(value) {
+      console.log("LocalForage getting: ", value);
+      return Promise.resolve(value);
+    })
+    .catch(function(err) {
+      console.log("LocalForage ERROR: ", err);
     });
 }
