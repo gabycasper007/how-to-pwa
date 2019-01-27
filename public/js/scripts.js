@@ -1,6 +1,9 @@
 const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
 const cards = document.querySelector("#cards");
+const FORM = document.querySelector("#syncForm");
+const TITLE_INPUT = document.querySelector("#title");
+const LOCATION_INPUT = document.querySelector("#location");
 var networkDataReceived = false;
 let deferredPrompt;
 
@@ -114,3 +117,12 @@ if (cards) {
     cardBody.appendChild(cardText);
   }
 }
+
+FORM.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (TITLE_INPUT.value.trim() === "" || LOCATION_INPUT.value.trim() === "") {
+    alert("Please enter valid data!");
+    return;
+  }
+});

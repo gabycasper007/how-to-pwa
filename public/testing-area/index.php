@@ -3,8 +3,24 @@
     <div class="row">
     <div class="col">
         <h2>Testing Area</h2>
+        
+        <form id="syncForm">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" placeholder="Enter location">
+            </div>
+            <button type="submit" class="btn btn-primary btn-raised">Submit</button>
+        </form>
+
+        <br>
 
         <div id="cards"></div>
+
+        <br>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">
