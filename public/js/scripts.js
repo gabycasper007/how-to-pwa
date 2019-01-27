@@ -57,58 +57,60 @@ installBtn.addEventListener("click", function() {
   }
 });
 
-fetch(POSTS_URL)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    networkDataReceived = true;
-    showcards(data);
+if (cards) {
+  fetch(POSTS_URL)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      networkDataReceived = true;
+      showcards(data);
+    });
+
+  localforage.iterate(function(value, key) {
+    if (!networkDataReceived) {
+      createCard(value);
+    }
   });
 
-localforage.iterate(function(value, key) {
-  if (!networkDataReceived) {
-    createCard(value);
-  }
-});
-
-function clearCards() {
-  while (cards.hasChildNodes()) {
-    cards.removeChild(cards.lastChild);
-  }
-}
-// Show all the cards
-function showcards(data) {
-  clearCards();
-  for (key in data) {
-    if (networkDataReceived) {
-      addWithLocalForage(key, data[key]);
+  function clearCards() {
+    while (cards.hasChildNodes()) {
+      cards.removeChild(cards.lastChild);
     }
-    createCard(data[key]);
   }
-}
+  // Show all the cards
+  function showcards(data) {
+    clearCards();
+    for (key in data) {
+      if (networkDataReceived) {
+        addWithLocalForage(key, data[key]);
+      }
+      createCard(data[key]);
+    }
+  }
 
-// Create a single card
-function createCard(data) {
-  var card = document.createElement("div");
-  var img = document.createElement("img");
-  var cardBody = document.createElement("div");
-  var cardTitle = document.createElement("h5");
-  var cardText = document.createElement("p");
+  // Create a single card
+  function createCard(data) {
+    var card = document.createElement("div");
+    var img = document.createElement("img");
+    var cardBody = document.createElement("div");
+    var cardTitle = document.createElement("h5");
+    var cardText = document.createElement("p");
 
-  card.className = "card";
+    card.className = "card";
 
-  img.className = "card-img-top";
-  img.setAttribute("src", data.image);
-  img.setAttribute("alt", data.location);
+    img.className = "card-img-top";
+    img.setAttribute("src", data.image);
+    img.setAttribute("alt", data.location);
 
-  cardBody.className = "card-body";
-  cardTitle.className = "card-title";
-  cardTitle.textContent = data.location;
-  cardText.className = "card-text";
-  cardText.textContent = data.title;
+    cardBody.className = "card-body";
+    cardTitle.className = "card-title";
+    cardTitle.textContent = data.location;
+    cardText.className = "card-text";
+    cardText.textContent = data.title;
 
-  cards.appendChild(card).appendChild(img);
-  card.appendChild(cardBody).appendChild(cardTitle);
-  cardBody.appendChild(cardText);
+    cards.appendChild(card).appendChild(img);
+    card.appendChild(cardBody).appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+  }
 }

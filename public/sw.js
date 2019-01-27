@@ -73,21 +73,23 @@ self.addEventListener("fetch", function(event) {
   if (event.request.url.indexOf(POSTS_URL) > -1) {
     // Network than Cache for Firebase data
     event.respondWith(
-      fetch(event.request).then(function(response) {
-        let clonedRes = response.clone();
+      fetch(event.request)
+        .then(function(response) {
+          let clonedRes = response.clone();
 
-        localforage
-          .clear()
-          .then(function() {
-            return clonedRes.json();
-          })
-          .then(function(data) {
-            for (let key in data) {
-              addWithLocalForage(key, data[key]);
-            }
-          });
-        return response;
-      })
+          localforage
+            .clear()
+            .then(function() {
+              return clonedRes.json();
+            })
+            .then(function(data) {
+              for (let key in data) {
+                addWithLocalForage(key, data[key]);
+              }
+            });
+          return response;
+        })
+        .catch(function() {})
     );
   } else {
     // we return the assets from Cache if they exist

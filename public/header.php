@@ -102,6 +102,7 @@
           <a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Background Sync</a>
           <a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Push Notifications</a>
           <a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Native Device Features</a>
+          <a href="<?php echo ROOT ?>testing-area/" class="list-group-item">9. Testing Area</a>
         </ul>
       </div>
       <main class="bmd-layout-content">

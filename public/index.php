@@ -2,7 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <div id="cards"></div>
         <h2>1. Introduction</h2>
         <p>
           <strong>Progressive Web Apps (PWAs)</strong> are websites that can be installed to a device’s homescreen without an app store, along with other capabilities like working offline and receiving push notifications.

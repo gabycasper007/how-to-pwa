@@ -12,6 +12,12 @@
                         <span class="paginationDesc">Push Notifications</span>
                     </a>
                 </li>
+                <li class="page-item forward">
+                    <a class="page-link" href="<?php echo ROOT ?>testing-area/" aria-label="Next">
+                        <span class="paginationDesc">Testing Area</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
