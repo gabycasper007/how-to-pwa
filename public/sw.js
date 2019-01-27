@@ -141,3 +141,40 @@ self.addEventListener("fetch", function(event) {
     );
   }
 });
+
+self.addEventListener("sync", function(event) {
+  console.log("[SW] Backgroung syncing", event);
+  if (event.tag === "sync-new-posts") {
+    event.waitUntil(
+      localForageSync
+        .iterate(function(value, key) {
+          fetch(POSTS_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            body: JSON.stringify({
+              id: key,
+              title: value.title,
+              location: value.location,
+              image: value.image
+            })
+          })
+            .then(function(response) {
+              console.log("Sent data to Firebase", response);
+              if (response.ok) {
+                console.log("Removed synced cached item", key);
+                localForageSync.removeItem(key);
+              }
+            })
+            .catch(function(err) {
+              console.log("Error while syncing", err);
+            });
+        })
+        .catch(function(err) {
+          console.log("LocalForage ERROR: ", err);
+        })
+    );
+  }
+});

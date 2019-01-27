@@ -118,17 +118,57 @@ if (cards) {
   }
 }
 
-FORM.addEventListener("submit", function(event) {
-  event.preventDefault();
+if (FORM) {
+  FORM.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-  if (TITLE_INPUT.value.trim() === "" || LOCATION_INPUT.value.trim() === "") {
-    alert("Please enter valid data!");
-    return;
-  }
+    if (TITLE_INPUT.value.trim() === "" || LOCATION_INPUT.value.trim() === "") {
+      alert("Please enter valid data!");
+      return;
+    }
 
-  if (serviceWorker in navigator && "SyncManager" in window) {
-    navigator.serviceWorker.ready.then(function(sw) {
-      sw.sync.register("sync-new-post");
-    });
-  }
-});
+    if ("serviceWorker" in navigator && "SyncManager" in window) {
+      navigator.serviceWorker.ready.then(function(sw) {
+        let post = {
+          id: new Date().toISOString(),
+          title: TITLE_INPUT.value,
+          location: LOCATION_INPUT.value,
+          image: "xxx"
+        };
+
+        localForageSync
+          .setItem(post.id, post)
+          .then(function(value) {
+            sw.sync.register("sync-new-posts");
+          })
+          .then(function() {
+            $.snackbar({ content: "Your post was saved for syncing!" });
+          })
+          .catch(function(err) {
+            console.log("Sync Error:", err);
+          });
+      });
+    } else {
+      sendData();
+    }
+  });
+}
+
+function sendData() {
+  fetch(POSTS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      id: new Date().toISOString(),
+      title: TITLE_INPUT.value,
+      location: LOCATION_INPUT.value,
+      image: "xxx"
+    })
+  }).then(function(response) {
+    console.log("Sent data to Firebase"), response;
+    //TODO: createCard()
+  });
+}

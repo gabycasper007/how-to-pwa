@@ -8,13 +8,17 @@ const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
 // This must be called before any other calls to localForage are made,
 localforage.config({
   name: "How to PWA",
-  storeName: "pwa_cards",
-  version: "1.0"
+  storeName: "pwa_cards"
+});
+
+var localForageSync = localforage.createInstance({
+  name: "How to PWA",
+  storeName: "sync_cards"
 });
 
 // Add to IndexedDB Storage
 function addWithLocalForage(key, data) {
-  localforage
+  return localforage
     .setItem(key, data)
     .then(function(value) {
       //   console.log("LocalForage adding: ", value);
