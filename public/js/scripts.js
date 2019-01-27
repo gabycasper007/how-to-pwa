@@ -125,4 +125,10 @@ FORM.addEventListener("submit", function(event) {
     alert("Please enter valid data!");
     return;
   }
+
+  if (serviceWorker in navigator && "SyncManager" in window) {
+    navigator.serviceWorker.ready.then(function(sw) {
+      sw.sync.register("sync-new-post");
+    });
+  }
 });
