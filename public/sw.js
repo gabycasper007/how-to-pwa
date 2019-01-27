@@ -148,7 +148,7 @@ self.addEventListener("sync", function(event) {
     event.waitUntil(
       localForageSync
         .iterate(function(value, key) {
-          fetch(POSTS_URL, {
+          fetch(FIREBASE_STORE_POST_DATA_URL, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

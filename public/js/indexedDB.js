@@ -3,6 +3,8 @@
 
 // Firebase url
 const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
+const FIREBASE_STORE_POST_DATA_URL =
+  "https://us-central1-how-to-pwa.cloudfunctions.net/storePostData";
 
 // Set and persist localForage options.
 // This must be called before any other calls to localForage are made,

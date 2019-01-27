@@ -10,3 +10,5 @@ Thumbs.db
 /node_modules
 /public/img
 /.idea
+/functions/how-to-pwa-fb-key.json
+/.firebase/*.cache

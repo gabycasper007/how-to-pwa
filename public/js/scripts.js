@@ -155,7 +155,7 @@ if (FORM) {
 }
 
 function sendData() {
-  fetch(POSTS_URL, {
+  fetch(FIREBASE_STORE_POST_DATA_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
