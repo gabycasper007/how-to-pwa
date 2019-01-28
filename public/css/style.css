@@ -208,6 +208,10 @@ pre[class*="language-"] > code {
   left: auto;
   right: 0;
 }
+#enableNotifications {
+  margin-bottom: 15px;
+  display: none;
+}
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   h4 {

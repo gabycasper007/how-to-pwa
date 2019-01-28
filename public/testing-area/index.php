@@ -18,6 +18,11 @@
 
         <br>
 
+        <button class="btn btn-raised btn-primary" id="enableNotifications">
+            Enable Notifications
+        </button>
+
+
         <div id="cards"></div>
 
         <br>

@@ -4,6 +4,9 @@ const cards = document.querySelector("#cards");
 const FORM = document.querySelector("#syncForm");
 const TITLE_INPUT = document.querySelector("#title");
 const LOCATION_INPUT = document.querySelector("#location");
+const enableNotificationsButton = document.querySelector(
+  "#enableNotifications"
+);
 var networkDataReceived = false;
 let deferredPrompt;
 
@@ -15,6 +18,19 @@ $(document).ready(function() {
 // Promise Polyfill
 if (!window.Promise) {
   window.Promise = Promise;
+}
+
+// Show Enable Notifications button
+if ("Notification" in window && enableNotificationsButton) {
+  enableNotificationsButton.style.display = "block";
+  enableNotificationsButton.addEventListener("click", function() {
+    Notification.requestPermission(function(result) {
+      console.log("User choice for notifications", result);
+      if (result != "default") {
+        enableNotificationsButton.style.display = "none";
+      }
+    });
+  });
 }
 
 // Register ServiceWorker
