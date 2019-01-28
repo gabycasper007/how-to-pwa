@@ -20,8 +20,43 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
+function displayNotification() {
+  let options = {
+    body: "You successfully subscribed to our notification service!",
+    icon: ROOT + "img/icons/icon-96x96.png",
+    image: ROOT + "img/pwa.png",
+    dir: "ltr",
+    lang: "en-US",
+    vibrate: [100, 50, 200],
+    badge: ROOT + "img/icons/icon-96x96.png",
+    tag: "confirm-notification",
+    renotify: true
+  };
+  navigator.serviceWorker.ready.then(function(sw) {
+    sw.showNotification("Successfully subscribed (from SW)!", options);
+  });
+}
+
+function configurePushSubscription() {
+  navigator.serviceWorker.ready
+    .then(function(sw) {
+      return sw.pushManager.getSubscription();
+    })
+    .then(function(sub) {
+      if (sub === null) {
+        // Create new subscription
+      } else {
+        // Create new subscription
+      }
+    });
+}
+
 // Show Enable Notifications button
-if ("Notification" in window && enableNotificationsButton) {
+if (
+  "Notification" in window &&
+  "serviceWorker" in navigator &&
+  enableNotificationsButton
+) {
   enableNotificationsButton.style.display = "block";
   enableNotificationsButton.addEventListener("click", function() {
     Notification.requestPermission(function(result) {
@@ -30,22 +65,7 @@ if ("Notification" in window && enableNotificationsButton) {
         enableNotificationsButton.style.display = "none";
       }
       if (result === "granted") {
-        if ("serviceWorker" in navigator) {
-          let options = {
-            body: "You successfully subscribed to our notification service!",
-            icon: ROOT + "img/icons/icon-96x96.png",
-            image: ROOT + "img/pwa.png",
-            dir: "ltr",
-            lang: "en-US",
-            vibrate: [100, 50, 200],
-            badge: ROOT + "img/icons/icon-96x96.png",
-            tag: "confirm-notification",
-            renotify: true
-          };
-          navigator.serviceWorker.ready.then(function(sw) {
-            sw.showNotification("Successfully subscribed (from SW)!", options);
-          });
-        }
+        configurePushSubscription();
       }
     });
   });
