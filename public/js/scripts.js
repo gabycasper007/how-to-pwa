@@ -38,7 +38,9 @@ if ("Notification" in window && enableNotificationsButton) {
             dir: "ltr",
             lang: "en-US",
             vibrate: [100, 50, 200],
-            badge: ROOT + "img/icons/icon-96x96.png"
+            badge: ROOT + "img/icons/icon-96x96.png",
+            tag: "confirm-notification",
+            renotify: true
           };
           navigator.serviceWorker.ready.then(function(sw) {
             sw.showNotification("Successfully subscribed (from SW)!", options);
