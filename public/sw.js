@@ -205,13 +205,13 @@ self.addEventListener("push", function(event) {
     title: "New",
     content: "Something new happened!"
   };
-  let options = {
-    body: data.content,
-    icon: ROOT + "img/icons/icon-96x96.png",
-    badge: ROOT + "img/icons/icon-96x96.png"
-  };
   if (event.data) {
     data = JSON.parse(event.data.text());
   }
+  let options = {
+    body: data.content,
+    icon: ROOT + "/img/icons/icon-96x96.png",
+    badge: ROOT + "/img/icons/icon-96x96.png"
+  };
   event.waitUntil(self.registration.showNotification(data.title, options));
 });

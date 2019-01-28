@@ -33,7 +33,7 @@ function displayNotification() {
     renotify: true
   };
   navigator.serviceWorker.ready.then(function(sw) {
-    sw.showNotification("Successfully subscribed (from SW)!", options);
+    sw.showNotification("Successfully subscribed", options);
   });
 }
 

@@ -36,28 +36,25 @@ exports.storePostData = functions.https.onRequest((request, response) => {
       })
       .then(subscriptions => {
         subscriptions.forEach(sub => {
-          let pushConfig = {
+          var pushConfig = {
             endpoint: sub.val().endpoint,
             keys: {
               auth: sub.val().keys.auth,
               p256dh: sub.val().keys.p256dh
             }
           };
+
           webpush.sendNotification(
             pushConfig,
-            JSON.stringify({
-              title: "New Post",
-              content: "New Post Added"
-            })
+            JSON.stringify({ title: "New Post", content: "New Post added!" })
           );
         });
-        return response.status(201).json({
-          message: "Data stored",
-          id: request.body.id
-        });
+        return response
+          .status(201)
+          .json({ message: "Data stored", id: request.body.id });
       })
       .catch(err => {
-        console.log("Subscription error", err);
+        response.status(500).json({ error: err });
       });
   });
 });
