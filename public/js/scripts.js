@@ -49,7 +49,7 @@ function configurePushSubscription() {
         // Authentification
         // We use Vapid to make sure nobody is allowed to send notifications on our behalf
         let vapidPublicKey = urlBase64ToUint8Array(
-          "BCOYQUq8U3mCmMEuOr4w77clcyT28lGf-WZBVkzUZMk2FS7wb7zxTr5jGmC04j7plvM6PMREkFSeXSmJVzINod4"
+          "BBe9Nffr35gtlfpKIQ0VhzaVVM7L-t1lfD3inWM4ItY0aWy8IPFrPLO8MCPYTF4YAoXBGNMmegzYuvFY58Ty9ts"
         );
         // Create new subscription
         return reg.pushManager.subscribe({
