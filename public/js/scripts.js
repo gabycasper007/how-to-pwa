@@ -26,8 +26,18 @@ if ("Notification" in window && enableNotificationsButton) {
   enableNotificationsButton.addEventListener("click", function() {
     Notification.requestPermission(function(result) {
       console.log("User choice for notifications", result);
-      if (result != "default") {
+      if (result !== "default") {
         enableNotificationsButton.style.display = "none";
+      }
+      if (result === "granted") {
+        if ("serviceWorker" in navigator) {
+          let options = {
+            body: "You successfully subscribed to our notification service!"
+          };
+          navigator.serviceWorker.ready.then(function(sw) {
+            sw.showNotification("Successfully subscribed (from SW)!", options);
+          });
+        }
       }
     });
   });
