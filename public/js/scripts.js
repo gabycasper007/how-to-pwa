@@ -32,7 +32,13 @@ if ("Notification" in window && enableNotificationsButton) {
       if (result === "granted") {
         if ("serviceWorker" in navigator) {
           let options = {
-            body: "You successfully subscribed to our notification service!"
+            body: "You successfully subscribed to our notification service!",
+            icon: ROOT + "img/icons/icon-96x96.png",
+            image: ROOT + "img/pwa.png",
+            dir: "ltr",
+            lang: "en-US",
+            vibrate: [100, 50, 200],
+            badge: ROOT + "img/icons/icon-96x96.png"
           };
           navigator.serviceWorker.ready.then(function(sw) {
             sw.showNotification("Successfully subscribed (from SW)!", options);
