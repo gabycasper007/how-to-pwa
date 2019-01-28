@@ -38,6 +38,7 @@ function displayNotification() {
 }
 
 function configurePushSubscription() {
+  let reg;
   navigator.serviceWorker.ready
     .then(function(sw) {
       return sw.pushManager.getSubscription();
@@ -45,8 +46,11 @@ function configurePushSubscription() {
     .then(function(sub) {
       if (sub === null) {
         // Create new subscription
+        reg.pushManager.subscribe({
+          userVisibleOnly: true
+        });
       } else {
-        // Create new subscription
+        // We have a subscription
       }
     });
 }
