@@ -106,7 +106,12 @@ self.addEventListener("fetch", function(event) {
         return fetch(event.request)
           .then(function(response) {
             // Check if we received a valid response
-            if (!response || response.type === "error") {
+
+            if (
+              !response ||
+              response.type === "error" ||
+              event.request.url.indexOf("chrome-extension://") > -1
+            ) {
               return response;
             }
 
@@ -123,7 +128,9 @@ self.addEventListener("fetch", function(event) {
               trimCache(DYNAMIC_CACHE_NAME, 30);
 
               // Add to Dynamic Cache Storage
-              cache.put(event.request, responseToCache);
+              if (event.request.url.indexOf(SUBSCRIPTIONS_URL) === -1) {
+                cache.put(event.request, responseToCache);
+              }
             });
 
             return response;

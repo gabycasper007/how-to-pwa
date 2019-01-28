@@ -41,17 +41,42 @@ function configurePushSubscription() {
   let reg;
   navigator.serviceWorker.ready
     .then(function(sw) {
+      reg = sw;
       return sw.pushManager.getSubscription();
     })
     .then(function(sub) {
       if (sub === null) {
+        // Authentification
+        // We use Vapid to make sure nobody is allowed to send notifications on our behalf
+        let vapidPublicKey = urlBase64ToUint8Array(
+          "BCOYQUq8U3mCmMEuOr4w77clcyT28lGf-WZBVkzUZMk2FS7wb7zxTr5jGmC04j7plvM6PMREkFSeXSmJVzINod4"
+        );
         // Create new subscription
-        reg.pushManager.subscribe({
-          userVisibleOnly: true
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: vapidPublicKey
         });
       } else {
         // We have a subscription
       }
+    })
+    .then(function(newSub) {
+      return fetch(SUBSCRIPTIONS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(newSub)
+      });
+    })
+    .then(function(response) {
+      if (response.ok) {
+        displayNotification();
+      }
+    })
+    .catch(function(err) {
+      console.log("Subscription error", err);
     });
 }
 
@@ -59,7 +84,8 @@ function configurePushSubscription() {
 if (
   "Notification" in window &&
   "serviceWorker" in navigator &&
-  enableNotificationsButton
+  enableNotificationsButton &&
+  Notification.permission === "default"
 ) {
   enableNotificationsButton.style.display = "block";
   enableNotificationsButton.addEventListener("click", function() {
