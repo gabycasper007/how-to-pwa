@@ -178,3 +178,16 @@ self.addEventListener("sync", function(event) {
     );
   }
 });
+
+self.addEventListener("notificationclick", function(event) {
+  let notification = event.notification;
+  let action = event.action;
+
+  if (action === "confirm") {
+  }
+  notification.close();
+});
+
+self.addEventListener("notificationclose", function(event) {
+  console.log("Notification was closed", event);
+});
