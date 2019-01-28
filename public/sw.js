@@ -188,11 +188,21 @@ self.addEventListener("sync", function(event) {
 
 self.addEventListener("notificationclick", function(event) {
   let notification = event.notification;
-  let action = event.action;
 
-  if (action === "confirm") {
-  }
-  notification.close();
+  event.waitUntil(
+    clients.matchAll().then(function(clients) {
+      let client = clients.find(function(client) {
+        return (client.visibilityState = "visible");
+      });
+      if (client !== "undefined") {
+        client.navigate(ROOT + "/testing-area/");
+        client.focus();
+      } else {
+        clients.openWindow(ROOT + "/testing-area/");
+      }
+      notification.close();
+    })
+  );
 });
 
 self.addEventListener("notificationclose", function(event) {
