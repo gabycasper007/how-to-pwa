@@ -1,6 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public";
-const CACHE_NAME = "static-pwa-1";
-const DYNAMIC_CACHE_NAME = "dynamic-pwa-1";
+const CACHE_NAME = "static-pwa-2";
+const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
 
 importScripts(ROOT + "/js/localforage.min.js");
 importScripts(ROOT + "/js/utility.js");
@@ -159,7 +159,7 @@ self.addEventListener("sync", function(event) {
           postData.append("id", key);
           postData.append("title", value.title);
           postData.append("location", value.location);
-          postData.append("file", image, key + ".png");
+          postData.append("file", value.image, key + ".png");
 
           fetch(FIREBASE_STORE_POST_DATA_URL, {
             method: "POST",
