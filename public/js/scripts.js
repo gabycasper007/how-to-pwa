@@ -8,7 +8,7 @@ const videoPlayer = document.querySelector("#player");
 const canvasEl = document.querySelector("#canvas");
 const captureBtn = document.querySelector("#capture-btn");
 const imagePicker = document.querySelector("#image-picker");
-const pickImage = document.querySelector("#pick-image");
+const imagePickerArea = document.querySelector("#pick-image");
 const enableNotificationsButton = document.querySelector(
   "#enableNotifications"
 );
@@ -266,6 +266,8 @@ function sendData() {
   });
 }
 
+initializeMedia();
+
 // Polyfill for Chrome and Mozilla for using Media Devices
 function initializeMedia() {
   if (!("mediaDevices" in navigator)) {
@@ -284,4 +286,19 @@ function initializeMedia() {
       });
     };
   }
+
+  navigator.mediaDevices
+    .getUserMedia({
+      video: true
+    })
+    .then(function(stream) {
+      videoPlayer.srcObject = stream;
+      imagePickerArea.style.display = "none";
+      videoPlayer.style.display = "block";
+    })
+    .catch(function(err) {
+      imagePickerArea.style.display = "block";
+      videoPlayer.style.display = "none";
+      canvasEl.style.display = "none";
+    });
 }

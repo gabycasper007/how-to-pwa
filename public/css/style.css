@@ -255,6 +255,7 @@ pre[class*="language-"] > code {
 
 #create-post #pick-image {
   display: none;
+  margin: 15px 0; 
 }
 
 .btn-secondary {
