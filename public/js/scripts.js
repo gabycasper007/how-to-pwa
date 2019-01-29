@@ -302,3 +302,24 @@ function initializeMedia() {
       canvasEl.style.display = "none";
     });
 }
+
+// Capture Photo from Video Stream
+captureBtn.addEventListener("click", function(event) {
+  let context = canvasEl.getContext("2d");
+
+  canvasEl.style.display = "block";
+  videoPlayer.style.display = "none";
+  captureBtn.style.display = "none";
+
+  context.drawImage(
+    videoPlayer,
+    0,
+    0,
+    canvas.width,
+    videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
+  );
+
+  videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
+    track.stop();
+  });
+});
