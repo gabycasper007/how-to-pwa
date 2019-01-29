@@ -1,8 +1,20 @@
 <?php require_once("../header.php") ?>
 <div class="container">
     <div class="row">
-    <div class="col">
+    <div class="col" id="create-post">
         <h2>Testing Area</h2>
+
+        <button class="btn btn-raised btn-success" id="enableNotifications">
+            Enable Notifications
+        </button>
+
+        <video id="player" autoplay></video>
+        <canvas id="canvas" width="320px" height="240px"></canvas>
+        <button class="btn btn-raised btn-secondary" id="capture-btn">Capture</button>
+        <div id="pick-image">
+            <h6>Pick an Image instead</h6>
+            <input type="file" accept="image/*" id="image-picker">
+        </div>
         
         <form id="syncForm">
             <div class="form-group">
@@ -13,15 +25,14 @@
                 <label for="location">Location</label>
                 <input type="text" class="form-control" id="location" placeholder="Enter location">
             </div>
+            <div class="input-section">
+                <button class="btn btn-primary" type="button" id="location-btn">Get Location</button>
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary btn-raised">Submit</button>
         </form>
-
-        <br>
-
-        <button class="btn btn-raised btn-primary" id="enableNotifications">
-            Enable Notifications
-        </button>
-
 
         <div id="cards"></div>
 

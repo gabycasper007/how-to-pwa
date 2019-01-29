@@ -1,6 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public";
-const CACHE_NAME = "static-pwa";
-const DYNAMIC_CACHE_NAME = "dynamic-pwa";
+const CACHE_NAME = "static-pwa-2";
+const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
 
 importScripts(ROOT + "/js/localforage.min.js");
 importScripts(ROOT + "/js/indexedDB.js");
@@ -51,7 +51,6 @@ self.addEventListener("install", function(event) {
 });
 
 self.addEventListener("activate", function(event) {
-  // console.log("[SW] Activated");
   // Remove old Caches using Versioning
   event.waitUntil(
     caches.keys().then(function(keys) {
@@ -149,6 +148,7 @@ self.addEventListener("fetch", function(event) {
   }
 });
 
+// Background syncing, sendint to Firebase
 self.addEventListener("sync", function(event) {
   console.log("[SW] Backgroung syncing", event);
   if (event.tag === "sync-new-posts") {
@@ -186,6 +186,7 @@ self.addEventListener("sync", function(event) {
   }
 });
 
+// Redirect to Testing Area when notification is clicked
 self.addEventListener("notificationclick", function(event) {
   let notification = event.notification;
 
@@ -205,10 +206,12 @@ self.addEventListener("notificationclick", function(event) {
   );
 });
 
+// Log when notification is closed (swiped away)
 self.addEventListener("notificationclose", function(event) {
   console.log("Notification was closed", event);
 });
 
+// Show The Push Notification
 self.addEventListener("push", function(event) {
   console.log("Push notification received!", event);
   let data = {

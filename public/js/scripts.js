@@ -20,6 +20,7 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
+// Show the actual Notification
 function displayNotification() {
   let options = {
     body: "You successfully subscribed to our notification service!",
@@ -145,6 +146,7 @@ installBtn.addEventListener("click", function() {
 });
 
 if (cards) {
+  // Cache then Network Stragegy for  Cards
   fetch(POSTS_URL)
     .then(function(response) {
       return response.json();
@@ -154,7 +156,7 @@ if (cards) {
       showcards(data);
     });
 
-  localforage.iterate(function(value, key) {
+  localforage.iterate(function(value) {
     if (!networkDataReceived) {
       createCard(value);
     }
@@ -202,6 +204,7 @@ if (cards) {
   }
 }
 
+// Sync Data added in the Form
 if (FORM) {
   FORM.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -238,6 +241,7 @@ if (FORM) {
   });
 }
 
+// Send data to Firebase
 function sendData() {
   fetch(FIREBASE_STORE_POST_DATA_URL, {
     method: "POST",
@@ -253,6 +257,5 @@ function sendData() {
     })
   }).then(function(response) {
     console.log("Sent data to Firebase"), response;
-    //TODO: createCard()
   });
 }
