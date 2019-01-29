@@ -324,3 +324,7 @@ captureBtn.addEventListener("click", function(event) {
   });
   image = dataURItoBlob(canvasEl.toDataURL());
 });
+
+imagePicker.addEventListener("change", function(event) {
+  image = event.target.files[0];
+});
