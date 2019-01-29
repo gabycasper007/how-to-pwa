@@ -1,6 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public";
-const CACHE_NAME = "static-pwa-2";
-const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
+const CACHE_NAME = "static-pwa-1";
+const DYNAMIC_CACHE_NAME = "dynamic-pwa-1";
 
 importScripts(ROOT + "/js/localforage.min.js");
 importScripts(ROOT + "/js/indexedDB.js");

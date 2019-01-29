@@ -4,10 +4,16 @@ const cards = document.querySelector("#cards");
 const FORM = document.querySelector("#syncForm");
 const TITLE_INPUT = document.querySelector("#title");
 const LOCATION_INPUT = document.querySelector("#location");
+const videoPlayer = document.querySelector("#player");
+const canvasEl = document.querySelector("#canvas");
+const captureBtn = document.querySelector("#capture-btn");
+const imagePicker = document.querySelector("#image-picker");
+const pickImage = document.querySelector("#pick-image");
 const enableNotificationsButton = document.querySelector(
   "#enableNotifications"
 );
-var networkDataReceived = false;
+
+let networkDataReceived = false;
 let deferredPrompt;
 
 // Load Material Bootstrap
@@ -180,11 +186,11 @@ if (cards) {
 
   // Create a single card
   function createCard(data) {
-    var card = document.createElement("div");
-    var img = document.createElement("img");
-    var cardBody = document.createElement("div");
-    var cardTitle = document.createElement("h5");
-    var cardText = document.createElement("p");
+    let card = document.createElement("div");
+    let img = document.createElement("img");
+    let cardBody = document.createElement("div");
+    let cardTitle = document.createElement("h5");
+    let cardText = document.createElement("p");
 
     card.className = "card";
 
@@ -258,4 +264,24 @@ function sendData() {
   }).then(function(response) {
     console.log("Sent data to Firebase"), response;
   });
+}
+
+// Polyfill for Chrome and Mozilla for using Media Devices
+function initializeMedia() {
+  if (!("mediaDevices" in navigator)) {
+    navigator.mediaDevices = {};
+  }
+
+  if (!"getUserMedia" in navigator.mediaDevices) {
+    navigator.mediaDevices.getUserMedia = function(constraints) {
+      let getUserMedia =
+        navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+      if (!getUserMedia) {
+        return Promise.reject(new Error("Get user media is not implemented!"));
+      }
+      return new Promise(function(resolve, reject) {
+        getUserMedia.call(navigator, constraints, resolve, reject);
+      });
+    };
+  }
 }
