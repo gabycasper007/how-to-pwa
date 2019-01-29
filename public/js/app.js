@@ -15,6 +15,7 @@ const enableNotificationsButton = document.querySelector(
 
 let networkDataReceived = false;
 let deferredPrompt;
+let image;
 
 // Load Material Bootstrap
 $(document).ready(function() {
@@ -215,6 +216,14 @@ if (FORM) {
   FORM.addEventListener("submit", function(event) {
     event.preventDefault();
 
+    let postData = new FormData();
+    let id = new Date().toISOString();
+
+    postData.append("id", id);
+    postData.append("title", TITLE_INPUT.value);
+    postData.append("location", LOCATION_INPUT.value);
+    postData.append("file", image, id + ".png");
+
     if (TITLE_INPUT.value.trim() === "" || LOCATION_INPUT.value.trim() === "") {
       alert("Please enter valid data!");
       return;
@@ -223,10 +232,10 @@ if (FORM) {
     if ("serviceWorker" in navigator && "SyncManager" in window) {
       navigator.serviceWorker.ready.then(function(sw) {
         let post = {
-          id: new Date().toISOString(),
+          id: id,
           title: TITLE_INPUT.value,
           location: LOCATION_INPUT.value,
-          image: "xxx"
+          image: image
         };
 
         localForageSync
@@ -242,25 +251,16 @@ if (FORM) {
           });
       });
     } else {
-      sendData();
+      sendData(postData);
     }
   });
 }
 
 // Send data to Firebase
-function sendData() {
+function sendData(postData) {
   fetch(FIREBASE_STORE_POST_DATA_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    },
-    body: JSON.stringify({
-      id: new Date().toISOString(),
-      title: TITLE_INPUT.value,
-      location: LOCATION_INPUT.value,
-      image: "xxx"
-    })
+    body: postData
   }).then(function(response) {
     console.log("Sent data to Firebase"), response;
   });
@@ -322,4 +322,5 @@ captureBtn.addEventListener("click", function(event) {
   videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
     track.stop();
   });
+  image = dataURItoBlob(canvasEl.toDataURL());
 });

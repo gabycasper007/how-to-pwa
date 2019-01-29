@@ -155,18 +155,15 @@ self.addEventListener("sync", function(event) {
     event.waitUntil(
       localForageSync
         .iterate(function(value, key) {
+          let postData = new FormData();
+          postData.append("id", key);
+          postData.append("title", value.title);
+          postData.append("location", value.location);
+          postData.append("file", image, key + ".png");
+
           fetch(FIREBASE_STORE_POST_DATA_URL, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            },
-            body: JSON.stringify({
-              id: key,
-              title: value.title,
-              location: value.location,
-              image: value.image
-            })
+            body: postData
           })
             .then(function(response) {
               console.log("Sent data to Firebase", response);
