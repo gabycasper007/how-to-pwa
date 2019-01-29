@@ -253,9 +253,28 @@ pre[class*="language-"] > code {
   margin: auto;
 }
 
+#create-post #location-loader,
+#customMap,
+#capture-btn {
+  display: none;
+}
+#capture-btn {
+  margin-top: 12px;
+}
+#location-loader {
+  margin: 10px 0 12px;
+}
+#customMap img {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+#location-btn {
+  margin: 10px 0 20px;
+}
+
 #create-post #pick-image {
   display: none;
-  margin: 15px 0; 
+  margin: 15px 0;
 }
 
 .btn-secondary {

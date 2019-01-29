@@ -21,17 +21,18 @@
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter title">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="manual-location">
                 <label for="location">Location</label>
                 <input type="text" class="form-control" id="location" placeholder="Enter location">
             </div>
             <div class="input-section">
-                <button class="btn btn-primary" type="button" id="location-btn">Get Location</button>
-                <div class="spinner-border spinner-border-sm" role="status">
+                <button class="btn btn-primary btn-raised" type="button" id="location-btn">Get Location</button>
+                <div class="spinner-border spinner-border-sm" role="status" id="location-loader">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-raised">Submit</button>
+            <div id="customMap"></div>
+            <button type="submit" class="btn btn-warning btn-raised">Submit</button>
         </form>
 
         <div id="cards"></div>

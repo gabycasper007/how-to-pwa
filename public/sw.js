@@ -159,6 +159,8 @@ self.addEventListener("sync", function(event) {
           postData.append("id", key);
           postData.append("title", value.title);
           postData.append("location", value.location);
+          postData.append("rawLocationLat", value.rawLocation.lat);
+          postData.append("rawLocationLng", value.rawLocation.lng);
           postData.append("file", value.image, key + ".png");
 
           fetch(FIREBASE_STORE_POST_DATA_URL, {

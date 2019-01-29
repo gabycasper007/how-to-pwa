@@ -2,13 +2,17 @@ const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
 const cards = document.querySelector("#cards");
 const FORM = document.querySelector("#syncForm");
-const TITLE_INPUT = document.querySelector("#title");
-const LOCATION_INPUT = document.querySelector("#location");
+const titleInput = document.querySelector("#title");
+const locationInput = document.querySelector("#location");
 const videoPlayer = document.querySelector("#player");
 const canvasEl = document.querySelector("#canvas");
 const captureBtn = document.querySelector("#capture-btn");
 const imagePicker = document.querySelector("#image-picker");
 const imagePickerArea = document.querySelector("#pick-image");
+const locationBtn = document.querySelector("#location-btn");
+const locationLoader = document.querySelector("#location-loader");
+const mapImg = document.querySelector("#customMap");
+const gcAPIkey = "AIzaSyDCAVfl78QdNtzJwiv9LrveBNssezJIWWw";
 const enableNotificationsButton = document.querySelector(
   "#enableNotifications"
 );
@@ -16,6 +20,7 @@ const enableNotificationsButton = document.querySelector(
 let networkDataReceived = false;
 let deferredPrompt;
 let image;
+let fetchedLocation = { lat: 0, lng: 0 };
 
 // Load Material Bootstrap
 $(document).ready(function() {
@@ -201,9 +206,9 @@ if (cards) {
 
     cardBody.className = "card-body";
     cardTitle.className = "card-title";
-    cardTitle.textContent = data.location;
+    cardTitle.textContent = data.title;
     cardText.className = "card-text";
-    cardText.textContent = data.title;
+    cardText.textContent = data.location;
 
     cards.appendChild(card).appendChild(img);
     card.appendChild(cardBody).appendChild(cardTitle);
@@ -220,22 +225,26 @@ if (FORM) {
     let id = new Date().toISOString();
 
     postData.append("id", id);
-    postData.append("title", TITLE_INPUT.value);
-    postData.append("location", LOCATION_INPUT.value);
+    postData.append("title", titleInput.value);
+    postData.append("location", locationInput.value);
+    postData.append("rawLocationLat", fetchedLocation.lat);
+    postData.append("rawLocationLng", fetchedLocation.lng);
     postData.append("file", image, id + ".png");
 
-    if (TITLE_INPUT.value.trim() === "" || LOCATION_INPUT.value.trim() === "") {
+    if (titleInput.value.trim() === "" || locationInput.value.trim() === "") {
       alert("Please enter valid data!");
       return;
     }
 
+    // Sync data to IndexedDB so we can send it when user is online
     if ("serviceWorker" in navigator && "SyncManager" in window) {
       navigator.serviceWorker.ready.then(function(sw) {
         let post = {
           id: id,
-          title: TITLE_INPUT.value,
-          location: LOCATION_INPUT.value,
-          image: image
+          title: titleInput.value,
+          location: locationInput.value,
+          image: image,
+          rawLocation: fetchedLocation
         };
 
         localForageSync
@@ -252,6 +261,13 @@ if (FORM) {
       });
     } else {
       sendData(postData);
+    }
+
+    // Stop Camera
+    if (videoPlayer.srcObject) {
+      videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
+        track.stop();
+      });
     }
   });
 }
@@ -295,11 +311,13 @@ function initializeMedia() {
       videoPlayer.srcObject = stream;
       imagePickerArea.style.display = "none";
       videoPlayer.style.display = "block";
+      captureBtn.style.display = "inline-block";
     })
     .catch(function(err) {
       imagePickerArea.style.display = "block";
       videoPlayer.style.display = "none";
       canvasEl.style.display = "none";
+      captureBtn.style.display = "none";
     });
 }
 
@@ -325,6 +343,65 @@ captureBtn.addEventListener("click", function(event) {
   image = dataURItoBlob(canvasEl.toDataURL());
 });
 
+// Respond to Image Picker Upload
 imagePicker.addEventListener("change", function(event) {
   image = event.target.files[0];
 });
+
+locationBtn.addEventListener("click", function(event) {
+  if (!"geolocation" in navigator) {
+    return;
+  }
+  let sawAlert = false;
+
+  locationBtn.style.display = "none";
+  locationLoader.style.display = "inline-block";
+
+  navigator.geolocation.getCurrentPosition(
+    function(postition) {
+      fetchedLocation = {
+        lat: postition.coords.latitude,
+        lng: postition.coords.latitude
+      };
+      locationInput.value = "In Bucuresti";
+      document.querySelector("#manual-location").classList.add("is-focused");
+
+      var img = new Image();
+      img.src =
+        "https://maps.googleapis.com/maps/api/staticmap?center=" +
+        postition.coords.latitude +
+        "," +
+        postition.coords.longitude +
+        "&zoom=13&size=600x400&sensor=false&key=" +
+        gcAPIkey;
+
+      mapImg.appendChild(img);
+      locationLoader.style.display = "none";
+      locationBtn.style.display = "none";
+      mapImg.style.display = "block";
+    },
+    function(err) {
+      locationBtn.style.display = "inline-block";
+      locationLoader.style.display = "none";
+      mapImg.style.display = "none";
+      if (!sawAlert) {
+        alert("Couldn't fetch location, please enter manually");
+        sawAlert = true;
+      }
+      fetchedLocation = { lat: 0, lng: 0 };
+      console.log(err);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 30000,
+      timeout: 27000
+    }
+  );
+});
+
+function initializeLocation() {
+  if (!"geolocation" in navigator) {
+    locationBtn.style.display = "none";
+    mapImg.style.display = "none";
+  }
+}
