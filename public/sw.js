@@ -3,7 +3,7 @@ const CACHE_NAME = "static-pwa-1";
 const DYNAMIC_CACHE_NAME = "dynamic-pwa-1";
 
 importScripts(ROOT + "/js/localforage.min.js");
-importScripts(ROOT + "/js/indexedDB.js");
+importScripts(ROOT + "/js/utility.js");
 
 // We will add these assets to our static Cache Storage.
 let urlsToCache = [
@@ -19,8 +19,8 @@ let urlsToCache = [
   ROOT + "/css/prism.css",
   ROOT + "/js/prism.js",
   ROOT + "/js/localforage.min.js",
-  ROOT + "/js/indexedDB.js",
-  ROOT + "/js/scripts.js"
+  ROOT + "/js/utility.js",
+  ROOT + "/js/app.js"
 ];
 
 // Prevent the Cache from using too much memory
