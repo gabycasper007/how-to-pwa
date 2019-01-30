@@ -229,7 +229,7 @@
                 <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion">
                     <div class="card-body">
                         <pre><code class="language-javascript">
-"lang": "en-US"
+"lang": "ro-RO"
                         </code></pre>
                         <p>Specifies the primary language for the values in the name and short_name members. This value is a string containing a single language tag.</p>
                     </div>

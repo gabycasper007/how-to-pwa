@@ -1,6 +1,6 @@
 
       <footer>
-        © Copyright <?php echo date('Y') ?>
+        © Copyright <?php echo date('Y') ?> - Gabriel VASILE
       </footer>
     </main>
 

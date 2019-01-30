@@ -46,9 +46,9 @@
         <p>Set and persist localForage options. This must be called before any other calls to localForage are made, but can be called after localForage is loaded:</p>
         <pre><code class="language-javascript">
 // This will rename the database from "localforage"
-// to "How to PWA".
+// to "Ghid PWA".
 localforage.config({
-    name: 'How to PWA'
+    name: 'Ghid PWA'
 });
             </code></pre>
 

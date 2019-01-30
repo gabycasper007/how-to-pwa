@@ -22,7 +22,7 @@ let deferredPrompt;
 let image;
 let fetchedLocation = { lat: 0, lng: 0 };
 
-// Load Material Bootstrap
+// Incarca Material Bootstrap
 $(document).ready(function() {
   $("body").bootstrapMaterialDesign();
 });
@@ -32,21 +32,21 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
-// Show the actual Notification
+// Afiseaza notificare
 function displayNotification() {
   let options = {
-    body: "You successfully subscribed to our notification service!",
+    body: "Te-ai abonat la serviciul de notificari!",
     icon: ROOT + "img/icons/icon-96x96.png",
     image: ROOT + "img/pwa.png",
     dir: "ltr",
-    lang: "en-US",
+    lang: "ro-RO",
     vibrate: [100, 50, 200],
     badge: ROOT + "img/icons/icon-96x96.png",
     tag: "confirm-notification",
     renotify: true
   };
   navigator.serviceWorker.ready.then(function(sw) {
-    sw.showNotification("Successfully subscribed", options);
+    sw.showNotification("Abonare cu succes", options);
   });
 }
 
@@ -59,18 +59,18 @@ function configurePushSubscription() {
     })
     .then(function(sub) {
       if (sub === null) {
-        // Authentification
-        // We use Vapid to make sure nobody is allowed to send notifications on our behalf
+        // Autentificare
+        // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
         let vapidPublicKey = urlBase64ToUint8Array(
           "BIfl1Prv850KN3sFkYEQZXqjUDD_PaABmUVHeAQoioxv99KbAb7tmRukk-rxxg_rJ7bJvUxNLd4tKUBrnvIMcLw"
         );
-        // Create new subscription
+        // Creaza noua abonare
         return reg.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: vapidPublicKey
         });
       } else {
-        // We have a subscription
+        // Este deja abonat
       }
     })
     .then(function(newSub) {
@@ -89,11 +89,11 @@ function configurePushSubscription() {
       }
     })
     .catch(function(err) {
-      console.log("Subscription error", err);
+      console.log("Eroare la abonare", err);
     });
 }
 
-// Show Enable Notifications button
+// Afiseaza butonul de abonare la notificari
 if (
   "Notification" in window &&
   "serviceWorker" in navigator &&
@@ -103,7 +103,7 @@ if (
   enableNotificationsButton.style.display = "block";
   enableNotificationsButton.addEventListener("click", function() {
     Notification.requestPermission(function(result) {
-      console.log("User choice for notifications", result);
+      console.log("Alegerea utilizatorului pentru notificari este:", result);
       if (result !== "default") {
         enableNotificationsButton.style.display = "none";
       }
@@ -114,21 +114,21 @@ if (
   });
 }
 
-// Register ServiceWorker
+// Inregistreaza Service Worker
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register(ROOT + "sw.js").then(
       function(reg) {
-        // console.log("SW Registed", reg.scope);
+        // console.log("SW Inregistrat", reg.scope);
       },
       function(err) {
-        console.log("SW failed: ", err);
+        console.log("SW a dat eroare: ", err);
       }
     );
   });
 }
 
-// Defer App's Install Banner
+// Amana bannerul pentru instalarea aplicatiei
 window.addEventListener("beforeinstallprompt", function(event) {
   console.log("beforeinstallprompt fired");
   installBtn.style.display = "block";
@@ -137,7 +137,7 @@ window.addEventListener("beforeinstallprompt", function(event) {
   return false;
 });
 
-// Show the App's Install Banner on click
+// Afiseaza la click bannerul pentru instalarea aplicatiei
 installBtn.addEventListener("click", function() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
@@ -146,10 +146,10 @@ installBtn.addEventListener("click", function() {
       console.log(choiceResult.outcome);
 
       if (choiceResult.outcome === "dismissed") {
-        console.log("User cancelled installation");
+        console.log("Utilizatorul a anulat instalarea");
       } else {
         installBtn.style.display = "none";
-        console.log("User added to home screen");
+        console.log("Utilizatorul a instalat aplicatia");
       }
     });
 
@@ -158,7 +158,9 @@ installBtn.addEventListener("click", function() {
 });
 
 if (cards) {
-  // Cache then Network Stragegy for  Cards
+  // Pentru imaginile din zona de testare
+  // Incarcam rapid din cache imaginile
+  // Dupa care actualizam imaginile afisate cu cele descarcate de pe internet
   fetch(POSTS_URL)
     .then(function(response) {
       return response.json();
@@ -179,7 +181,7 @@ if (cards) {
       cards.removeChild(cards.lastChild);
     }
   }
-  // Show all the cards
+  // Afisaza toate imaginile
   function showcards(data) {
     clearCards();
     for (key in data) {
@@ -190,7 +192,7 @@ if (cards) {
     }
   }
 
-  // Create a single card
+  // Afiseaza o imagine
   function createCard(data) {
     let card = document.createElement("div");
     let img = document.createElement("img");
@@ -216,7 +218,7 @@ if (cards) {
   }
 }
 
-// Sync Data added in the Form
+// Sincronizeaza datele adaugate in formular
 if (FORM) {
   FORM.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -232,11 +234,12 @@ if (FORM) {
     postData.append("file", image, id + ".png");
 
     if (titleInput.value.trim() === "" || locationInput.value.trim() === "") {
-      alert("Please enter valid data!");
+      alert("Completeaza toate campurile!");
       return;
     }
 
-    // Sync data to IndexedDB so we can send it when user is online
+    // Sincronizeaza datele in IndexedDB
+    // pentru a le putea trimite atunci cand utilizatorul este online
     if ("serviceWorker" in navigator && "SyncManager" in window) {
       navigator.serviceWorker.ready.then(function(sw) {
         let post = {
@@ -253,17 +256,19 @@ if (FORM) {
             sw.sync.register("sync-new-posts");
           })
           .then(function() {
-            $.snackbar({ content: "Your post was saved for syncing!" });
+            $.snackbar({
+              content: "Postarea ta a fost salvata si va fi incarcata ulterior!"
+            });
           })
           .catch(function(err) {
-            console.log("Sync Error:", err);
+            console.log("Eroare sincronizare:", err);
           });
       });
     } else {
       sendData(postData);
     }
 
-    // Stop Camera
+    // Opreste Camera
     if (videoPlayer.srcObject) {
       videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
         track.stop();
@@ -272,17 +277,17 @@ if (FORM) {
   });
 }
 
-// Send data to Firebase
+// Trimite date la baza de date din Firebase
 function sendData(postData) {
   fetch(FIREBASE_STORE_POST_DATA_URL, {
     method: "POST",
     body: postData
   }).then(function(response) {
-    console.log("Sent data to Firebase"), response;
+    console.log("Am trimis datele la Firebase"), response;
   });
 }
 
-// Polyfill for Chrome and Mozilla for using Media Devices
+// Polyfill pentru Chrome si Mozilla pentru a folosi instrumente media
 function initializeMedia() {
   if (!("mediaDevices" in navigator)) {
     navigator.mediaDevices = {};
@@ -293,7 +298,11 @@ function initializeMedia() {
       let getUserMedia =
         navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       if (!getUserMedia) {
-        return Promise.reject(new Error("Get user media is not implemented!"));
+        return Promise.reject(
+          new Error(
+            "Browserul folosit nu permite accesul la instrumente media!"
+          )
+        );
       }
       return new Promise(function(resolve, reject) {
         getUserMedia.call(navigator, constraints, resolve, reject);
@@ -319,7 +328,7 @@ function initializeMedia() {
     });
 }
 
-// Capture Photo from Video Stream
+// Capteaza fotografie din flux video
 if (captureBtn) {
   initializeMedia();
 
@@ -345,7 +354,7 @@ if (captureBtn) {
   });
 }
 
-// Respond to Image Picker Upload
+// Raspunde la selectorul de imagini
 if (imagePicker) {
   imagePicker.addEventListener("change", function(event) {
     image = event.target.files[0];
@@ -390,7 +399,7 @@ if (locationBtn) {
         locationLoader.style.display = "none";
         mapImg.style.display = "none";
         if (!sawAlert) {
-          alert("Couldn't fetch location, please enter manually");
+          alert("Browserul nu a putut obtine locatia, adaug-o manual");
           sawAlert = true;
         }
         fetchedLocation = { lat: 0, lng: 0 };

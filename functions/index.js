@@ -116,14 +116,14 @@ exports.storePostData = functions.https.onRequest((request, response) => {
                   webpush.sendNotification(
                     pushConfig,
                     JSON.stringify({
-                      title: "New Post",
-                      content: "New Post added!"
+                      title: "Postare noua",
+                      content: "O noua postre a fost adaugata!"
                     })
                   );
                 });
                 return response
                   .status(201)
-                  .json({ message: "Data stored", id: fields.id });
+                  .json({ message: "Datele au fost salvate", id: fields.id });
               })
               .catch(err => {
                 response.status(500).json({ error: err });

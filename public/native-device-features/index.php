@@ -144,7 +144,7 @@ navigator.geolocation.clearWatch(watchID);
                 </li>
                 <li class="page-item forward">
                     <a class="page-link" href="<?php echo ROOT ?>testing-area/" aria-label="Next">
-                        <span class="paginationDesc">Testing Area</span>
+                        <span class="paginationDesc">Zona de testare</span>
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

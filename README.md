@@ -1,2 +1,3 @@
-# how-to-pwa
-How To Create Progressive Web Apps
+# Ghid-PWA
+
+Cum sa creezi Progressive Web Apps

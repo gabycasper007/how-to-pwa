@@ -5,7 +5,7 @@ const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
 importScripts(ROOT + "/js/localforage.min.js");
 importScripts(ROOT + "/js/utility.js");
 
-// We will add these assets to our static Cache Storage.
+// Fisiere statice - CSS, JS si HTML
 let urlsToCache = [
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css",
   "https://fonts.googleapis.com/css?family=Lato|Open+Sans|PT+Serif|Roboto:300,400,500,700|Material+Icons|Ubuntu|Vollkorn",
@@ -14,6 +14,14 @@ let urlsToCache = [
   "https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js",
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js",
   ROOT + "/",
+  ROOT + "/web-app-manifest/",
+  ROOT + "/service-workers/",
+  ROOT + "/caching/",
+  ROOT + "/indexed-db/",
+  ROOT + "/background-sync/",
+  ROOT + "/push-notifications/",
+  ROOT + "/native-device-features/",
+  ROOT + "/testing-area/",
   ROOT + "/offline.php",
   ROOT + "/css/style.css",
   ROOT + "/css/prism.css",
@@ -23,7 +31,8 @@ let urlsToCache = [
   ROOT + "/js/app.js"
 ];
 
-// Prevent the Cache from using too much memory
+// Previne Cache API de la a folosi prea multa memorie,
+// tinand in cache doar pana la maxItems elemente
 function trimCache(cacheName, maxItems) {
   caches.open(cacheName).then(function(cache) {
     return cache.keys().then(function(keys) {
@@ -35,42 +44,44 @@ function trimCache(cacheName, maxItems) {
 }
 
 self.addEventListener("install", function(event) {
-  // Add assets to static Cache Storage
+  // Adauga fisierele statice in Cache Storage
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then(function(cache) {
-        // console.log("[SW] Opened cache");
+        // console.log("[SW] Am deschis cache");
         return cache.addAll(urlsToCache);
       })
       .then(function() {
-        // Activate the Service Worker
+        // Activeaza Service Worker
         return self.skipWaiting();
       })
   );
 });
 
 self.addEventListener("activate", function(event) {
-  // Remove old Caches using Versioning
+  // Sterge Cache-uri vechi
   event.waitUntil(
     caches.keys().then(function(keys) {
       return Promise.all(
         keys.map(function(key) {
           if (![CACHE_NAME, DYNAMIC_CACHE_NAME].includes(key)) {
-            console.log("[SW] Removing old cache", key);
+            console.log("[SW] Sterge cache vechi", key);
             return caches.delete(key);
           }
         })
       );
     })
   );
-  // Claim Activation for current Service Worker in current opened browser tabs
+  // Activeaza Service Worker in toate taburile deschise in browserul curent
   return self.clients.claim();
 });
 
 self.addEventListener("fetch", function(event) {
   if (event.request.url.indexOf(POSTS_URL) > -1) {
-    // Network than Cache for Firebase data
+    // Pentru imaginile din Testing Area
+    // descarca-le din baza de date Firebase
+    // apoi adauga-le in IndexedDB
     event.respondWith(
       fetch(event.request)
         .then(function(response) {
@@ -91,21 +102,19 @@ self.addEventListener("fetch", function(event) {
         .catch(function() {})
     );
   } else {
-    // we return the assets from Cache if they exist
-    // If they're not found in the cache, we fallback
-    // to make a network request
+    // Pentru restul fisierelor, le cautam mai intai in Cache
+    // Le servim din cache daca le gasim, altfel incercam sa le accesam online
     event.respondWith(
       caches.match(event.request).then(function(response) {
-        // Cache hit - return response
+        // Am gasit fisierul in cache, il servesc de acolo
         if (response) {
           return response;
         }
 
-        // Request from network
+        // Nu am gasit fisierul, incerc sa il accesez online
         return fetch(event.request)
           .then(function(response) {
-            // Check if we received a valid response
-
+            // Verificam daca raspunsul este valid
             if (
               !response ||
               response.type === "error" ||
@@ -114,19 +123,17 @@ self.addEventListener("fetch", function(event) {
               return response;
             }
 
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
+            // IMPORTANT: Clonam raspunsul deoarece dorim
+            // ca si cacheul si browserul sa il foloseasca
             let responseToCache = response.clone();
 
-            // Dynamic Caching
+            // Cache Dinamic pt orice alte resurse care nu sunt deja in cache
             caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
               // console.log("[SW] Cache PUT", event.request.url);
-              // Keep maximum 30 items in the Dynamic Cache Storage
+              // Tinem maxim 30 de fisiere in cache-ul dinamic
               trimCache(DYNAMIC_CACHE_NAME, 30);
 
-              // Add to Dynamic Cache Storage
+              // Adauga in cache dinamic
               if (event.request.url.indexOf(SUBSCRIPTIONS_URL) === -1) {
                 cache.put(event.request, responseToCache);
               }
@@ -135,8 +142,10 @@ self.addEventListener("fetch", function(event) {
             return response;
           })
           .catch(function(err) {
-            // Resource not found in cache and network request
-            // Fallback to show an offline page
+            // Fisierul nu a fost gasit nici in cache, nici online
+            // Daca fisierul este de tip HTML, afisam pagina de rezerva "offline"
+            // astfel incat aplicatia sa functioneze mai departe, dar sa atentioneze utilizatorul
+            // ca nu are acces la internet iar pagina curenta nu se gaseste in cache
             return caches.open(CACHE_NAME).then(function(cache) {
               if (event.request.headers.get("accept").includes("text/html")) {
                 return cache.match(ROOT + "/offline.php");
@@ -148,9 +157,9 @@ self.addEventListener("fetch", function(event) {
   }
 });
 
-// Background syncing, sendint to Firebase
+// Sincronizeaza pe fundal, trimite catre Firebase
 self.addEventListener("sync", function(event) {
-  console.log("[SW] Backgroung syncing", event);
+  console.log("[SW] Sincronizare pe fundal", event);
   if (event.tag === "sync-new-posts") {
     event.waitUntil(
       localForageSync
@@ -168,24 +177,27 @@ self.addEventListener("sync", function(event) {
             body: postData
           })
             .then(function(response) {
-              console.log("Sent data to Firebase", response);
+              console.log("Am trimis datele catre Firebase", response);
               if (response.ok) {
-                console.log("Removed synced cached item", key);
+                console.log(
+                  "Am sters din IndexedDB elementul sincronizat",
+                  key
+                );
                 localForageSync.removeItem(key);
               }
             })
             .catch(function(err) {
-              console.log("Error while syncing", err);
+              console.log("Eroare la sincronizare", err);
             });
         })
         .catch(function(err) {
-          console.log("LocalForage ERROR: ", err);
+          console.log("Eroare din LocalForage: ", err);
         })
     );
   }
 });
 
-// Redirect to Testing Area when notification is clicked
+// Redirectioneaza la Testing Area cand notificarea este apasata
 self.addEventListener("notificationclick", function(event) {
   let notification = event.notification;
 
@@ -205,17 +217,17 @@ self.addEventListener("notificationclick", function(event) {
   );
 });
 
-// Log when notification is closed (swiped away)
+// Inregistreaza faptul ca notificarea a fost inchisa (swiped away)
 self.addEventListener("notificationclose", function(event) {
-  console.log("Notification was closed", event);
+  console.log("Notificarea a fost inchisa", event);
 });
 
 // Show The Push Notification
 self.addEventListener("push", function(event) {
-  console.log("Push notification received!", event);
+  console.log("Am primit o notificare push", event);
   let data = {
-    title: "New",
-    content: "Something new happened!"
+    title: "De ultima ora!",
+    content: "Ceva nou s-a intamplat!"
   };
   if (event.data) {
     data = JSON.parse(event.data.text());

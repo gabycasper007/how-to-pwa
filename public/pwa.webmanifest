@@ -1,13 +1,14 @@
 {
-  "name": "How to PWA",
+  "name": "Ghid PWA",
   "short_name": "PWA",
   "start_url": "/PWA/how-to-pwa/public/index.php",
   "display": "standalone",
   "orientation": "any",
   "scope": ".",
   "dir": "ltr",
-  "lang": "en-US",
-  "description": "Progressive Web App that teaches how to create a Progressive Web App",
+  "lang": "ro-RO",
+  "lang": "ro-RO",
+  "description": "O aplicatie care te invata cum sa faci aplicatii progresive",
   "background_color": "#9c27b0",
   "theme_color": "#6a0080",
   "icons": [

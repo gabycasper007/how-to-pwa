@@ -1,38 +1,37 @@
-// This file uses indexedDB through localforage.js
+// Acest fisier foloseste indexedDB prin localforage.js
 // https://localforage.github.io/localForage
 
-// Firebase url
+// URL Firebase
 const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
 const SUBSCRIPTIONS_URL =
   "https://how-to-pwa.firebaseio.com/subscriptions.json";
 const FIREBASE_STORE_POST_DATA_URL =
   "https://us-central1-how-to-pwa.cloudfunctions.net/storePostData";
 
-// Set and persist localForage options.
-// This must be called before any other calls to localForage are made,
+// Seteaza optiuni localForage
 localforage.config({
-  name: "How to PWA",
+  name: "Ghid PWA",
   storeName: "pwa_cards"
 });
 
 var localForageSync = localforage.createInstance({
-  name: "How to PWA",
+  name: "Ghid PWA",
   storeName: "sync_cards"
 });
 
-// Add to IndexedDB Storage
+// Adauga la IndexedDB Storage
 function addWithLocalForage(key, data) {
   return localforage
     .setItem(key, data)
     .then(function(value) {
-      //   console.log("LocalForage adding: ", value);
+      // console.log("LocalForage adding: ", value);
     })
     .catch(function(err) {
       console.log(err);
     });
 }
 
-// Get from IndexedDB Storage
+// Preia din IndexedDB Storage
 function getFromLocalForage(key) {
   return localforage
     .getItem(key)

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <!-- Meta taguri necesare -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -16,7 +16,7 @@
       
     <meta name=”apple-mobile-web-app-capable” content=”yes”>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="How to PWA">
+    <meta name="apple-mobile-web-app-title" content="Ghid PWA">
 
     <link rel="apple-touch-startup-image" href="<?php echo ROOT; ?>img/icons/icon-152x152.png">
     <link rel="apple-touch-icon" href="<?php echo ROOT; ?>img/icons/icon-152x152.png">
@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="<?php echo ROOT; ?>css/style.css" />
     <link rel="manifest" href="<?php echo ROOT; ?>pwa.webmanifest">
 
-    <title>How to PWA</title>
+    <title>Ghid PWA</title>
   </head>
   <body>
     <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
@@ -63,11 +63,11 @@
             data-toggle="drawer"
             data-target="#dw-s2"
           >
-            <span class="sr-only">Toggle drawer</span>
+            <span class="sr-only">Meniu</span>
             <i class="material-icons">menu</i>
           </button>
           <ul class="nav navbar-nav">
-            <li class="nav-item"><h1 class="primaryTitle"><a  href="<?php echo ROOT; ?>">How to PWA</a></h1></li>
+            <li class="nav-item"><h1 class="primaryTitle"><a  href="<?php echo ROOT; ?>">Ghid PWA</a></h1></li>
           </ul>
 
           <div class="dropdown pull-xs-right">
@@ -85,24 +85,24 @@
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="lr1"
             >
-              <button class="dropdown-item" id="InstallPWA" type="button">Install PWA</button>
+              <button class="dropdown-item" id="InstallPWA" type="button">Instaleaza PWA</button>
             </div>
           </div>
         </div>
       </header>
       
       <div id="dw-s2" class="bmd-layout-drawer bg-faded">
-        <header><a class="navbar-brand" ><h5>How to PWA</h5></a></header>
+        <header><a class="navbar-brand" ><h5>Ghid PWA</h5></a></header>
         <ul class="list-group">
-          <a href="<?php echo ROOT ?>" class="list-group-item">1. Introduction</a>
-          <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Web App Manifest</a>
-          <a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Service Workers</a>
-          <a href="<?php echo ROOT ?>caching/" class="list-group-item">4. Caching</a>
+          <a href="<?php echo ROOT ?>" class="list-group-item">1. Introducere</a>
+          <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Manifestearea aplicatiei</a>
+          <a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Lucratori de servicii</a>
+          <a href="<?php echo ROOT ?>caching/" class="list-group-item">4. Cache</a>
           <a href="<?php echo ROOT ?>indexed-db/" class="list-group-item">5. IndexedDB</a>
-          <a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Background Sync</a>
-          <a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Push Notifications</a>
-          <a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Native Device Features</a>
-          <a href="<?php echo ROOT ?>testing-area/" class="list-group-item">9. Testing Area</a>
+          <a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Sincronizare pe fundal</a>
+          <a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Notificari Push</a>
+          <a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Functionalitati native</a>
+          <a href="<?php echo ROOT ?>testing-area/" class="list-group-item">9. Zona de testare</a>
         </ul>
       </div>
       <main class="bmd-layout-content">
