@@ -81,7 +81,7 @@
 
         <figure class="figure">
           <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">
-              <img src="img/web-app-manifest.png" class="figure-img img-fluid rounded" alt="web app manifest browser support">
+              <img src="<?php echo ROOT ?>img/web-app-manifest.png" class="figure-img img-fluid rounded" alt="web app manifest browser support">
           <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Web App Manifest Browser Support</a></figcaption>
         </figure>
 

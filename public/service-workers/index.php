@@ -13,6 +13,24 @@
           <li><a href="#dynamic-caching">Dynamic Caching</a></li>
           <li><a href="#delete-old-caches">Delete Old Caches</a></li>
       </ul>
+
+      <p>The Service Worker can be checked in Google Chrome using Developer Tools and going to Application -> Service Workers</p>
+
+      <figure class="figure">
+        <img src="<?php echo ROOT ?>img/service-workers-file.png" class="figure-img img-fluid rounded" alt="service workers file">
+        <figcaption class="figure-caption">Service Worker</figcaption>
+      </figure>
+
+      <p>
+          Browser support for Service Workers can be checked here: <a href="https://caniuse.com/#search=service%20workers" target="_blank">Service Workers Browser Support</a>.
+      </p>
+
+      <figure class="figure">
+        <a href="https://caniuse.com/#search=service%20workers" target="_blank">
+            <img src="<?php echo ROOT ?>img/service-workers.png" class="figure-img img-fluid rounded" alt="Service Workers browser support">
+        <figcaption class="figure-caption"><a href="https://caniuse.com/#search=service%20workers" target="_blank">Service Workers Browser Support</a></figcaption>
+      </figure>
+      
       <h4 id="what-is-a-service-worker">What is a service worker</h4>
       <p>A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. Today, they already include features like push notifications and background sync. </p>
       <p>Service workers run on a separate thread from the main JavaScript code of our page, and don't have any access to the DOM structure. The API is non-blocking, and can send and receive communication between different contexts.</p>

@@ -4,10 +4,33 @@
     <div class="col">
         <h2>4. Caching</h2>
 
-        <p>A major advantage of the service worker cache API is that it gives you more detailed control than the built-in browser cache does. For example, your service worker can cache multiple requests when the user first runs your web app, including assets that they have not yet visited.</p>
+        <p>A major advantage of the service worker Cache API is that it gives you more detailed control than the built-in browser cache does. For example, your service worker can cache multiple requests when the user first runs your web app, including assets that they have not yet visited.</p>
         <p>This will speed up subsequent requests. You can also implement your own cache control logic, ensuring that assets that are considered important are kept in the cache while deleting less-used data.</p>
 
-        <p>It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:</p>
+        <p>The cached files can be seen in Google Chrome using Developer Tools and going to Application -> Cache -> Cache Storage</p>
+
+        <figure class="figure">
+          <img src="<?php echo ROOT ?>img/cached-files.png" class="figure-img img-fluid rounded" alt="cached files">
+          <figcaption class="figure-caption">Cached files</figcaption>
+        </figure>
+
+        <p>The Cache API is an experimental tehnology. Browser support can be seen here: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility" target="_blank">Cache API browser support</a></p>
+
+        <figure class="figure">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility" target="_blank">
+            <img src="<?php echo ROOT ?>img/cache-api-browser-support.png" class="figure-img img-fluid rounded" alt="cache api browser support">
+          </a>
+          <figcaption class="figure-caption">Cache API browser support</figcaption>
+        </figure>
+
+        <p>Deleting cached files manually can be done in Google Chrome using Developer Tools and going to Application -> Clear Storage -> Clear side data</p>
+
+        <figure class="figure">
+          <img src="<?php echo ROOT ?>img/deleting-cached-files.png" class="figure-img img-fluid rounded" alt="clear site data">
+          <figcaption class="figure-caption">Clear site data</figcaption>
+        </figure>
+
+        <p>However, it doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:</p>
 
         <h4>Cache only</h4>
         <p>Ideal for: Anything you'd consider static to that "version" of your site. You should have cached these in the install event, so you can depend on them being there.</p>

@@ -14,6 +14,24 @@
             The manifest informs details for websites installed on the homescreen of a device, providing users with quicker access and a richer experience
             </div>  
         </p>
+
+        <p>The manifest file can be checked in Google Chrome using Developer Tools and going to Application -> Manifest</p>
+
+        <figure class="figure">
+          <img src="<?php echo ROOT ?>img/manifest-file.png" class="figure-img img-fluid rounded" alt="manifest file">
+          <figcaption class="figure-caption">Manifest File</figcaption>
+        </figure>
+
+        <p>
+            Browser support for Web App Manifest can be checked here: <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Web App Manifest Browser Support</a>.
+        </p>
+
+        <figure class="figure">
+          <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">
+              <img src="<?php echo ROOT ?>img/web-app-manifest.png" class="figure-img img-fluid rounded" alt="web app manifest browser support">
+          <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Web App Manifest Browser Support</a></figcaption>
+        </figure>
+
         <hr>
         <h4>Linking the manifest file</h4>
         <p>Web app manifests are deployed in your HTML pages using a &lt;link> element in the &lt;head> of a document:</p>

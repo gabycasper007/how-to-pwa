@@ -282,8 +282,6 @@ function sendData(postData) {
   });
 }
 
-initializeMedia();
-
 // Polyfill for Chrome and Mozilla for using Media Devices
 function initializeMedia() {
   if (!("mediaDevices" in navigator)) {
@@ -322,82 +320,90 @@ function initializeMedia() {
 }
 
 // Capture Photo from Video Stream
-captureBtn.addEventListener("click", function(event) {
-  let context = canvasEl.getContext("2d");
+if (captureBtn) {
+  initializeMedia();
 
-  canvasEl.style.display = "block";
-  videoPlayer.style.display = "none";
-  captureBtn.style.display = "none";
+  captureBtn.addEventListener("click", function(event) {
+    let context = canvasEl.getContext("2d");
 
-  context.drawImage(
-    videoPlayer,
-    0,
-    0,
-    canvas.width,
-    videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
-  );
+    canvasEl.style.display = "block";
+    videoPlayer.style.display = "none";
+    captureBtn.style.display = "none";
 
-  videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
-    track.stop();
+    context.drawImage(
+      videoPlayer,
+      0,
+      0,
+      canvas.width,
+      videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
+    );
+
+    videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
+      track.stop();
+    });
+    image = dataURItoBlob(canvasEl.toDataURL());
   });
-  image = dataURItoBlob(canvasEl.toDataURL());
-});
+}
 
 // Respond to Image Picker Upload
-imagePicker.addEventListener("change", function(event) {
-  image = event.target.files[0];
-});
+if (imagePicker) {
+  imagePicker.addEventListener("change", function(event) {
+    image = event.target.files[0];
+  });
+}
 
-locationBtn.addEventListener("click", function(event) {
-  if (!"geolocation" in navigator) {
-    return;
-  }
-  let sawAlert = false;
-
-  locationBtn.style.display = "none";
-  locationLoader.style.display = "inline-block";
-
-  navigator.geolocation.getCurrentPosition(
-    function(postition) {
-      fetchedLocation = {
-        lat: postition.coords.latitude,
-        lng: postition.coords.latitude
-      };
-      locationInput.value = "In Bucuresti";
-      document.querySelector("#manual-location").classList.add("is-focused");
-
-      var img = new Image();
-      img.src =
-        "https://maps.googleapis.com/maps/api/staticmap?center=" +
-        postition.coords.latitude +
-        "," +
-        postition.coords.longitude +
-        "&zoom=13&size=600x400&sensor=false&key=" +
-        gcAPIkey;
-
-      mapImg.appendChild(img);
-      locationLoader.style.display = "none";
-      locationBtn.style.display = "none";
-      mapImg.style.display = "block";
-    },
-    function(err) {
-      locationBtn.style.display = "inline-block";
-      locationLoader.style.display = "none";
-      mapImg.style.display = "none";
-      if (!sawAlert) {
-        alert("Couldn't fetch location, please enter manually");
-        sawAlert = true;
-      }
-      fetchedLocation = { lat: 0, lng: 0 };
-      console.log(err);
-    },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 30000,
-      timeout: 27000
+if (locationBtn) {
+  locationBtn.addEventListener("click", function(event) {
+    if (!"geolocation" in navigator) {
+      return;
     }
-  );
-});
+    let sawAlert = false;
+
+    locationBtn.style.display = "none";
+    locationLoader.style.display = "inline-block";
+
+    navigator.geolocation.getCurrentPosition(
+      function(postition) {
+        fetchedLocation = {
+          lat: postition.coords.latitude,
+          lng: postition.coords.latitude
+        };
+        locationInput.value = "In Bucuresti";
+        document.querySelector("#manual-location").classList.add("is-focused");
+
+        var img = new Image();
+        img.src =
+          "https://maps.googleapis.com/maps/api/staticmap?center=" +
+          postition.coords.latitude +
+          "," +
+          postition.coords.longitude +
+          "&zoom=13&size=600x400&sensor=false&key=" +
+          gcAPIkey;
+
+        mapImg.appendChild(img);
+        locationLoader.style.display = "none";
+        locationBtn.style.display = "none";
+        mapImg.style.display = "block";
+      },
+      function(err) {
+        locationBtn.style.display = "inline-block";
+        locationLoader.style.display = "none";
+        mapImg.style.display = "none";
+        if (!sawAlert) {
+          alert("Couldn't fetch location, please enter manually");
+          sawAlert = true;
+        }
+        fetchedLocation = { lat: 0, lng: 0 };
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000
+      }
+    );
+  });
+}
 
 function initializeLocation() {
   if (!"geolocation" in navigator) {

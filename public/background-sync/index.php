@@ -7,7 +7,27 @@
         <p>Background sync is a new web API that lets you defer actions until the user has stable connectivity. This is useful for ensuring that whatever the user wants to send, is actually sent. The user can go offline and even close the browser, safe in the knowledge that their request will be sent when they regain connectivity.</p>
         <p>Service Workers provides offline functionality and dramatically speeds up load times using caching. While this is useful, there has been no way for the page to actually send something to the server without connectivity. Background Sync is the feature that has been built to handle just such a scenario.</p>
 
-        <h4>What could I use background sync for?</h4>
+        <p>Browser support for Background Sync API can be checked here: <a href="https://caniuse.com/#search=background%20sync%20api" target="_blank">Browser Sync API browser support</a></p>
+
+        <figure class="figure">
+          <a href="https://caniuse.com/#search=background%20sync%20api" target="_blank">
+            <img src="<?php echo ROOT ?>img/background-sync-api.png" class="figure-img img-fluid rounded" alt="Browser Sync API browser support">
+          </a>
+          <figcaption class="figure-caption">Browser Sync API browser support</figcaption>
+        </figure>
+
+        <p>If you write an email, instant message, or simply favorite a tweet, the application needs to communicate that data to the server. If that fails, either due to user connectivity, service availability or anything in-between, the app can store that action in some kind of 'outbox' for retry later.</p>
+
+        <p>
+            <div class="alert alert-info" role="alert">
+            <i class="material-icons"> info </i>
+            Unfortunately, on the web, that outbox can only be processed while the site is displayed in a browsing context. This is particularly problematic on mobile, where browsing contexts are frequently shut down to free memory.
+            </div>  
+        </p>
+
+        <p>Native application platforms provide job scheduling APIs that enable developers to collaborate with the system to ensure low power usage and background-driven processing. The web platform needs capabilities like this too. That's where Background Sync comes into play.</p>
+
+        <h4>What could I use Background Sync for?</h4>
 
         <p>Ideally, you’d use it to schedule any data sending that you care about beyond the life of the page. Chat messages, emails, document updates, settings changes, photo uploads… anything that you want to reach the server even if user navigates away or closes the tab. The page could store these in an "outbox" store in indexedDB, and the service worker would retrieve them, and send them.</p>
         <p>If you write an email, instant message, or simply favorite a tweet, the application needs to communicate that data to the server. If that fails, either due to user connectivity, service availability or anything in-between, the app can store that action in some kind of 'outbox' for retry later.</p>
