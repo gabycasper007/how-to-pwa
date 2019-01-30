@@ -2,79 +2,79 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h2>1. Introduction</h2>
+        <h2>1. Introducere</h2>
         <p>
-          <strong>Progressive Web Apps (PWAs)</strong> are websites that can be installed to a device’s homescreen without an app store, along with other capabilities like working offline and receiving push notifications.
+          <strong>Aplicatiile progresive, numite in engleza "Progressive Web Apps" sau PWAs</strong> sunt website-uri ce pot fi instalate pe pagina principala a dispozitivului folosit fara descarcarea de pe un magazin de aplicatii (app store). Acestea pot primi notificari de tip push si functioneaza in mare proportie si fara acces la internet.
         </p>
-        <p>Progressive web apps use modern web APIs along with traditional progressive enhancement strategy to create cross-platform web applications. These apps work everywhere and provide several features that give them the same user experience advantages as native apps. </p>
+        <p>Aplicatiile progresive folosesc API-uri moderne si strategii de imbunatatire progresiva pentru a creea aplicatii web ce funtioneaza indiferent de dispozitiv. Aceste aplicatii funtioneaza oriunde si ofera mai multe caracteristici pentru a oferi aceeasi experienta utilizatorilor ca si aplicatiile mobile native. </p>
         <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
             
-            A PWA loads quickly, even on flaky networks, sends relevant push
-        notifications, has an icon on the home screen, and loads as a
-        top-level, full screen experience.
+            Folosind cache-ul, o aplicatie PWA se incarca rapid chiar si cand accesul la internet este limitat, trimite notificari push relevante, poate fi accesata rapid de pe pagina principala a dispozitivului (fara a accesa browserul), si acopera intreg ecranul, asemenea aplicatiilor mobile native.
         </div>
 
-        <h4>PWA advantages</h4>
+        <h4>Avantajele aplicatiilor PWA</h4>
 
-        <p>PWAs are developed using a number of specific technologies and standard patterns to allow them to take advantage of both web and native app features. For example, web apps are more discoverable — it's a lot easier and faster to visit a website than install an application, and you can also share web apps via a link.</p>
-        <p>On the other hand, native apps are better integrated with the operating system and therefore offer a more seamless experience for the users. You can install a native app so that it works offline, and users love tapping their homescreen icons to easily access their favorite apps, rather than navigating to it using a browser.</p>
-        <p>PWAs give us the ability to create web apps that can enjoy these same advantages.</p>
+        <p>Aplicatiile PWAs sunt construite folosind o insiruire de tehnologii specifice si tipare standard pentru a le permite sa profite atat de beneficiile web cat si de cele ale aplicatiilor mobile native. De exemplu, site-uri web sunt mai usor de descoperit si indexat de motoarele de cautare — este mult mai la indemana sa vizitam un website decat sa instalam o aplicatie, si de asemenea poti distribui usor paginile web folosind o ancora (link).</p>
+        <p>Pe de alta parte, aplicatiile mobile native sunt mai usor de integrat cu sistemul de operare al dispozitivului si ca atare ofera o experienta mai cursiva pentru utilizatori. Poti instala o aplicatie nativa iar aceasta va putea funtiona si fara acces la internet. Utilizatorilor le este mai la indemana sa acceseze aplicatiile deja instalate pe propriul dispozitiv, decat sa navigheze in pagina unui website folosind browserul.</p>
+        <p>Aplicatiile PWA ofera insa avantaje similare aplicatiilor mobile native.</p>
 
-        <h4>PWAs should be:</h4>
+        <h4>Aplicatiile PWA trebuie sa fie:</h4>
         <ul>
-          <li>Progressive, so it's still usable on a basic level on older browsers, but fully-functional on the latest ones.</li>
-          <li>Responsive, so it's usable on any device with a screen and a browser — mobile phones, tablets, laptops, TVs, fridges, etc.</li>
-          <li>Network independent, so it works offline or with a poor network connection.</li>
-          <li>App-like feel</li>
-          <li>Fresh, so it has up-to-date information</li>
-          <li>Safe, so the connection between you and the app is secured against any third parties trying to get access to your sensitive data.</li>
-          <li>Discoverable, so the contents can be found through search engines.</li>
-          <li>Re-engageable, so it's able to send notifications whenever there's new content available.</li>
-          <li>Installable, so it's available on the device's home screen.</li>
-          <li>Linkable, so you can share it by simply sending a URL.</li>
+          <li>Progresive, adica sa funtioneze ca un PWA pe dispozitive si browsere moderne, dar functionalitatile de baza sa poata fi folosite si pe dispozive si browsere vechi care nu permit functionalitatile moderne PWA.</li>
+          <li>Sensibile la rezolutia folosita (responsive), pentru a puta fi folosite la orice rezolutie si pe orice dispozitiv — telefoane mobile, tablete, laptopuri, calculatoare, TV-uri, etc.</li>
+          <li>Sa funtioneze indiferent daca accesul la internet este limitat sau inexistent.</li>
+          <li>Sa aibe un aspect asemanator cu aplicatiile</li>
+          <li>Sa prezinte informatii curente, la zi</li>
+          <li>Sa fie sigure, iar conexiunea dintre utilizator si aplicatie sa fie securizata prin protocolul HTTPS. De aceea, aspectele PWA vor functiona doar de pe o conexiune sigura de tip HTTPS sau pe localhost (pentru depanare). </li>
+          <li>Detectabile usor, in asa fel incat continutul sa poata fi indexat de catre motoarele de cautare asemenea website-urilor.</li>
+          <li>Angrenante, trimitand notificari push in momentul in care aplicatia prezinta continut nou, asemenea aplicatiilor mobile native.</li>
+          <li>Instalabile, in asa fel incat sa fie accesibile de pe ecranul principal al dispozitivului, asemenea aplicatiilor mobile native.</li>
+          <li>Distribuibile, in asa fel incat sa permita distribuirea prin ancore (link) asemenea website-urilor.</li>
         </ul>
 
-        <h4>What makes an app a PWA?</h4>
+        <h4>Ce este necesar pentru un website sa fie considerat aplicatie PWA?</h4>
 
-        <p>PWAs are not created with a single technology. They represent a new philosophy for building web apps, involving some specific patterns, APIs, and other features. It's not that obvious if a web app is a PWA or not from first glance. </p>
-        <p>An app could be considered a PWA when it meets certain requirements, or implements a set of given features: works offline, is installable, is easy to synchronize, can send push notifications, etc.</p>
+        <p>Aplicatiile PWA nu sunt create cu o singura tehnologie ci reprezinta o noua filozofie pentru crearea aplicatiilor web, implicand mai multe modele specifice si API-uri moderne. La prima vedere, nu este evident daca un website este sau nu o aplicatie PWA. </p>
+        <p>Un website poate fi considerat aplicatie PWA cand indeplineste anumite cerinte specifice si implementeaza un set de funtionalitati ca: funtioneaza fara internet, este instalabil, sincronizeaza informatia, poate alerta utilizatorii chiar si atunci cand telefonul este in buzunar, etc.</p>
 
         <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
             
-            There are tools to measure the completeness of an app in percentages (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a>). By implementing various technological advantages, we can make an app more progressive, thus ending up with a higher Lighthouse score.
+            Exista instrumente de masura pentru a verifica procentual cat de completa este o aplicatie (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a>). Implementand diverse avantaje tehnologice, putem face o aplicatie mai progresiva, in asa fel incat scorul din instrumentul Lighthouse va creste.
         </div>
 
-        <h4>PWA Benefits</h4>
+        <h4>Beneficiile tehnologiilor necesare pentru aplicatiile PWA</h4>
 
         <ul>
-          <li>A decrease in loading times after the app has been installed, thanks to caching with Service Workers, along with saving precious bandwidth and time.</li>
-          <li>The ability to update only the content that has changed when an app update is available. In contrast, with a native app, even the slightest modification can force the user to download the entire application again.</li>
-          <li>A look and feel that is more integrated with the native platform — app icons on the homescreen, apps that run fullscreen, etc.</li>
-          <li>Re-engaging with users via system notifications and push messages, leading to more engaged users and better conversion rates.</li>
+          <li>O scadere a timpilor de incarcare dupa ce aplicatia a fost instalata, datorata salvarii resurselor in cache folosind lucratori de servicii (Service Workers), salvand timp si latime de banda utilizatorilor.</li>
+          <li>Abilitatea de a actualiza <strong>doar continutul modificat</strong> atunci cand o actualizare a aplicatiei este disponibila. In contrast la o aplicatie mobila nativa, utilizatorul este obligat pentru fiecare mica modificare sa descarce noua varianta a aplicatiei.</li>
+          <li>Un aspect integrat cu platforma dispozitivului — aplicatia are iconita pe ecranul principal si ruleaza pe intreg ecranul.</li>
+          <li>Aduce utilizatorii inapoi folosind notificari push iar asta conduce la utilizatori mai captivati si la rate de conversii marite (ex: un magazin online vinde mai multe produse).</li>
         </ul>
 
-        <h4>Success Stories</h4>
-        <p><a href="https://stories.flipkart.com/" target="_blank">Flipkart Lite</a> — India's largest e-commerce site rebuilt as a progressive web app in 2015, which resulted in 70% increase in conversions. </p>
-        <p><a href="https://m.aliexpress.com/AliExpress" target="_blank">AliExpress</a> PWA has also seen much better results than the web or native app, with a 104% increase in conversion rates for new users. Given their profit increase, and the relatively low amount of work required for the conversion to PWAs, the advantage is clear.</p>
+        <h4>Povesti de succes</h4>
+        <p><a href="https://stories.flipkart.com/" target="_blank">Flipkart Lite</a> — Cel mai mare magazin online din India a fost reconstruit ca PWA in 2015, iar asta le-au adus 70% mai multi clienti.</p>
+        <p><a href="https://m.aliexpress.com/AliExpress" target="_blank">AliExpress</a> Aplicatia PWA a avut rezultate mai bune atat decat site-ul web cat si decat aplicatia mobila nativa, cu o crestere a vanzarilor de 104% in randul utilizatorilor noi.</p>
 
-        <h4>Browser support</h4>
+        <h4>Suportul in browsere</h4>
 
-        <p>The key ingredient required for PWAs is service worker support. Thankfully service workers are now supported on all major browsers on desktop and mobile.</p>
+        <p>Ingredientul principal necesar pentru aplicatiile PWA este suportul lucratorilor de servicii (Service Worker). Din fericire acestia sunt acum suportati de catre majoritatea browserelor principale atat pe mobil cat si pe desktop.</p>
 
         <p>
             <div class="alert alert-danger" role="alert">
             <i class="material-icons"> warning </i>
-            It’ll be a while before all browsers support background sync, especially as Safari and Edge don’t yet support service workers. 
+            Cu toate acestea, unele functionalitati ale aplicatiilor PWA sunt in stare experimentala si nu sunt accesibile de pe orice browser.  <br><br>
+            De exemplu, va mai dura pana toate browserele vor permite funtionalitatea de sincronizare in fundal (Background Sync), mai ales avand in vedere ca Safari si Edge inca nu suporta lucratorii de servicii (Service Workers). <br><br>
+            Majoritatea functionalitatilor specifice aplicatiilor PWA sunt insa accesibile folosind browserul <a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a>.
             </div>  
         </p>
         
-        <p>Other features such as Web App Manifest, Push, Notifications, and Add to Home Screen functionality have wide support too. Currently Safari has limited support for Web App Manifest and Add to Home Screen and no support for web push notifications.</p>
+        <p>Alte functionalitati ca: manifestarea aplicatiei (Web App Manifest), notificari fortate (Push Notifications), si adaugarea pe ecranul principal al dispozitivului (Add to Home Screen) au suport destul de larg. In momentul de fata Safari are suport limitat pentru functionalitatile "Web App Manifest" si "Add to Home Screen" si nu are suport pentru "Push Notifications".</p>
         <p>
           <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
-            Browser support for different functionalities can be checked using <a href="https://caniuse.com" target="_blank">Can I use</a> website. Example below.
+            Suportul browserelor poate fi verificat folosind website-ul <a href="https://caniuse.com" target="_blank">Can I use</a>. Exemplu mai jos.
             </div>  
         </p>
 
@@ -82,30 +82,30 @@
         <figure class="figure">
           <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">
               <img src="<?php echo ROOT ?>img/web-app-manifest.png" class="figure-img img-fluid rounded" alt="web app manifest browser support">
-          <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Web App Manifest Browser Support</a></figcaption>
+          <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Suportul browserelor pentru "Web App Manifest"</a></figcaption>
         </figure>
 
-        <p>Even though some functionalities are not supported in all browsers yet, bit by bit successful patterns are brought from Android/iOS onto the web, while still retaining what makes the web great!</p>
+        <p>Chiar daca multe functionalitati nu sunt suportate inca de toate browserele, pas cu pas modele de succes din Android/iOS sunt aduse in aplicatiile web PWA, pastrand in acelasi timp beneficiile site-urilor web!</p>
 
-        <h4>Methodology</h4>
+        <h4>Metodologie</h4>
 
-        <p>A PWA is improving the user experiance by loading a minimal user interface as soon as possible and then caching it so it is available offline for subsequent visits before then loading all the contents of the app.</p>
+        <p>O aplicatie PWA imbunatateste experienta utilizatorului incarcand mai intai o interfata minimala pe care o adauga in cache pentru a o putea accesa ulterior si fara acces la internet, dupa care descarca restul continutului aplicatiei.</p>
 
         <p>
           <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
-            That way, the next time someone visits the app from the device, the UI loads from the cache immediately and any new content is requested from the server (if it isn’t available in the cache already).
+            Astfel, data viitoare cand utilizatorul acceseaza aplicatia, interfata este incarcata rapid din cache iar continutul nou este ulterior descarcat de pe server (daca nu este deja disponibil in cache).
             </div>  
         </p>
 
-        <p>This feels fast as the user sees "something" instantly, instead of a loading spinner or a blank page. It also allows the website to be accessible offline if the network connection is not available.</p>
-        <p>We can control what is requested from the server and what is retrieved from the cache with a service worker. This caches the app shell and manages the dynamic content in a way that greatly improves the performance.</p>
+        <p>Folosind aceasta metodologie, aplicatia pare mai rapida deoarece utilizatorul vede instant interfata ei in loc sa vada o pagina goala. De asemenea, permite site-ului sa fie folosit fara acces la internet.</p>
+        <p>Putem controla ce este cerut din server si ce este luat din cache folosind un lucrator de serviciu (Service Worker). Acesta adauga in cache resursele statice, interfata aplicatiei si administreaza continutul dinamic pentru a imbunatati performanta aplicatiei.</p>
 
         <nav aria-label="Page navigation example">
               <ul class="pagination clearfix">
                   <li class="page-item forward">
                       <a class="page-link" href="<?php echo ROOT ?>web-app-manifest/" aria-label="Next">
-                          <span class="paginationDesc">Web App Manifest</span>
+                          <span class="paginationDesc">Manifestarea aplicatiei</span>
                           <span aria-hidden="true">&raquo;</span>
                       </a>
                   </li>
