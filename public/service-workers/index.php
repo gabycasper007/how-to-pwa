@@ -2,19 +2,19 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h2>3. Service Workers</h2>
-      <p>Rich offline experiences, periodic background syncs, push notifications—functionality that would normally require a native application—are coming to the web. Service workers provide the technical foundation that all these features rely on.</p>
-      <p>With service workers you can easily make your web app work 100% offline, achieve insane performance boosts, deliver native-feeling experiences</p>
+      <h2>3. Lucratori de servicii (Service Workers)</h2>
+      <p>Functionalitati care pana acum existau doar in aplicatiile mobile native sunt acum accesibile si pentru website-uri. Aceste functionalitati includ: sincronizare pe fundal, notificari push si utilizarea site-ului chiar si cand nu mai ai acces la internet. Fisierele de tip Service Worker ofera fundatia tehnica pe care aceste functionalitati se bazeaza.</p>
+      <p>Folosind un service worker aplicatia web poate functiona 100% offline, se poate incarca multa mai repede si poate avea un aspect asemanator unei aplicatii mobile native.</p>
       <ul>
-          <li><a href="#what-is-a-service-worker">What is a service worker</a></li>
-          <li><a href="#register-a-service-worker">Register a Service Worker</a></li>
-          <li><a href="#install-a-service-worker">Install a Service Worker</a></li>
-          <li><a href="#cache-and-return-requests">Cache and return requests</a></li>
-          <li><a href="#dynamic-caching">Dynamic Caching</a></li>
-          <li><a href="#delete-old-caches">Delete Old Caches</a></li>
+          <li><a href="#what-is-a-service-worker">Ce reprezinta un Service Worker</a></li>
+          <li><a href="#register-a-service-worker">Cum inregistram un Service Worker</a></li>
+          <li><a href="#install-a-service-worker">Cum instalam un Service Worker</a></li>
+          <li><a href="#cache-and-return-requests">Cum salvam resursele in cache</a></li>
+          <li><a href="#dynamic-caching">Cache dinamic</a></li>
+          <li><a href="#delete-old-caches">Cum stergem cache-ul vechi</a></li>
       </ul>
 
-      <p>The Service Worker can be checked in Google Chrome using Developer Tools and going to Application -> Service Workers</p>
+      <p>Fisierele de tip Service Worker pot fi vizualizate si administrate in Google Chrome folosind Developer Tools si accesand Application -> Service Workers</p>
 
       <figure class="figure">
         <img src="<?php echo ROOT ?>img/service-workers-file.png" class="figure-img img-fluid rounded" alt="service workers file">
@@ -22,38 +22,36 @@
       </figure>
 
       <p>
-          Browser support for Service Workers can be checked here: <a href="https://caniuse.com/#search=service%20workers" target="_blank">Service Workers Browser Support</a>.
+          Suportul browserelor pentru fisierele de tip Service Worker poate fi vizualizat aici: <a href="https://caniuse.com/#search=service%20workers" target="_blank">Suport pt Service Workers</a>.
       </p>
 
       <figure class="figure">
         <a href="https://caniuse.com/#search=service%20workers" target="_blank">
-            <img src="<?php echo ROOT ?>img/service-workers.png" class="figure-img img-fluid rounded" alt="Service Workers browser support">
-        <figcaption class="figure-caption"><a href="https://caniuse.com/#search=service%20workers" target="_blank">Service Workers Browser Support</a></figcaption>
+            <img src="<?php echo ROOT ?>img/service-workers.png" class="figure-img img-fluid rounded" alt="Suport pt Service Workers">
+        <figcaption class="figure-caption"><a href="https://caniuse.com/#search=service%20workers" target="_blank">Suport pt Service Workers</a></figcaption>
       </figure>
       
-      <h4 id="what-is-a-service-worker">What is a service worker</h4>
-      <p>A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. Today, they already include features like push notifications and background sync. </p>
-      <p>Service workers run on a separate thread from the main JavaScript code of our page, and don't have any access to the DOM structure. The API is non-blocking, and can send and receive communication between different contexts.</p>
+      <h4 id="what-is-a-service-worker">Ce este un Service Worker</h4>
+      <p>Un Service Worker este un fisier Javascript pe care browserul il ruleaza pe fundal, separat de pagina web, ce poate fi folosit pentru functionalitati care nu necesita pagina web sa fie deschisa. Astazi aceste functionalitati includ notificari push si sincronizare pe fundal. </p>
+      <p>Fisierele de tip Service Worker ruleaza pe un fir (thread) separat de celelalte fisiere JavaScript ale aplicatiei, si nu au access la nodurile HTML (DOM). Din aceste motive, fisierele de tip Service Worker nu blocheaza cursul aplicatiei si poate trimite si primi comunicari cu diferite contexte.</p>
       <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
-            
-            In the future, service workers might support other things like periodic sync or geofencing. The core feature discussed here is the ability to intercept and handle network requests, including programmatically managing a cache of responses.
+            Motivul pentru care aceste fisiere sunt interesante este pentru ca ofera aplicatiilor posibilitatea de a functiona offline si ofera programatorilor control detaliat asupra modalitatii de folosire a cache-ului si a resurselor.
       </div>
-      <p>The reason this is such an exciting API is that it allows you to support offline experiences, giving developers complete control over the experience.</p>
-      <p>Service workers can do a lot more than "just" offering offline capabilities, including handling notifications, performing heavy calculations on a separate thread, etc. Service workers are quite powerful as they can take control over network requests, modify them, serve custom responses retrieved from the cache, or synthesize responses completely.</p>
+      <p>Un Service Worker poate insa face mai mult decat sa ofere functionalitati offline. Acesta poate  including manevra notificari si poate face calcule costisitoare pe un thread separat. De asemenea pot manipula solicitarile de resurse din retea, le poate modifica, poate servi raspunsuri personalizate luate din cache si poate sintetiza raspunsuri noi.</p>
 
-      <h4 id="register-a-service-worker">Register a Service Worker</h4>
+      <h4 id="register-a-service-worker">Cum inregistram un Service Worker</h4>
 
-      <p>The next code checks to see if the service worker API is available, and if it is, the service worker at /sw.js is registered once the page is loaded.</p>
+      <p>Urmatorul cod verifica mai intai daca browserul suport functionalitatea Service Worker, si daca da, fisierul Service Worker denumit /sw.js este inregistrat de indata ce pagina a fost incarcata.</p>
       <pre><code class="language-javascript">
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(
         function(reg) {
-            console.log('SW Registed', reg.scope);
+            console.log('SW Inregistrat', reg.scope);
         }, 
         function(err) {
-            console.log('SW failed: ', err);
+            console.log('SW a esuat: ', err);
         }
     );
   });
@@ -61,18 +59,18 @@ if ('serviceWorker' in navigator) {
 
 </code></pre>
 
-        <h4 id="install-a-service-worker">Install a Service Worker</h4>
+        <h4 id="install-a-service-worker">Cum instalam un Service Worker</h4>
 
-        <p>In order to install the service worker, you need to define a callback for the install event and decide which files you want to cache.</p>
-        <div>Inside of our install callback, we need to take the following steps:</div>
+        <p>Pentru a instala un Service Worker, trebuie sa definim o functie care sa fie apelata atunci cand evenimentul "install" este declansat. In acest moment putem adauga fisierele statice in cache.</p>
+        <div>In interiorului functiei ce va fi apelata, vom face urmatoarele:</div>
         <ul>
-            <li>Open a cache.</li>
-            <li>Cache our files.</li>
-            <li>Confirm whether all the required assets are cached or not.</li>
+            <li>Deschidem cache-ul.</li>
+            <li>Salvam fisierele in cache.</li>
+            <li>Confirmam daca toate fisierele au fost adaugate in cache.</li>
         </ul>
 
         <pre><code class="language-javascript">
-var CACHE_NAME = 'my-site-cache-v1';
+const STATIC_CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
   '/styles/main.css',
@@ -81,7 +79,7 @@ var urlsToCache = [
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.open(STATIC_CACHE_NAME)
       .then(function(cache) {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
@@ -90,22 +88,29 @@ self.addEventListener('install', function(event) {
 });
 
 </code></pre>
-      <p>This is a chain of promises (caches.open() and cache.addAll()). The event.waitUntil() method takes a promise and uses it to know how long installation takes, and whether it succeeded or not.</p>
+      <p>Acesta este un lant de promisiuni (caches.open() si cache.addAll()). Functia event.waitUntil() preia o promisiune si o foloseste pentru a afla cat dureaza instalarea si daca aceasta s-a efectuat cu succes.</p>
+      
+      <p>
+        <div>Pentru mai multe detalii despre promisiuni, accesati <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise API</a></div>
+        <div>Pentru mai multe detalii despre interfata Cache, accesati <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache API</a></div>
+        <div>Pentru mai multe detalii despre interfata Fetch, accesati <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a></div>
+      </p>
       <div class="alert alert-danger" role="alert">
             <i class="material-icons"> warning </i>
-            If all the files are successfully cached, then the service worker will be installed. If any of the files fail to download, then the install step will fail.
+            Daca toate fisierele sunt adaugate cu succes in cache, atunci fisierul service worker va fi instalat. Daca vreunul dintre fisiere nu a putut fi accesat pentru a putea fi adaugat in cache, atunci instalarea va esua.
       </div>
-      <h4 id="cache-and-return-requests">Cache and return requests</h4>
-      <p>After a service worker is installed and the user navigates to a different page or refreshes, the service worker will begin to receive fetch events.</p>
+      <h4 id="cache-and-return-requests">Cum salvam resursele in cache</h4>
+      <p>Dupa ce un Service Worker este instalat si utilizatorul navigheaza la o alta pagina sau reincarca aplicatia (refresh), fisierul Service Worker va incepe sa primeasca evenimente de tip fetch.</p>
       <pre><code class="language-javascript">
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
+  event.respondWith( // Cu ce raspundem in momentul in care este cerut un fisier 
     caches.match(event.request)
       .then(function(response) {
-        // Cache hit - return response
+        // Am gasit fisierul in cache, intoarcem raspunsul
         if (response) {
           return response;
         }
+        // Nu am gasit fisierul in cache, incercam sa il obtinem de pe server
         return fetch(event.request);
       }
     )
@@ -113,40 +118,37 @@ self.addEventListener('fetch', function(event) {
 });
 </code></pre>
 
-    <p>Here we've defined our fetch event and within event.respondWith(), we pass in a promise from caches.match(). This method looks at the request and finds any cached results from any of the caches your service worker created.</p>
-    <p>If we have a matching response, we return the cached value, otherwise we return the result of a call to fetch, which will make a network request and return the data from the network.</p>
+    <p>Acest cod urmareste evenimentele de tip fetch (atunci cand browserul cere un fisier) si raspunde prin fisierul gasit in cache daca exista (prin caches.match()). Daca fisierul nu este in cache, va incerca sa il obtina de pe server.</p>
 
     <div class="alert alert-info" role="alert">
         <i class="material-icons"> done </i>
-        This uses any cached assets we cached during the install step.
+        Prin aceasta metoda practic folosim resursele salvate in cache in timpul instalarii fisierului Service Worker.
     </div>
 
-    <h4 id="dynamic-caching">Dynamic Caching</h4>
-    <p>If we want to cache new requests cumulatively, we can do so by handling the response of the fetch request and then adding it to the cache, like below.</p>
+    <h4 id="dynamic-caching">Cache dinamic</h4>
+    <p>Daca vrem sa adaugam in cache noi cereri de resurse, putem face asta adaugand in cache raspunsul unei cereri de tip fetch.</p>
     <pre><code class="language-javascript">
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
+  event.respondWith( // Cu ce raspundem in momentul in care este cerut un fisier 
     caches.match(event.request)
       .then(function(response) {
-        // Cache hit - return response
+        // Am gasit fisierul in cache, intoarcem raspunsul
         if (response) {
           return response;
         }
 
         return fetch(event.request).then(
           function(response) {
-            // Check if we received a valid response
+            // Verificam daca raspunsul este valid
             if(!response || response.status !== 200 || response.type === "error") {
               return response;
             }
 
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
+            // IMPORTANT: Clonam responsul pentru a-l putea consuma si browserul si cache-ul
             var responseToCache = response.clone();
 
-            caches.open(CACHE_NAME)
+            // Adaugam resursa in cache-ul dinamic
+            caches.open(DYNAMIC_CACHE_NAME)
               .then(function(cache) {
                 cache.put(event.request, responseToCache);
               });
@@ -159,18 +161,19 @@ self.addEventListener('fetch', function(event) {
 });
 </code></pre>
 
-    <p>Once we get a response, we perform the following checks:
+    <p>Indata ce am primit un raspuns, efectuam urmatoarele verificari:
     <ul>
-        <li>Ensure the response is valid.</li>
-        <li>Check the status is 200 on the response.</li>
-        <li>If you make sure the response type is basic (which indicates that it's a request from our origin), the requests to third party assets will not be cached.</p></li>
+        <li>Verificam daca raspunsul este valid.</li>
+        <li>Verificam daca statusul raspunsului este 200.</li>
+        <li>Verificam daca tipul raspunsului este de baza (ceea ce indica ca fisierul este de pe website-ul nostru). Cererile de resurse catre alte site-uri nu vor fi adaugate in cache.</p></li>
     </ul>
-    <p>If we pass the checks, we clone the response so we can send one to the browser and one to the cache. The reason for this is that because the response is a Stream, the body can only be consumed once.</p>
+    <p>Daca toate verificarile sunt in regula, clonam respunsul pentru a putea trimite unul catre browser si unul catre cache.</p>
 
-    <h4 id="delete-old-caches">Delete Old Caches</h4>
+    <h4 id="delete-old-caches">Cum stergem cache-ul vechi</h4>
 
-    <p>The following code will loop through all of the caches in the service worker and deleting any caches that aren't defined in the cache whitelist.</p>
+    <p>Urmatorul cod va verifica in toate cache-urile aplicatiei si va sterge toate cache-urile care nu se afla in variabila "cacheWhitelist".</p>
     <pre><code class="language-javascript">
+// Efectuam aceasta actualizare a cache-urilor in momentul in care fisierul Service Worker este activat, adica preia controlul paginii.
 self.addEventListener('activate', function(event) {
 
   var cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
@@ -194,12 +197,12 @@ self.addEventListener('activate', function(event) {
             <li class="page-item backward">
                 <a class="page-link" href="<?php echo ROOT ?>web-app-manifest/" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
-                    <span class="paginationDesc">Web App Manifest</span>
+                    <span class="paginationDesc">Manifestarea aplicatiei</span>
                 </a>
             </li>
             <li class="page-item forward">
                 <a class="page-link" href="<?php echo ROOT ?>caching/" aria-label="Next">
-                    <span class="paginationDesc">Caching</span>
+                    <span class="paginationDesc">Cache</span>
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

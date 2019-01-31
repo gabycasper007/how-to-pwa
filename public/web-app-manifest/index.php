@@ -401,12 +401,12 @@
                 <li class="page-item backward">
                     <a class="page-link" href="<?php echo ROOT ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="paginationDesc">Introduction</span>
+                        <span class="paginationDesc">Introducere</span>
                     </a>
                 </li>
                 <li class="page-item forward">
                     <a class="page-link" href="<?php echo ROOT ?>service-workers/" aria-label="Next">
-                        <span class="paginationDesc">Service Workers</span>
+                        <span class="paginationDesc">Lucratori de servicii</span>
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
