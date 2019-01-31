@@ -4,116 +4,111 @@
     <div class="col">
         <h2>5. IndexedDB</h2>
 
-        <p>IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high-performance searches of this data. While Web Storage is useful for storing smaller amounts of data, it is less useful for storing larger amounts of structured data.</p>
-        <p>IndexedDB is a way for you to persistently store data inside a user's browser. Because it lets you create web applications with rich query abilities regardless of network availability, these applications can work both online and offline.</p>
+        <p>IndexedDB este un API pentru pastrarea in browser de cantitati semnificative de date structurate sub forma unei baze de date. Acest API foloseste indici pentru a permite cautari rapide de date. In timp ce API-ul <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API" target="_blank">Web Storage</a> este util pentru a pastra cantitati mici de date, nu este deloc util pentru pastrarea de cantitati mari de date structurate.</p>
+        <p>IndexedDB ofera posibilitatea de a salva persistent date in browserul utilizatorilor. Deoarece permite crearea aplicatiilor web cu abilitati importante de interogare indiferent de accesul la internet, aplicatiile care folosesc IndexedDB vor functiona atat online, cat si offline.</p>
 
-        <p>The IndexedDB storage can be seen in Google Chrome using Developer Tools and going to Application -> Storage -> IndexedDB</p>
+        <p>Datele salvate in IndexedDB pot fi vazute in Google Chrome folosind Developer Tools si accesand Application -> Storage -> IndexedDB</p>
 
         <figure class="figure">
           <img src="<?php echo ROOT ?>img/indexedDB-storage.png" class="figure-img img-fluid rounded" alt="IndexedDB">
-          <figcaption class="figure-caption">IndexedDB Storage</figcaption>
+          <figcaption class="figure-caption">Datele din IndexedDB</figcaption>
         </figure>
 
-        <p>Browser support for IndexedDB can be checked here: <a href="https://caniuse.com/#search=indexedDB" target="_blank">IndexedDB browser support</a></p>
+        <p>Suportul browserelor pentru IndexedDB poate fi verificat la adresa: <a href="https://caniuse.com/#search=indexedDB" target="_blank">Suportul browserelor pentru IndexedDB</a></p>
 
         <figure class="figure">
           <a href="https://caniuse.com/#search=indexedDB" target="_blank">
-            <img src="<?php echo ROOT ?>img/indexedDB-browser-support.png" class="figure-img img-fluid rounded" alt="IndexedDB browser support">
+            <img src="<?php echo ROOT ?>img/indexedDB-browser-support.png" class="figure-img img-fluid rounded" alt="Suportul browserelor pentru IndexedDB">
           </a>
-          <figcaption class="figure-caption">IndexedDB browser support</figcaption>
+          <figcaption class="figure-caption">Suportul browserelor pentru IndexedDB</figcaption>
         </figure>
 
-        <p>Deleting IndexedDB storage manually can be done in Google Chrome using Developer Tools and going to Application -> Clear Storage -> Clear side data</p>
+        <p>Stergerea manuala a datelor din IndexedDB poate fi facuta in Google Chrome folosind Developer Tools si accesand Application -> Clear Storage -> Clear side data</p>
 
         <figure class="figure">
           <img src="<?php echo ROOT ?>img/deleting-cached-files.png" class="figure-img img-fluid rounded" alt="clear site data">
-          <figcaption class="figure-caption">Clear site data</figcaption>
+          <figcaption class="figure-caption">Stergerea datelor din IndexedDB</figcaption>
         </figure>
 
-        <p>IndexedDB is a transactional JavaScript-based object-oriented database system. IndexedDB lets you store and retrieve objects that are indexed with a key. </p>
-        <p>You need to specify the database schema, open a connection to your database, and then retrieve and update data within a series of transactions.</p>
+        <p>IndexedDB este un sistem de baze de date orientate obiect in JavaScript. IndexedDB permite salvarea si accesarea de obiecte, date, ce sunt indexate cu o cheie. </p>
+        <p>Trebuie specificat structura bazei de date, deschisa o conexiune la baza de date, si apoi se pot accesa, salva, si actualiza date printr-o serie de tranzactii.</p>
+        <p>Documentatia detaliata pentru IndexedDB poate fi gasita aici: <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API" target="_blank">IndexedDB</a></p>
 
-        <p>IndexedDB API is powerful, but it's too complicated for simple cases, so we're going to use <a href="https://localforage.github.io/localForage/" target="_blank">localForage JavaScript library</a> for a simpler approach.</p>
+        <p>API-ul IndexedDB este puternic, insa este prea complicat pentru cazuri simple. Mai simplu este sa folosim o librarie Javascript ca <a href="https://localforage.github.io/localForage/" target="_blank">localForage</a> pentru simplificare.</p>
         <p>LocalForage includes a localStorage-backed fallback store for browsers with no IndexedDB or WebSQL support.</p>
 
-        <h4>Installing localForage</h4>
-        <p>The simplest approach to use localForage is to simply include the JS file</p>
+        <h4>Cum instalam libraria localForage</h4>
+        <p>Cea mai simpla metoda de a folosi localForage este de a include libraria in aplicatia noastra prin</p>
         <pre><code class="language-html">
 &lt;script src="localforage.js"></script>
             </code></pre>
 
-        <h4>Configuring localForage</h4>
-        <p>Set and persist localForage options. This must be called before any other calls to localForage are made, but can be called after localForage is loaded:</p>
+        <h4>Configurarea librariei localForage</h4>
+        <p>Setam si persistam optiunile localForage. Acest cod trebuie sa fie inaintea oricarui alt cod ce foloseste libraria localForage:</p>
         <pre><code class="language-javascript">
-// This will rename the database from "localforage"
-// to "Ghid PWA".
+// Redenumim baza de date din "localforage"
+// in "Ghid PWA".
 localforage.config({
     name: 'Ghid PWA'
 });
             </code></pre>
 
-        <h4>Adding an item to the storage</h4>
-        <p>Saves data to an offline store:</p>
+        <h4>Adaugarea unui element in baza de date</h4>
+        <p>Salvam date folosind codul:</p>
         <pre><code class="language-javascript">
-localforage.setItem('somekey', 'some value').then(function (value) {
-    // Do other things once the value has been saved.
+localforage.setItem('cheie', 'valoare').then(function (value) {
+    // Aici valoarea este salvata si putem executa alte instructiuni
+    console.log(value);
+}).catch(function(error) {
+    // Acest cod va rula daca exista erori
+    console.log(error);
+});
+            </code></pre>
+
+        <h4>Accesarea unui element din baza de date</h4>
+        <p>Daca elementul nu exista in baza de date, functia getItem() va intoarce valoarea null.</p>
+        <pre><code class="language-javascript">
+localforage.getItem('cheie').then(function(value) {
+    // Aici valoarea este preluata
     console.log(value);
 }).catch(function(err) {
-    // This code runs if there were any errors
+    // Acest cod va rula daca exista erori
     console.log(err);
 });
             </code></pre>
 
-        <h4>Getting an item from the storage</h4>
-        <p>Gets an item from the storage library and supplies the result to a callback. If the key does not exist, getItem() will return null.</p>
+        <h4>Accesarea tuturor elementelor din baza de date</h4>
+        <p>Itereaza peste toate perechile din baza de date.</p>
         <pre><code class="language-javascript">
-localforage.getItem('somekey').then(function(value) {
-    // This code runs once the value has been loaded
-    // from the offline store.
-    console.log(value);
-}).catch(function(err) {
-    // This code runs if there were any errors
-    console.log(err);
-});
-            </code></pre>
-
-        <h4>Getting ALL the items from the storage</h4>
-        <p>Iterate over all value/key pairs in datastore.</p>
-        <pre><code class="language-javascript">
-// The same code, but using ES6 Promises.
 localforage.iterate(function(value, key, iterationNumber) {
-    // Resulting key/value pair -- this callback
-    // will be executed for every item in the
-    // database.
+    // Codul de aici va fi executat pentru fiecare element din baza de date
     console.log([key, value]);
 }).then(function() {
-    console.log('Iteration has completed');
+    console.log('Iteratia s-a terminat');
 }).catch(function(err) {
-    // This code runs if there were any errors
+    // Acest cod va rula daca exista erori
     console.log(err);
 });
             </code></pre>
 
-        <h4>Removing an item from the storage</h4>
-        <p>Removes the value of a key from the offline store.</p>
+        <h4>Stergerea unui element din baza de date</h4>
         <pre><code class="language-javascript">
-localforage.removeItem('somekey').then(function() {
-    // Run this code once the key has been removed.
-    console.log('Key is cleared!');
+localforage.removeItem('cheie').then(function() {
+    // Codul de aici ruleaza cand elementul a fost sters
+    console.log('Elementul a fost sters!');
 }).catch(function(err) {
-    // This code runs if there were any errors
+    // Acest cod va rula daca exista erori
     console.log(err);
 });
             </code></pre>
 
-        <h4>Removing ALL the items from the storage</h4>
-        <p>Removes every key from the database, returning it to a blank slate.</p>
+        <h4>Stergerea tuturor elementelor din baza de date</h4>
         <pre><code class="language-javascript">
 localforage.clear().then(function() {
-    // Run this code once the database has been entirely deleted.
-    console.log('Database is now empty.');
+    // Codul de aici va rula dupa ce baza de date a fost golita.
+    console.log('Baza de date este acum goala.');
 }).catch(function(err) {
-    // This code runs if there were any errors
+    // Acest cod va rula daca exista erori
     console.log(err);
 });
             </code></pre>
@@ -123,12 +118,12 @@ localforage.clear().then(function() {
                 <li class="page-item backward">
                     <a class="page-link" href="<?php echo ROOT ?>caching/" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="paginationDesc">Caching</span>
+                        <span class="paginationDesc">Cache</span>
                     </a>
                 </li>
                 <li class="page-item forward">
                     <a class="page-link" href="<?php echo ROOT ?>background-sync/" aria-label="Next">
-                        <span class="paginationDesc">Background Sync</span>
+                        <span class="paginationDesc">Sincronizare pe fundal</span>
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
