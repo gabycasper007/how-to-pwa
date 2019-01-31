@@ -159,6 +159,7 @@ self.addEventListener('fetch', function(event) {
       })
     );
 });
+
 </code></pre>
 
     <p>Indata ce am primit un raspuns, efectuam urmatoarele verificari:

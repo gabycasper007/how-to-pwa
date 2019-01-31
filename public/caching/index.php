@@ -2,60 +2,56 @@
 <div class="container">
     <div class="row">
     <div class="col">
-        <h2>4. Caching</h2>
+        <h2>4. Cache</h2>
 
-        <p>A major advantage of the service worker Cache API is that it gives you more detailed control than the built-in browser cache does. For example, your service worker can cache multiple requests when the user first runs your web app, including assets that they have not yet visited.</p>
-        <p>This will speed up subsequent requests. You can also implement your own cache control logic, ensuring that assets that are considered important are kept in the cache while deleting less-used data.</p>
+        <p>Un avantaj principal al <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache" target="_blank">Cache API</a> este ca ofera mai mult control asupra fisierelor salvate in cache decat cache-ul standard al browserelor. De exemplu, un Service Worker poate adauga in cache mai multe resurse atunci cand utilizatorul porneste pentru prima oara aplicatia PWA, inclusiv pagini nevizitate inca.</p>
+        <p>Aceasta va mari viteza de incarcare a aplicatiei la urmatoarele folosiri. Putem de asemenea sa implementam propriul cod pentru manipularea cache-ului, asigurandu-ne ca resursele importante sunt pastrate in cache, in timp ce resursele mai putin importante pot fi sterse din cache.</p>
 
-        <p>The cached files can be seen in Google Chrome using Developer Tools and going to Application -> Cache -> Cache Storage</p>
+        <p>Fisierele salvate in cache pot fi vazute in Google Chrome folosind Developer Tools si intrand la Application -> Cache -> Cache Storage</p>
 
         <figure class="figure">
-          <img src="<?php echo ROOT ?>img/cached-files.png" class="figure-img img-fluid rounded" alt="cached files">
-          <figcaption class="figure-caption">Cached files</figcaption>
+          <img src="<?php echo ROOT ?>img/cached-files.png" class="figure-img img-fluid rounded" alt="Fisiere adaugate in cache">
+          <figcaption class="figure-caption">Fisiere adaugate in cache</figcaption>
         </figure>
 
-        <p>The Cache API is an experimental tehnology. Browser support can be seen here: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility" target="_blank">Cache API browser support</a></p>
+        <p>Cache API este o tehnologie inca in stadiu experimental. Suportul in diferite browsere poate fi vizualizat aici: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility" target="_blank">Suportul browserelor pentru Cache API</a></p>
 
         <figure class="figure">
           <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility" target="_blank">
             <img src="<?php echo ROOT ?>img/cache-api-browser-support.png" class="figure-img img-fluid rounded" alt="cache api browser support">
           </a>
-          <figcaption class="figure-caption">Cache API browser support</figcaption>
+          <figcaption class="figure-caption">Suportul browserelor pentru Cache API</figcaption>
         </figure>
 
-        <p>Deleting cached files manually can be done in Google Chrome using Developer Tools and going to Application -> Clear Storage -> Clear side data</p>
+        <p>Stergerea manuala a fisierelor din cache poate fi facuta in Google Chrome folosind Developer Tools si mergand la Application -> Clear Storage -> Clear side data</p>
 
         <figure class="figure">
           <img src="<?php echo ROOT ?>img/deleting-cached-files.png" class="figure-img img-fluid rounded" alt="clear site data">
-          <figcaption class="figure-caption">Clear site data</figcaption>
+          <figcaption class="figure-caption">Stergere cache</figcaption>
         </figure>
 
-        <p>However, it doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:</p>
+        <p>Pentru a folosi fisierele din cache, trebuie sa specificam in fisierul Service Worker cum si cand sa le accesam. Mai jos sunt cateva tipare pentru manipularea solicitarilor de resurse web:</p>
 
-        <h4>Cache only</h4>
-        <p>Ideal for: Anything you'd consider static to that "version" of your site. You should have cached these in the install event, so you can depend on them being there.</p>
+        <h4>Servirea fisierelor doar din cache</h4>
+        <p>Ideal pentru: toate fisiere statice principale in afisarea aspectului aplicatiei. Aceste fisiere au fost adaugate in cache in momentul intalarii aplicatiei folosind evenimentul "install" <em>(vezi <a href="<?php echo ROOT ?>service-workers/#install-a-service-worker">Cum instalam un Service Worker</a>)</em>.</p>
 
         <pre><code class="language-javascript">
 self.addEventListener('fetch', (event) => {
-  // If a match isn't found in the cache, the response
-  // will look like a connection error
   event.respondWith(caches.match(event.request));
 });        
         </code></pre>
 
-        <h4>Network only</h4>
-        <p>Ideal for: Things that have no offline equivalent, such as analytics pings, non-GET requests.</p>
+        <h4>Servirea fisierelor doar de pe server</h4>
+        <p>Ideal pentru: Solicitari care nu au alternativa offline, ca trimiterea unui formular (solicitare POST), pinguri analytics, etc.</p>
 
         <pre><code class="language-javascript">
 self.addEventListener('fetch', (event) => {
   event.respondWith(fetch(event.request));
-  // or simply don't call event.respondWith, which
-  // will result in default browser behaviour
 });      
         </code></pre>
 
-        <h4>Cache, falling back to network</h4>
-        <p>Ideal for: If you're building offline-first, this is how you'll handle the majority of requests. Other patterns will be exceptions based on the incoming request.</p>
+        <h4>Cache, apoi server daca nu exista in cache</h4>
+        <p>Ideal pentru: daca vrei ca aplicatia sa functioneze offline, aceasta va fi metoda cea mai folosita. Celelalte tipare vor fi doar exceptii in functie de cerere.</p>
 
         <pre><code class="language-javascript">
 self.addEventListener('fetch', (event) => {
@@ -66,20 +62,17 @@ self.addEventListener('fetch', (event) => {
 });
         </code></pre>
 
-        <h4>Cache & network race</h4>
-        <p>Ideal for: Small assets where you're chasing performance on devices with slow disk access.</p>
+        <h4>Competitie intre cache si server</h4>
+        <p>Ideal pentru: resurse mici servite pe dispozitive care acceseaza greu dispozitivul principal de stocare al datelor.</p>
 
         <pre><code class="language-javascript">
-// Promise.race is no good to us because it rejects if
-// a promise rejects before fulfilling. Let's make a proper
-// race function:
 function promiseAny(promises) {
   return new Promise((resolve, reject) => {
-    // make sure promises are all promises
+    // ne asiguram ca toate sunt promisiuni
     promises = promises.map(p => Promise.resolve(p));
-    // resolve this promise as soon as one resolves
+    // rezolvam aceasta functie in momentul in care oricare dintre promisiuni a fost indeplinita
     promises.forEach(p => p.then(resolve));
-    // reject if all promises reject
+    // afisam eroare daca nicio promisiune nu a fost indeplinita
     promises.reduce((a, b) => a.catch(() => b))
       .catch(() => reject(Error("All failed")));
   });
@@ -95,13 +88,13 @@ self.addEventListener('fetch', (event) => {
 });
         </code></pre>
 
-        <h4>Network falling back to cache</h4>
-        <p>Ideal for: A quick-fix for resources that update frequently, outside of the "version" of the site. E.g. articles, avatars, social media timelines, game leader boards.</p>
+        <h4>Server, apoi cache daca suntem offline</h4>
+        <p>Ideal pentru: resurse care se actualizeaza frecvent ca articole, avatare, cronologii social media (timeline), lista cu numarul de puncte intr-un joc, etc.</p>
 
         <p>
             <div class="alert alert-danger" role="alert">
             <i class="material-icons"> warning </i>
-            If the user has an intermitent or slow connection they'll have to wait for the network to fail before they get the perfectly acceptable content already on their device. This can take an extremely long time and is a frustrating user experience. See the next pattern, "Cache then network", for a better solution.
+            Atentie! Daca utilizatorul are conexiune lenta sau intermitenta la internet va fi nevoie sa astepte mai intai ca accesul la acele resurse sa esueze inainte sa vada continutul din cache. Aceasta poate dura foarte mult si este o experienta frustranta pentru utilizatori. Tiparul urmatori reprezinta o solutie mai eficienta.
             </div>  
         </p>
 
@@ -117,12 +110,12 @@ self.addEventListener('fetch', (event) => {
 });
         </code></pre>
         
-        <h4>Cache then network</h4>
-        <p>Ideal for: Content that updates frequently. E.g. articles, social media timelines, game leaderboards. This requires the page to make two requests, one to the cache, one to the network. The idea is to show the cached data first, then update the page when/if the network data arrives.</p>
+        <h4>Cache apoi server</h4>
+        <p>Ideal pentru: resurse care se actualizeaza frecvent ca articole, avatare, cronologii social media (timeline), lista cu numarul de puncte intr-un joc. Acest tipar face doua cereri, una catre cache, una catre server. Afisam mai intai datele din cache, apoi actualizam pagina cand si daca datele de pe server pot fi accesate.</p>
 
         <pre><code class="language-javascript">
 async function update() {
-  // Start the network request as soon as possible.
+  // Efectuam cererea catre server
   const networkPromise = fetch('/data.json');
 
   startSpinner();
@@ -136,7 +129,7 @@ async function update() {
     cache.put('/data.json', networkResponse.clone());
     await displayUpdate(networkResponse);
   } catch (err) {
-    // Maybe report a lack of connectivity to the user.
+    // Aici putem anunta utilizatorul ca are acces limitat la internet
   }
 
   stopSpinner();
@@ -151,25 +144,22 @@ async function displayUpdate(response) {
 }
         </code></pre>
         
-        <h4>Generic fallback</h4>
-        <p>If you fail to serve something from the cache and/or network you may want to provide a generic fallback. Ideal for: Secondary imagery such as avatars, failed POST requests, "Unavailable while offline" page.</p>
+        <h4>Pagina de rezerva</h4>
+        <p>Daca nu gasim un fisier nici in cache, nici pe server atunci afisam pagina de rezerva in care anuntam utilizatorul ca are acces limitat la internet, iar pagina ceruta nu este disponibila in cache. Ideal pentru: imagini secundare ca avatare si pagini care anunta ca resursele nu sunt disponibile offline.</p>
 
         <pre><code class="language-javascript">
 self.addEventListener('fetch', (event) => {
   event.respondWith(async function() {
-    // Try the cache
+    // Cautam mai intai in cache
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
     try {
-      // Fall back to network
+      // Cautam ulterior pe server
       return await fetch(event.request);
     } catch (err) {
-      // If both fail, show a generic fallback:
+      // Daca ambele metode esueaza, afisam o pagina de rezerva:
       return caches.match('/offline.html');
-      // However, in reality you'd have many different
-      // fallbacks, depending on URL & headers.
-      // Eg, a fallback silhouette image for avatars.
     }
   }());
 });
@@ -181,7 +171,7 @@ self.addEventListener('fetch', (event) => {
                 <li class="page-item backward">
                     <a class="page-link" href="<?php echo ROOT ?>service-workers/" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="paginationDesc">Service Workers</span>
+                        <span class="paginationDesc">Lucratori de servicii</span>
                     </a>
                 </li>
                 <li class="page-item forward">
