@@ -2,98 +2,99 @@
 <div class="container">
     <div class="row">
     <div class="col">
-        <h2>7. Push Notifications</h2>
+        <h2>7. Notificari push</h2>
 
-        <p>The Push API gives web applications the ability to receive messages pushed to them from a server, whether or not the web app is in the foreground, or even currently loaded, on a user agent. This lets developers deliver asynchronous notifications and updates to users that opt in, resulting in better engagement with timely new content.</p>
-        <p>A notification is a message that pops up on the user's device. Notifications can be triggered locally by an open application, or they can be "pushed" from the server to the user even when the app is not running. They allow your users to opt-in to timely updates and allow you to effectively re-engage users with customized content.</p>
+        <p>API-ul Push aplicatiilor web abilitatea de a primi mesaje trimise de catre server, indiferent daca aplicatia web este activa, in fundal, sau daca este inchisa. Aceasta functionalitate permite programatorilor sa ofere notificari asincron si actualizari catre utilizatorii abonati la serviciul de notificari, implicand mai des utilizatorii oferindu-le continut nou.</p>
+        <p>O notificare este un mesaj care apare pe ecranul dispozitivului folosit de utilizator. Aceste notificari pot fi declansate local in aplicatie, sau pot fi "impinse" de catre server catre utilizator chiar si cand aplicatia este inchisa. Asta permite utilizatorilor sa se aboneze la actualizari periodice si permite programatorilor sa aduca din nou utilizatorii in aplicatie pri oferirea de continut nou.</p>
 
         <p>
             <div class="alert alert-info" role="alert">
             <i class="material-icons"> info </i>
-            The Push API allows a service worker to handle Push Messages from a server, even while the app is not active.
-            </div>  
+            API-ul Push permite fiserului Service Worker sa manuiasca mesajele Push primite de la server, chiar si cand aplicatia nu este activa.
+          </div>  
         </p>
 
-        <p>Browser support for Push API can be checked here: <a href="https://caniuse.com/#search=push%20notifications" target="_blank">Push API browser support</a></p>
+        <p>Suportul browserelor pentru API-ul Push poate fi verificat aici: <a href="https://caniuse.com/#search=push%20notifications" target="_blank">Suportul browserelor pentru API-ul Push</a></p>
 
         <figure class="figure">
           <a href="https://caniuse.com/#search=push%20notifications" target="_blank">
-            <img src="<?php echo ROOT ?>img/push-api-browser-support.png" class="figure-img img-fluid rounded" alt="Push API browser support">
+            <img src="<?php echo ROOT ?>img/push-api-browser-support.png" class="figure-img img-fluid rounded" alt="Suportul browserelor pentru API-ul Push">
           </a>
-          <figcaption class="figure-caption">Push API browser support</figcaption>
+          <figcaption class="figure-caption">Suportul browserelor pentru API-ul Push</figcaption>
         </figure>
 
-        <p>Push notifications let your app extend beyond the browser, and are an incredibly powerful way to engage with the user. They can do simple things, such as alert the user to an important event, display an icon and a small piece of text that the user can then click to open up your site.</p>
-        <p>The Notifications API lets us display notifications to the user. Where possible, it uses the same mechanisms a native app would use, giving a completely native look and feel.</p>
+        <p>Notificarile Push permit aplicatiei PWA sa se extinda dincolo de browser, si reprezinta un mod foarte eficient de a interactiona cu utilizatorii. Acestea pot alerta utilizatorii cu privire la evenimente importante si pot afisa o iconita si o descriere scurta pe care utilizatorii pot da click pentru a deschide website-ul si a vizualiza informatia respectiva.</p>
+        <p>API-ul de notificari Push permite afisarea de notificari folosind acelasi mecanism pe care aplicatiile native il folosesc, oferind un aspect identic. Mai jos modul de lucru.</p>
 
-        <h4>Check for Support</h4>
-        <p>The web is not yet at the point where we can build apps that depend on web notifications.</p>
+        <h4>Verificam suportul browserului</h4>
+        <p>Momentan nu toate browserele permit notificari de tip push.</p>
         <pre><code class="language-javascript">
 if ('Notification' in window && navigator.serviceWorker) {
-  // Display the UI to let the user toggle notifications
+  // Aici se poate afisa un buton pe care 
+  // utilizatorul sa il apese pentru a se abona la notificari
 }
         </code></pre>
 
-        <h4>Request permission</h4>
-        <p>Before we can create a notification we need to get permission from the user.</p>
+        <h4>Cerere permisiune</h4>
+        <p>Inainte de a crea o notificare trebuie sa cerem permisiunea utilizatorului de abonare la notificari.</p>
         <pre><code class="language-javascript">
 Notification.requestPermission(function(status) {
-    console.log('Notification permission status:', status);
+    console.log('Statusul notificarilor s-a modificat in:', status);
 });
         </code></pre>
 
-        <h4>Check for permission</h4>
-        <p>Always check for permission to use the Notifications API. It is important to keep checking that permission has been granted because the status may change.</p>
+        <h4>Verificare permisiune</h4>
+        <p>Statusul abonarii unui utilizator la abonari se poate schimba asa ca vom verifica de fiecare data daca utilizatorul inca este abonat.</p>
         <pre><code class="language-javascript">
 if (Notification.permission === "granted") {
-  /* do our magic */
+  /* Aici putem afisa o notificare */
 } else if (Notification.permission === "blocked") {
- /* the user has previously denied push. Can't reprompt. */
+ /* Utilizatorul nu doreste notificari si nu ii putem cere din nou permisiunea. */
 } else {
-  /* show a prompt to the user */
+  /* Aici putem cere permisiunea de abonare */
 }
         </code></pre>
 
-        <h4>Display a notification</h4>
-        <p>We can show a notification from the app's main script with the showNotification method which is called on the service worker registration object. This creates the notification on the active service worker, so that events triggered by interactions with the notification are heard by the service worker.</p>
+        <h4>Afisarea unei notificari</h4>
+        <p>Putem afisa o notificare din din fisierele Javascript ale aplicatiei folosind functia "showNotification" care este apelata folosind obiectul service worker-ului inregistrat. Aceasta creeeaza o notificare in service worker-ul activ, in asa fel incat evenimentele declansate de utilizator prin interactiunea cu notificarea sa poata fi captate de service worker.</p>
         <pre><code class="language-javascript">
 if (Notification.permission == 'granted') {
     navigator.serviceWorker.getRegistration().then(function(reg) {
-      reg.showNotification('Hello world!');
+      reg.showNotification('Hello world!'); // Afisam notificare
     });
 }
         </code></pre>
 
-        <h4>Notification options</h4>
-        <p>The showNotification method has an optional second argument for configuring the notification.</p>
+        <h4>Optiuni</h4>
+        <p>Functia "showNotification" are un parametru secundar ce permite configurarea notificarii.</p>
         <pre><code class="language-javascript">
 if (Notification.permission == 'granted') {
     navigator.serviceWorker.getRegistration().then(function(reg) {
       var options = {
-        body: 'Here is a notification body!', // Adds a main description to the notification
-        icon: 'images/example.png', // Attaches an image to make the notification more visually appealing
-        vibrate: [100, 50, 100], // Specifies a vibration pattern 
-        data: {  // Attaches custom data to the notification
+        body: 'Tocmai am postat un articol nou pe blog', // Adauga o descriere scurta notificarii
+        icon: 'images/example.png', // Ataseaza o imagine pentru a face notificarea mai interesanta
+        vibrate: [100, 50, 100], // Specifica un tipar de vibratii pentru notificarea curenta 
+        data: {  // Ataseaza date personalizate notificarii
           dateOfArrival: Date.now(),
           primaryKey: 1
         }
       };
-      reg.showNotification('Hello world!', options);
+      reg.showNotification('Postare noua!', options);
     });
 }
         </code></pre>
 
-        <h4>Acting on events</h4>
-        <p>If the user dismisses the notification through a direct action on the notification (such as a swipe in Android), it raises a <strong>notificationclose</strong> event inside the service worker.</p>
+        <h4>Cum actionam la raspunsul utilizatorilor</h4>
+        <p>Cand utilizatorul inchide notificarea evenimentul <strong>notificationclose</strong>  se declanseaza  in interiorul fisierului Service Worker.</p>
         <pre><code class="language-javascript">
 self.addEventListener('notificationclose', function(e) {
   var notification = e.notification;
   var primaryKey = notification.data.primaryKey;
 
-  console.log('Closed notification: ' + primaryKey);
+  console.log('Notificarea a fost inchisa: ' + primaryKey);
 });
         </code></pre>
-        <p>he click triggers a notificationclick event inside the service worker</p>
+        <p>Daca utilizatorul apasa pe notificare, asta declanseaza evenimentul <strong>notificationclick</strong> in interiorul fisierului Service Worker</p>
         <pre><code class="language-javascript">
 self.addEventListener('notificationclick', function(e) {
   var notification = e.notification;
@@ -103,8 +104,9 @@ self.addEventListener('notificationclick', function(e) {
   if (action === 'close') {
     notification.close();
   } else {
+    // Redirectionam utilizatorul catre pagina aferenta
     clients.openWindow('http://www.example.com');
-    notification.close();
+    notification.close(); // Inchidem notificarea
   }
 });
         </code></pre>
@@ -114,12 +116,12 @@ self.addEventListener('notificationclick', function(e) {
                 <li class="page-item backward">
                     <a class="page-link" href="<?php echo ROOT ?>background-sync/" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="paginationDesc">Background Sync</span>
+                        <span class="paginationDesc">Sincronizare pe fundal</span>
                     </a>
                 </li>
                 <li class="page-item forward">
                     <a class="page-link" href="<?php echo ROOT ?>native-device-features/" aria-label="Next">
-                        <span class="paginationDesc">Native Device Features</span>
+                        <span class="paginationDesc">Functionalitati native</span>
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
