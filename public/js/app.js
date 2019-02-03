@@ -178,7 +178,7 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register(ROOT + "sw.js").then(
       function(reg) {
-        // console.log("SW Inregistrat", reg.scope);
+        console.log("SW Inregistrat", reg.scope);
       },
       function(err) {
         console.log("SW a dat eroare: ", err);
