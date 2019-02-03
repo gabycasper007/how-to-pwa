@@ -8,8 +8,6 @@
             Enable Notifications
         </button>
 
-        <button class="dropdown-item" id="InstallPWA" type="button">Instaleaza PWA</button>
-
         <div id="cards"></div>
 
         <br>

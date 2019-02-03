@@ -1,4 +1,3 @@
-const installBtn = document.querySelector("#InstallPWA");
 const cards = document.querySelector("#cards");
 const FORM = document.querySelector("#syncForm");
 const titleInput = document.querySelector("#title");
@@ -60,6 +59,10 @@ function closeCreatePostModal() {
   locationBtn.style.display = "inline";
   locationLoader.style.display = "none";
   captureBtn.style.display = "inline";
+  titleInput.value = "";
+  locationInput.value = "";
+  mapImg.style.display = "none";
+  mapImg.innerHTML = "";
   if (videoPlayer.srcObject) {
     videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
       track.stop();
@@ -187,30 +190,9 @@ if ("serviceWorker" in navigator) {
 // Amana bannerul pentru instalarea aplicatiei
 window.addEventListener("beforeinstallprompt", function(event) {
   console.log("beforeinstallprompt fired");
-  installBtn.style.display = "block";
   event.preventDefault();
   deferredPrompt = event;
   return false;
-});
-
-// Afiseaza la click bannerul pentru instalarea aplicatiei
-installBtn.addEventListener("click", function() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-
-    deferredPrompt.userChoice.then(function(choiceResult) {
-      console.log(choiceResult.outcome);
-
-      if (choiceResult.outcome === "dismissed") {
-        console.log("Utilizatorul a anulat instalarea");
-      } else {
-        installBtn.style.display = "none";
-        console.log("Utilizatorul a instalat aplicatia");
-      }
-    });
-
-    deferredPrompt = null;
-  }
 });
 
 if (cards) {
@@ -324,12 +306,7 @@ if (FORM) {
       sendData(postData);
     }
 
-    // Opreste Camera
-    if (videoPlayer.srcObject) {
-      videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
-        track.stop();
-      });
-    }
+    closeCreatePostModal();
   });
 }
 
@@ -368,7 +345,9 @@ function initializeMedia() {
 
   navigator.mediaDevices
     .getUserMedia({
-      video: true
+      video: true,
+      width: 320,
+      height: 240
     })
     .then(function(stream) {
       videoPlayer.srcObject = stream;
@@ -429,7 +408,7 @@ if (locationBtn) {
           lat: postition.coords.latitude,
           lng: postition.coords.latitude
         };
-        locationInput.value = "In Bucuresti";
+        locationInput.value = "Bucuresti";
         document.querySelector("#manual-location").classList.add("is-focused");
 
         var img = new Image();

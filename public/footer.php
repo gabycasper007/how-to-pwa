@@ -9,7 +9,6 @@
 
           <div id="create-post">
             <div class="container">
-              <button class="btn btn-primary btn-raised" id="InstallPWA" type="button">Instaleaza PWA</button>
               <video id="player" autoplay></video>
               <canvas id="canvas" width="320px" height="240px"></canvas>
               <button class="btn btn-raised btn-secondary" id="capture-btn">Capture</button>
