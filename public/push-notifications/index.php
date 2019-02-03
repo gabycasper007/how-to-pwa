@@ -2,9 +2,9 @@
 <div class="container">
     <div class="row">
     <div class="col">
-        <h2>7. Notificari push</h2>
+        <h2>7. Notificari push (push notifications)</h2>
 
-        <p>API-ul Push aplicatiilor web abilitatea de a primi mesaje trimise de catre server, indiferent daca aplicatia web este activa, in fundal, sau daca este inchisa. Aceasta functionalitate permite programatorilor sa ofere notificari asincron si actualizari catre utilizatorii abonati la serviciul de notificari, implicand mai des utilizatorii oferindu-le continut nou.</p>
+        <p>Interfata Push permite aplicatiilor web abilitatea de a primi mesaje trimise de catre server, indiferent daca aplicatia web este activa, in fundal, sau daca este inchisa. Aceasta functionalitate permite programatorilor sa ofere notificari asincron si actualizari catre utilizatorii abonati la serviciul de notificari, implicand mai des utilizatorii oferindu-le continut nou.</p>
         <p>O notificare este un mesaj care apare pe ecranul dispozitivului folosit de utilizator. Aceste notificari pot fi declansate local in aplicatie, sau pot fi "impinse" de catre server catre utilizator chiar si cand aplicatia este inchisa. Asta permite utilizatorilor sa se aboneze la actualizari periodice si permite programatorilor sa aduca din nou utilizatorii in aplicatie pri oferirea de continut nou.</p>
 
         <p>

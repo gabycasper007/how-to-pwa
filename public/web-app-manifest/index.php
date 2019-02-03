@@ -394,7 +394,7 @@
         </div>
 
         <h4>Ecran de pornire</h4>
-        <p>Incepand cu Chrome 47, un ecran de pornire este prezentat pentru aplicatiile PWA. Acest ecran de pornire este generated automat din detaliile gasite in fisierul manifest, in mod special folosind numele, culoarea de fundal si una dintre iconite.</p>
+        <p>Incepand cu Chrome 47, un ecran de pornire este prezentat pentru aplicatiile PWA. Acest ecran de pornire este generat automat din detaliile gasite in fisierul manifest, in mod special folosind numele, culoarea de fundal si una dintre iconite.</p>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">

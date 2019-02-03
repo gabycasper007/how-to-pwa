@@ -1,4 +1,3 @@
-const ROOT = "/PWA/how-to-pwa/public/";
 const installBtn = document.querySelector("#InstallPWA");
 const cards = document.querySelector("#cards");
 const FORM = document.querySelector("#syncForm");
@@ -26,6 +25,17 @@ let fetchedLocation = { lat: 0, lng: 0 };
 $(document).ready(function() {
   $("body").bootstrapMaterialDesign();
 });
+
+// Use passive listeners to improve scrolling performance
+$.event.special.touchstart = {
+  setup: function(_, ns, handle) {
+    if (ns.includes("noPreventDefault")) {
+      this.addEventListener("touchstart", handle, { passive: false });
+    } else {
+      this.addEventListener("touchstart", handle, { passive: true });
+    }
+  }
+};
 
 // Promise Polyfill
 if (!window.Promise) {

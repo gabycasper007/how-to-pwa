@@ -1,0 +1,12 @@
+{
+  "remotePath": "/pwa/",
+  "host": "brazicraciun.net",
+  "port": 21,
+  "username": "web",
+  "password": "brazi-pentru-toti",
+  "protocol": "ftp",
+  "uploadOnSave": true,
+  "passive": true,
+  "secure": true,
+  "debug": true
+}

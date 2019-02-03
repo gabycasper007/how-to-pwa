@@ -1,0 +1,1 @@
+<?php define(ROOT, '/PWA/how-to-pwa/public/') ?>

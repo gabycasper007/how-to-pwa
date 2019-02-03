@@ -38,7 +38,7 @@
             <i class="material-icons"> done </i>
             Motivul pentru care aceste fisiere sunt interesante este pentru ca ofera aplicatiilor posibilitatea de a functiona offline si ofera programatorilor control detaliat asupra modalitatii de folosire a cache-ului si a resurselor.
       </div>
-      <p>Un Service Worker poate insa face mai mult decat sa ofere functionalitati offline. Acesta poate  including manevra notificari si poate face calcule costisitoare pe un thread separat. De asemenea pot manipula solicitarile de resurse din retea, le poate modifica, poate servi raspunsuri personalizate luate din cache si poate sintetiza raspunsuri noi.</p>
+      <p>Un Service Worker poate insa face mai mult decat sa ofere functionalitati offline. Acesta poate  inclusiv manevra notificari si poate face calcule costisitoare pe un thread separat. De asemenea poate manipula solicitarile de resurse din retea, le poate modifica, poate servi raspunsuri personalizate luate din cache si poate sintetiza raspunsuri noi.</p>
 
       <h4 id="register-a-service-worker">Cum inregistram un Service Worker</h4>
 

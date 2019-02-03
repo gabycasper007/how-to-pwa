@@ -1,4 +1,4 @@
-<?php define(ROOT, '/PWA/how-to-pwa/public/') ?>
+<?php require_once("config.php") ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta name="description" content="Ghid PWA">
 
     <!-- You must provide a single page application solution offering back buttons inside the UI -or use location.href instead of normal <a> links if you don’t want them to be opened in the browser instead of your app’s container-. -->
       <!-- https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb -->
@@ -94,15 +95,15 @@
       <div id="dw-s2" class="bmd-layout-drawer bg-faded">
         <header><a class="navbar-brand" ><h5>Ghid PWA</h5></a></header>
         <ul class="list-group">
-          <a href="<?php echo ROOT ?>" class="list-group-item">1. Introducere</a>
-          <a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Manifestearea aplicatiei</a>
-          <a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Lucratori de servicii</a>
-          <a href="<?php echo ROOT ?>caching/" class="list-group-item">4. Cache</a>
-          <a href="<?php echo ROOT ?>indexed-db/" class="list-group-item">5. IndexedDB</a>
-          <a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Sincronizare pe fundal</a>
-          <a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Notificari Push</a>
-          <a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Functionalitati native</a>
-          <a href="<?php echo ROOT ?>testing-area/" class="list-group-item">9. Zona de testare</a>
+          <li><a href="<?php echo ROOT ?>" class="list-group-item">1. Introducere</a></li>
+          <li><a href="<?php echo ROOT ?>web-app-manifest/" class="list-group-item">2. Manifestearea aplicatiei</a></li>
+          <li><a href="<?php echo ROOT ?>service-workers/" class="list-group-item">3. Lucratori de servicii</a></li>
+          <li><a href="<?php echo ROOT ?>caching/" class="list-group-item">4. Cache</a></li>
+          <li><a href="<?php echo ROOT ?>indexed-db/" class="list-group-item">5. IndexedDB</a></li>
+          <li><a href="<?php echo ROOT ?>background-sync/" class="list-group-item">6. Sincronizare pe fundal</a></li>
+          <li><a href="<?php echo ROOT ?>push-notifications/" class="list-group-item">7. Notificari Push</a></li>
+          <li><a href="<?php echo ROOT ?>native-device-features/" class="list-group-item">8. Functionalitati native</a></li>
+          <li><a href="<?php echo ROOT ?>testing-area/" class="list-group-item">9. Zona de testare</a></li>
         </ul>
       </div>
       <main class="bmd-layout-content">

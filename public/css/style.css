@@ -65,6 +65,9 @@ a:hover {
 .alert-danger .material-icons {
   color: var(--dark-red);
 }
+.alert-danger a {
+  color: #000;
+}
 .navbar {
   padding: 0.9rem 1rem;
   border-top: 24px solid var(--primary-dark);

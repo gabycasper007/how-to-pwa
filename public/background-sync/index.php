@@ -5,7 +5,7 @@
         <h2>6. Sincronizare pe fundal (Background Sync)</h2>
 
         <p>Background Sync este un API nou ce permite amanarea actiunilor pana cand utilizatorul are acces stabil la internet. Aceasta functionalitate ajuta aplicatia sa functioneze cursiv, iar ceea ce doreste sa posteze utilizatorul chiar sa ajunga pe server. Utilizatorul poate inchide accesul la internet si chiar browserul, iar ceea ce a dorit sa posteze se va trimite catre server cand dispozitivul va avea din nou acces la internet.</p>
-        <p>Fisierele Service Worker ofera functionalitate offline creste dramatic viteza de incarcare a aplicatiei folosind cache-ul. Chiar daca aceasta functionalitate este foarte utila, pana la API-ul Background Sync nu a existat o posibilitate ca pagina sa trimita ceva catre server fara conexiune la internet, insa noul API Background Sync tocmai pentru aceasta a fost creeat.</p>
+        <p>Fisierele de tip Service Worker ofera functionalitate offline si cresc dramatic viteza de incarcare a aplicatiei folosind cache-ul. Chiar daca aceasta functionalitate este foarte utila, pana la API-ul Background Sync nu a existat o posibilitate ca pagina sa trimita ceva catre server fara conexiune la internet, insa noul API Background Sync tocmai pentru aceasta a fost creeat.</p>
 
         <p>Suportul browserelor pentu API-ul Background Sync poate fi verificat aici: <a href="https://caniuse.com/#search=background%20sync%20api" target="_blank">Suport browsere Background Sync</a></p>
 
@@ -16,7 +16,7 @@
           <figcaption class="figure-caption">Suport browsere Background Sync</figcaption>
         </figure>
 
-        <p>Cand scrii un email, un mesaj pe Facebook, WhatsApp, Twitter, etc., aplicatia are nevoie sa trimita mesajul catre server. Daca nu poate face asta din cauza lipsei conexiunii la internet, aplicatia poate salva mesajul intr-o sectiune numita "outbox" pentru a incerca mai tarziu.</p>
+        <p>Cand scriem un email, un mesaj pe Facebook, WhatsApp, Twitter, etc., aplicatia are nevoie sa trimita mesajul catre server. Daca nu poate face asta din cauza lipsei conexiunii la internet, aplicatia poate salva mesajul intr-o sectiune numita "outbox" pentru a incerca mai tarziu.</p>
 
         <p>
             <div class="alert alert-info" role="alert">

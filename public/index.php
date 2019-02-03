@@ -41,7 +41,7 @@
         <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
             
-            Exista instrumente de masura pentru a verifica procentual cat de completa este o aplicatie (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a>). Implementand diverse avantaje tehnologice, putem face o aplicatie mai progresiva, in asa fel incat scorul din instrumentul Lighthouse va creste.
+            Exista instrumente de masura pentru a verifica procentual cat de completa este o aplicatie (<a href="https://developers.google.com/web/tools/lighthouse/" target="_blank" rel="noopener" aria-label="Lighthouse">Lighthouse</a>). Implementand diverse avantaje tehnologice, putem face o aplicatie mai progresiva, in asa fel incat scorul din instrumentul Lighthouse va creste.
         </div>
 
         <h4>Beneficiile tehnologiilor necesare pentru aplicatiile PWA</h4>
@@ -54,8 +54,8 @@
         </ul>
 
         <h4>Povesti de succes</h4>
-        <p><a href="https://stories.flipkart.com/" target="_blank">Flipkart Lite</a> — Cel mai mare magazin online din India a fost reconstruit ca PWA in 2015, iar asta le-au adus 70% mai multi clienti.</p>
-        <p><a href="https://m.aliexpress.com/AliExpress" target="_blank">AliExpress</a> Aplicatia PWA a avut rezultate mai bune atat decat site-ul web cat si decat aplicatia mobila nativa, cu o crestere a vanzarilor de 104% in randul utilizatorilor noi.</p>
+        <p><a href="https://stories.flipkart.com/" rel="noopener" aria-label="Flipkart" target="_blank">Flipkart Lite</a> — Cel mai mare magazin online din India a fost reconstruit ca PWA in 2015, iar asta le-au adus 70% mai multi clienti.</p>
+        <p><a href="https://m.aliexpress.com/AliExpress" rel="noopener" aria-label="AliExpress" target="_blank">AliExpress</a> Aplicatia PWA a avut rezultate mai bune atat decat site-ul web cat si decat aplicatia mobila nativa, cu o crestere a vanzarilor de 104% in randul utilizatorilor noi.</p>
 
         <h4>Suportul in browsere</h4>
 
@@ -66,7 +66,7 @@
             <i class="material-icons"> warning </i>
             Cu toate acestea, unele functionalitati ale aplicatiilor PWA sunt in stare experimentala si nu sunt accesibile de pe orice browser.  <br><br>
             De exemplu, va mai dura pana toate browserele vor permite funtionalitatea de sincronizare in fundal (Background Sync), mai ales avand in vedere ca Safari si Edge inca nu suporta lucratorii de servicii (Service Workers). <br><br>
-            Majoritatea functionalitatilor specifice aplicatiilor PWA sunt insa accesibile folosind browserul <a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a>.
+            Majoritatea functionalitatilor specifice aplicatiilor PWA sunt insa accesibile folosind browserul <a href="https://www.google.com/chrome/" rel="noopener" target="_blank" aria-label="Google Chrome">Google Chrome</a>.
             </div>  
         </p>
         
@@ -74,15 +74,15 @@
         <p>
           <div class="alert alert-info" role="alert">
             <i class="material-icons"> done </i>
-            Suportul browserelor poate fi verificat folosind website-ul <a href="https://caniuse.com" target="_blank">Can I use</a>. Exemplu mai jos.
+            Suportul browserelor poate fi verificat folosind website-ul <a href="https://caniuse.com" rel="noopener" aria-label="Can I Use" target="_blank">Can I use</a>. Exemplu mai jos.
             </div>  
         </p>
 
 
         <figure class="figure">
-          <a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">
+          <a href="https://caniuse.com/#feat=web-app-manifest" rel="noopener" aria-label="Can I Use" target="_blank">
               <img src="<?php echo ROOT ?>img/web-app-manifest.png" class="figure-img img-fluid rounded" alt="web app manifest browser support">
-          <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" target="_blank">Suportul browserelor pentru "Web App Manifest"</a></figcaption>
+          <figcaption class="figure-caption"><a href="https://caniuse.com/#feat=web-app-manifest" rel="noopener" aria-label="Can I Use" target="_blank">Suportul browserelor pentru "Web App Manifest"</a></figcaption>
         </figure>
 
         <p>Chiar daca multe functionalitati nu sunt suportate inca de toate browserele, pas cu pas modele de succes din Android/iOS sunt aduse in aplicatiile web PWA, pastrand in acelasi timp beneficiile site-urilor web!</p>
