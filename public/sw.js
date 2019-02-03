@@ -31,18 +31,6 @@ let urlsToCache = [
   ROOT + "/js/app.js"
 ];
 
-// Previne Cache API de la a folosi prea multa memorie,
-// tinand in cache doar pana la maxItems elemente
-function trimCache(cacheName, maxItems) {
-  caches.open(cacheName).then(function(cache) {
-    return cache.keys().then(function(keys) {
-      if (keys.length > maxItems) {
-        cache.delete(keys[0]).then(trimCache(cacheName, maxItems));
-      }
-    });
-  });
-}
-
 self.addEventListener("install", function(event) {
   // Adauga fisierele statice in Cache Storage
   event.waitUntil(
@@ -222,7 +210,7 @@ self.addEventListener("notificationclose", function(event) {
   console.log("Notificarea a fost inchisa", event);
 });
 
-// Show The Push Notification
+// Afiseaza notificarea Push
 self.addEventListener("push", function(event) {
   console.log("Am primit o notificare push", event);
   let data = {
@@ -239,3 +227,15 @@ self.addEventListener("push", function(event) {
   };
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
+
+// Previne Cache API de la a folosi prea multa memorie,
+// tinand in cache doar pana la maxItems elemente
+function trimCache(cacheName, maxItems) {
+  caches.open(cacheName).then(function(cache) {
+    return cache.keys().then(function(keys) {
+      if (keys.length > maxItems) {
+        cache.delete(keys[0]).then(trimCache(cacheName, maxItems));
+      }
+    });
+  });
+}
