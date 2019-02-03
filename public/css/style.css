@@ -48,7 +48,7 @@ a {
 a:hover {
   color: var(--secondary);
 }
-.material-icons {
+.alert .material-icons {
   position: relative;
   top: 6px;
 }
@@ -283,15 +283,51 @@ pre[class*="language-"] > code {
   margin: 10px 0 20px;
 }
 
-#create-post #pick-image {
-  display: none;
-  margin: 15px 0;
-}
-
 .btn-secondary {
   color: #fff;
   background-color: var(--primary);
   border-color: var(--primary);
+}
+
+.floating-button {
+  z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 30px;
+}
+#create-post {
+  z-index: 1001;
+  position: fixed;
+  width: 100%;
+  min-height: calc(100vh - 56px);
+  overflow-y: scroll;
+  bottom: 0;
+  top: 56px;
+  padding-top: 30px;
+  background: var(--white);
+  text-align: center;
+  transform: translateY(100vh);
+  transition: transform 0.3s;
+}
+#create-post video,
+#create-post canvas {
+  width: 512px;
+  max-width: 100%;
+  display: none;
+  margin: auto;
+}
+#create-post #pick-image {
+  display: none;
+  margin: 15px 0;
+}
+#create-post #capture-btn {
+  margin: 10px auto;
+}
+#close-modal-btn {
+  top: 0;
+  position: relative;
+  margin-bottom: 30px;
 }
 
 /* Large devices (desktops, 992px and up) */

@@ -11,6 +11,9 @@ const imagePickerArea = document.querySelector("#pick-image");
 const locationBtn = document.querySelector("#location-btn");
 const locationLoader = document.querySelector("#location-loader");
 const mapImg = document.querySelector("#customMap");
+const createPostArea = document.querySelector("#create-post");
+const shareImageButton = document.querySelector("#share-image-button");
+const closeModalButton = document.querySelector("#close-modal-btn");
 const gcAPIkey = "AIzaSyDCAVfl78QdNtzJwiv9LrveBNssezJIWWw";
 const enableNotificationsButton = document.querySelector(
   "#enableNotifications"
@@ -25,6 +28,49 @@ let fetchedLocation = { lat: 0, lng: 0 };
 $(document).ready(function() {
   $("body").bootstrapMaterialDesign();
 });
+
+// Open Modal
+function openCreatePostModal() {
+  setTimeout(function() {
+    createPostArea.style.transform = "translateY(0)";
+  }, 1);
+  initializeMedia();
+  initializeLocation();
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+
+    deferredPrompt.userChoice.then(function(choiceResult) {
+      console.log(choiceResult.outcome);
+
+      if (choiceResult.outcome === "dismissed") {
+        console.log("User cancelled installation");
+      } else {
+        console.log("User added to home screen");
+      }
+    });
+    deferredPrompt = null;
+  }
+}
+
+// Close Modal
+function closeCreatePostModal() {
+  imagePickerArea.style.display = "none";
+  videoPlayer.style.display = "none";
+  canvasEl.style.display = "none";
+  locationBtn.style.display = "inline";
+  locationLoader.style.display = "none";
+  captureBtn.style.display = "inline";
+  if (videoPlayer.srcObject) {
+    videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
+      track.stop();
+    });
+  }
+  setTimeout(function() {
+    createPostArea.style.transform = "translateY(100vh)";
+  }, 1);
+}
+shareImageButton.addEventListener("click", openCreatePostModal);
+closeModalButton.addEventListener("click", closeCreatePostModal);
 
 // Use passive listeners to improve scrolling performance
 $.event.special.touchstart = {
@@ -339,30 +385,26 @@ function initializeMedia() {
 }
 
 // Capteaza fotografie din flux video
-if (captureBtn) {
-  initializeMedia();
+captureBtn.addEventListener("click", function(event) {
+  let context = canvasEl.getContext("2d");
 
-  captureBtn.addEventListener("click", function(event) {
-    let context = canvasEl.getContext("2d");
+  canvasEl.style.display = "block";
+  videoPlayer.style.display = "none";
+  captureBtn.style.display = "none";
 
-    canvasEl.style.display = "block";
-    videoPlayer.style.display = "none";
-    captureBtn.style.display = "none";
+  context.drawImage(
+    videoPlayer,
+    0,
+    0,
+    canvas.width,
+    videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
+  );
 
-    context.drawImage(
-      videoPlayer,
-      0,
-      0,
-      canvas.width,
-      videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
-    );
-
-    videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
-      track.stop();
-    });
-    image = dataURItoBlob(canvasEl.toDataURL());
+  videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
+    track.stop();
   });
-}
+  image = dataURItoBlob(canvasEl.toDataURL());
+});
 
 // Raspunde la selectorul de imagini
 if (imagePicker) {

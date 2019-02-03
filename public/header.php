@@ -55,9 +55,12 @@
     <title>Ghid PWA</title>
   </head>
   <body>
-    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+    <div class="bmd-layout-container bmd-drawer-f-r bmd-drawer-overlay">
       <header class="bmd-layout-header">
         <div class="navbar navbar-dark bg-primary sticky-top">
+          <ul class="nav navbar-nav">
+            <li class="nav-item"><h1 class="primaryTitle"><a  href="<?php echo ROOT; ?>">Ghid PWA</a></h1></li>
+          </ul>
           <button
             class="navbar-toggler"
             type="button"
@@ -67,28 +70,6 @@
             <span class="sr-only">Meniu</span>
             <i class="material-icons">menu</i>
           </button>
-          <ul class="nav navbar-nav">
-            <li class="nav-item"><h1 class="primaryTitle"><a  href="<?php echo ROOT; ?>">Ghid PWA</a></h1></li>
-          </ul>
-
-          <div class="dropdown pull-xs-right">
-            <button
-              class="btn bmd-btn-icon dropdown-toggle"
-              type="button"
-              id="lr1"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="material-icons">more_vert</i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-right"
-              aria-labelledby="lr1"
-            >
-              <button class="dropdown-item" id="InstallPWA" type="button">Instaleaza PWA</button>
-            </div>
-          </div>
         </div>
       </header>
       
