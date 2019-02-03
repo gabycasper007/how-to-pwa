@@ -1,5 +1,4 @@
 
-
           <div class="floating-button">
             <button class="btn btn-success bmd-btn-fab"
                     id="share-image-button">
@@ -11,29 +10,29 @@
             <div class="container">
               <video id="player" autoplay></video>
               <canvas id="canvas" width="320px" height="240px"></canvas>
-              <button class="btn btn-raised btn-secondary" id="capture-btn">Capture</button>
+              <button class="btn btn-raised btn-secondary" id="capture-btn">Captura</button>
               <div id="pick-image">
-                  <h6>Pick an Image instead</h6>
+                  <h6>Alege o imagine</h6>
                   <input type="file" accept="image/*" id="image-picker">
               </div>
               
               <form id="syncForm">
                   <div class="form-group">
-                      <label for="title">Title</label>
-                      <input type="text" class="form-control" id="title" placeholder="Enter title">
+                      <label for="title">Titlu</label>
+                      <input type="text" class="form-control" id="title" placeholder="Completeaza titlu">
                   </div>
                   <div class="form-group" id="manual-location">
-                      <label for="location">Location</label>
-                      <input type="text" class="form-control" id="location" placeholder="Enter location">
+                      <label for="location">Locatie</label>
+                      <input type="text" class="form-control" id="location" placeholder="Completeaza locatie">
                   </div>
                   <div class="input-section">
-                      <button class="btn btn-primary btn-raised" type="button" id="location-btn">Get Location</button>
+                      <button class="btn btn-primary btn-raised" type="button" id="location-btn">Preia locatie</button>
                       <div class="spinner-border spinner-border-sm" role="status" id="location-loader">
-                          <span class="sr-only">Loading...</span>
+                          <span class="sr-only">Se incarca...</span>
                       </div>
                   </div>
                   <div id="customMap"></div>
-                  <button type="submit" class="btn btn-warning btn-raised">Submit</button>
+                  <button type="submit" class="btn btn-warning btn-raised">Trimite</button>
               </form>
               <button class="btn btn-secondary bmd-btn-fab" id="close-modal-btn" type="button">
                 <i class="material-icons">close</i>

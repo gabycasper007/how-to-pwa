@@ -2,10 +2,10 @@
 <div class="container">
     <div class="row">
     <div class="col">
-        <h2>Testing Area</h2>
+        <h2>Zona de testare</h2>
 
         <button class="btn btn-raised btn-success" id="enableNotifications">
-            Enable Notifications
+            Permite notificari
         </button>
 
         <div id="cards"></div>
@@ -17,7 +17,7 @@
                 <li class="page-item backward">
                     <a class="page-link" href="<?php echo ROOT ?>native-device-features/" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="paginationDesc">Native Device Features</span>
+                        <span class="paginationDesc">Functionalitati native</span>
                     </a>
                 </li>
             </ul>
