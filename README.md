@@ -1,3 +1,3 @@
 # Ghid-PWA
 
-Cum sa creezi Progressive Web Apps
+Ghid pentru creare Progressive Web Apps
