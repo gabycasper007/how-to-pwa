@@ -398,7 +398,7 @@ if (imagePicker) {
   });
 }
 
-function createMapImage() {
+function createMapImage(position) {
   var img = new Image();
   img.src =
     "https://maps.googleapis.com/maps/api/staticmap?center=" +
