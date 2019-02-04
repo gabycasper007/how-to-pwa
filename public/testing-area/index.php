@@ -4,10 +4,6 @@
     <div class="col">
         <h2>Zona de testare</h2>
 
-        <button class="btn btn-raised btn-success" id="enableNotifications">
-            Permite notificari
-        </button>
-
         <div id="cards"></div>
 
         <br>

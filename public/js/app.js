@@ -14,9 +14,6 @@ const createPostArea = document.querySelector("#create-post");
 const shareImageButton = document.querySelector("#share-image-button");
 const closeModalButton = document.querySelector("#close-modal-btn");
 const gcAPIkey = "AIzaSyDCAVfl78QdNtzJwiv9LrveBNssezJIWWw";
-const enableNotificationsButton = document.querySelector(
-  "#enableNotifications"
-);
 
 let networkDataReceived = false;
 let deferredPrompt;
@@ -33,8 +30,13 @@ function openCreatePostModal() {
   setTimeout(function() {
     createPostArea.style.transform = "translateY(0)";
   }, 1);
+  askUserToInstallPWA();
+  initializePushNotifications();
   initializeMedia();
   initializeLocation();
+}
+
+function askUserToInstallPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
 
@@ -150,27 +152,6 @@ function configurePushSubscription() {
     .catch(function(err) {
       console.log("Eroare la abonare", err);
     });
-}
-
-// Afiseaza butonul de abonare la notificari
-if (
-  "Notification" in window &&
-  "serviceWorker" in navigator &&
-  enableNotificationsButton &&
-  Notification.permission === "default"
-) {
-  enableNotificationsButton.style.display = "block";
-  enableNotificationsButton.addEventListener("click", function() {
-    Notification.requestPermission(function(result) {
-      console.log("Alegerea utilizatorului pentru notificari este:", result);
-      if (result !== "default") {
-        enableNotificationsButton.style.display = "none";
-      }
-      if (result === "granted") {
-        configurePushSubscription();
-      }
-    });
-  });
 }
 
 // Inregistreaza Service Worker
@@ -449,5 +430,20 @@ function initializeLocation() {
   if (!"geolocation" in navigator) {
     locationBtn.style.display = "none";
     mapImg.style.display = "none";
+  }
+}
+
+function initializePushNotifications() {
+  if (
+    "Notification" in window &&
+    "serviceWorker" in navigator &&
+    Notification.permission === "default"
+  ) {
+    // Cere permisiunea de a afisa notificari push
+    Notification.requestPermission(function(result) {
+      if (result === "granted") {
+        configurePushSubscription();
+      }
+    });
   }
 }
