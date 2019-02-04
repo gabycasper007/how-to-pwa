@@ -220,7 +220,9 @@ self.addEventListener("push", function(event) {
   let options = {
     body: data.content,
     icon: ROOT + "img/icons/icon-96x96.png",
-    badge: ROOT + "img/icons/icon-96x96.png"
+    badge: ROOT + "img/icons/icon-96x96.png",
+    vibrate: [300, 100, 400],
+    image: data.image
   };
   event.waitUntil(self.registration.showNotification(data.title, options));
 });

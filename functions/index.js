@@ -117,7 +117,14 @@ exports.storePostData = functions.https.onRequest((request, response) => {
                     pushConfig,
                     JSON.stringify({
                       title: fields.title,
-                      content: "O postare noua despre " + fields.location
+                      content: "O postare noua despre " + fields.location,
+                      image:
+                        "https://firebasestorage.googleapis.com/v0/b/" +
+                        bucket.name +
+                        "/o/" +
+                        encodeURIComponent(uploadedFile.name) +
+                        "?alt=media&token=" +
+                        uuid
                     })
                   );
                 });
