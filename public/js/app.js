@@ -242,6 +242,16 @@ if (cards) {
   }
 }
 
+function getFormData() {
+  return {
+    id: new Date().toISOString(),
+    title: titleInput.value,
+    location: locationInput.value,
+    image: image,
+    rawLocation: fetchedLocation
+  };
+}
+
 // Sincronizeaza datele adaugate in formular
 FORM.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -256,13 +266,7 @@ FORM.addEventListener("submit", function(event) {
     return;
   }
 
-  let post = {
-    id: new Date().toISOString(),
-    title: titleInput.value,
-    location: locationInput.value,
-    image: image,
-    rawLocation: fetchedLocation
-  };
+  let post = getFormData();
 
   // Sincronizeaza datele in IndexedDB
   // pentru a le putea trimite atunci cand utilizatorul este online
@@ -405,7 +409,7 @@ function createMapImage(position) {
     position.coords.latitude +
     "," +
     position.coords.longitude +
-    "&zoom=13&size=600x400&sensor=false&key=" +
+    "&zoom=16&size=600x400&sensor=false&key=" +
     gcAPIkey;
   return img;
 }
