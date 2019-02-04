@@ -150,37 +150,37 @@ self.addEventListener("sync", function(event) {
   console.log("[SW] Sincronizare pe fundal", event);
   if (event.tag === "sync-new-posts") {
     event.waitUntil(
-      localForageSync
-        .iterate(function(value, key) {
-          let postData = new FormData();
-          postData.append("id", key);
-          postData.append("title", value.title);
-          postData.append("location", value.location);
-          postData.append("rawLocationLat", value.rawLocation.lat);
-          postData.append("rawLocationLng", value.rawLocation.lng);
-          postData.append("file", value.image, key + ".png");
-
-          fetch(FIREBASE_STORE_POST_DATA_URL, {
-            method: "POST",
-            body: postData
-          })
-            .then(function(response) {
-              console.log("Am trimis datele catre Firebase", response);
-              if (response.ok) {
-                console.log("Sterg din IndexedDB elementul sincronizat", key);
-                localForageSync.removeItem(key);
-              }
-            })
-            .catch(function(err) {
-              console.log("Eroare la sincronizare", err);
-            });
-        })
-        .catch(function(err) {
-          console.log("Eroare din LocalForage: ", err);
-        })
+      localForageSync.iterate(sendDataToFirebase).catch(function(err) {
+        console.log("Eroare din LocalForage: ", err);
+      })
     );
   }
 });
+
+function sendDataToFirebase(value, key) {
+  let postData = new FormData();
+  postData.append("id", key);
+  postData.append("title", value.title);
+  postData.append("location", value.location);
+  postData.append("rawLocationLat", value.rawLocation.lat);
+  postData.append("rawLocationLng", value.rawLocation.lng);
+  postData.append("file", value.image, key + ".png");
+
+  fetch(FIREBASE_STORE_POST_DATA_URL, {
+    method: "POST",
+    body: postData
+  })
+    .then(function(response) {
+      console.log("Am trimis datele catre Firebase", response);
+      if (response.ok) {
+        console.log("Sterg din IndexedDB elementul sincronizat", key);
+        localForageSync.removeItem(key);
+      }
+    })
+    .catch(function(err) {
+      console.log("Eroare la sincronizare", err);
+    });
+}
 
 // Redirectioneaza la Testing Area cand notificarea este apasata
 self.addEventListener("notificationclick", function(event) {
