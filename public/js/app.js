@@ -127,7 +127,7 @@ function configurePushSubscription(permission) {
           // Autentificare
           // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
           let vapidPublicKey = urlBase64ToUint8Array(
-            "BIfl1Prv850KN3sFkYEQZXqjUDD_PaABmUVHeAQoioxv99KbAb7tmRukk-rxxg_rJ7bJvUxNLd4tKUBrnvIMcLw"
+            "BCmjdJomhJTLEX7JKrvHrJLOUMhzM_VAgsyaU9tmkklvZtfaXrj_aLoj8GzrYD_7U2F4vWP02zAdJy7-Bf9pgEA"
           );
           // Creaza noua abonare
           return reg.pushManager.subscribe({
@@ -284,15 +284,13 @@ FORM.addEventListener("submit", function(event) {
 function savePostForLater(sw, post) {
   localForageSync
     .setItem(post.id, post)
-    .then(emitSyncEvent(sw))
+    .then(function() {
+      sw.sync.register("sync-new-posts");
+    })
     .then(notifyUserAboutSync)
     .catch(function(error) {
       console.log("Eroare sincronizare:", error);
     });
-}
-
-function emitSyncEvent(sw) {
-  sw.sync.register("sync-new-posts");
 }
 
 function notifyUserAboutSync() {

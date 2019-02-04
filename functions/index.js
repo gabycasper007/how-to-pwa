@@ -95,8 +95,8 @@ exports.storePostData = functions.https.onRequest((request, response) => {
               .then(_ => {
                 webpush.setVapidDetails(
                   "mailto:gabriell.vasile@gmail.com",
-                  "BIfl1Prv850KN3sFkYEQZXqjUDD_PaABmUVHeAQoioxv99KbAb7tmRukk-rxxg_rJ7bJvUxNLd4tKUBrnvIMcLw",
-                  "q056isQgBQhvRvorQ12ILmm6Nfbo41MbykSQT9eV0bM"
+                  "BCmjdJomhJTLEX7JKrvHrJLOUMhzM_VAgsyaU9tmkklvZtfaXrj_aLoj8GzrYD_7U2F4vWP02zAdJy7-Bf9pgEA",
+                  "diSeJCyI0RXR0Pc1ZnbO-L0GXidcyRtB6-IVatTpO-M"
                 );
                 return admin
                   .database()
