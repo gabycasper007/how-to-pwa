@@ -167,10 +167,7 @@ self.addEventListener("sync", function(event) {
             .then(function(response) {
               console.log("Am trimis datele catre Firebase", response);
               if (response.ok) {
-                console.log(
-                  "Am sters din IndexedDB elementul sincronizat",
-                  key
-                );
+                console.log("Sterg din IndexedDB elementul sincronizat", key);
                 localForageSync.removeItem(key);
               }
             })
