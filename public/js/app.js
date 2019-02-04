@@ -321,8 +321,7 @@ function sendDataToFirebase() {
   });
 }
 
-// Polyfill pentru Chrome si Mozilla pentru a folosi instrumente media
-function initializeMedia() {
+function setMediaDevicesPolyfill() {
   if (!("mediaDevices" in navigator)) {
     navigator.mediaDevices = {};
   }
@@ -343,6 +342,11 @@ function initializeMedia() {
       });
     };
   }
+}
+
+// Polyfill pentru Chrome si Mozilla pentru a folosi instrumente media
+function initializeMedia() {
+  setMediaDevicesPolyfill();
 
   navigator.mediaDevices
     .getUserMedia({
