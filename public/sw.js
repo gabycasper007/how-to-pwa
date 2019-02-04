@@ -1,9 +1,9 @@
-const ROOT = "/PWA/how-to-pwa/public";
+const ROOT = "/PWA/how-to-pwa/public/";
 const CACHE_NAME = "static-pwa-2";
 const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
 
-importScripts(ROOT + "/js/localforage.min.js");
-importScripts(ROOT + "/js/utility.js");
+importScripts(ROOT + "js/localforage.min.js");
+importScripts(ROOT + "js/utility.js");
 
 // Fisiere statice - CSS, JS si HTML
 let urlsToCache = [
@@ -13,22 +13,22 @@ let urlsToCache = [
   "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js",
   "https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js",
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js",
-  ROOT + "/",
-  ROOT + "/web-app-manifest/",
-  ROOT + "/service-workers/",
-  ROOT + "/caching/",
-  ROOT + "/indexed-db/",
-  ROOT + "/background-sync/",
-  ROOT + "/push-notifications/",
-  ROOT + "/native-device-features/",
-  ROOT + "/testing-area/",
-  ROOT + "/offline.php",
-  ROOT + "/css/style.css",
-  ROOT + "/css/prism.css",
-  ROOT + "/js/prism.js",
-  ROOT + "/js/localforage.min.js",
-  ROOT + "/js/utility.js",
-  ROOT + "/js/app.js"
+  ROOT + "",
+  ROOT + "web-app-manifest/",
+  ROOT + "service-workers/",
+  ROOT + "caching/",
+  ROOT + "indexed-db/",
+  ROOT + "background-sync/",
+  ROOT + "push-notifications/",
+  ROOT + "native-device-features/",
+  ROOT + "testing-area/",
+  ROOT + "offline.php",
+  ROOT + "css/style.css",
+  ROOT + "css/prism.css",
+  ROOT + "js/prism.js",
+  ROOT + "js/localforage.min.js",
+  ROOT + "js/utility.js",
+  ROOT + "js/app.js"
 ];
 
 self.addEventListener("install", function(event) {
@@ -136,7 +136,7 @@ self.addEventListener("fetch", function(event) {
             // ca nu are acces la internet iar pagina curenta nu se gaseste in cache
             return caches.open(CACHE_NAME).then(function(cache) {
               if (event.request.headers.get("accept").includes("text/html")) {
-                return cache.match(ROOT + "/offline.php");
+                return cache.match(ROOT + "offline.php");
               }
             });
           });
@@ -195,10 +195,10 @@ self.addEventListener("notificationclick", function(event) {
         return (client.visibilityState = "visible");
       });
       if (client !== "undefined") {
-        client.navigate(ROOT + "/testing-area/");
+        client.navigate(ROOT + "testing-area/");
         client.focus();
       } else {
-        clients.openWindow(ROOT + "/testing-area/");
+        clients.openWindow(ROOT + "testing-area/");
       }
       notification.close();
     })
@@ -222,8 +222,8 @@ self.addEventListener("push", function(event) {
   }
   let options = {
     body: data.content,
-    icon: ROOT + "/img/icons/icon-96x96.png",
-    badge: ROOT + "/img/icons/icon-96x96.png"
+    icon: ROOT + "img/icons/icon-96x96.png",
+    badge: ROOT + "img/icons/icon-96x96.png"
   };
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
