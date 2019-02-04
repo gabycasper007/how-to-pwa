@@ -15,6 +15,7 @@ const shareImageButton = document.querySelector("#share-image-button");
 const closeModalButton = document.querySelector("#close-modal-btn");
 const gcAPIkey = "AIzaSyDCAVfl78QdNtzJwiv9LrveBNssezJIWWw";
 
+let sawAlert = false;
 let networkDataReceived = false;
 let deferredPrompt;
 let image;
@@ -321,6 +322,7 @@ function sendDataToFirebase() {
   });
 }
 
+// Polyfill pentru webkit si Mozilla pentru a folosi instrumente media
 function setMediaDevicesPolyfill() {
   if (!("mediaDevices" in navigator)) {
     navigator.mediaDevices = {};
@@ -344,7 +346,6 @@ function setMediaDevicesPolyfill() {
   }
 }
 
-// Polyfill pentru Chrome si Mozilla pentru a folosi instrumente media
 function initializeMedia() {
   setMediaDevicesPolyfill();
 
@@ -397,58 +398,63 @@ if (imagePicker) {
   });
 }
 
-if (locationBtn) {
-  locationBtn.addEventListener("click", function(event) {
-    if (!"geolocation" in navigator) {
-      return;
-    }
-    let sawAlert = false;
-
-    locationBtn.style.display = "none";
-    locationLoader.style.display = "inline-block";
-
-    navigator.geolocation.getCurrentPosition(
-      function(postition) {
-        fetchedLocation = {
-          lat: postition.coords.latitude,
-          lng: postition.coords.latitude
-        };
-        locationInput.value = "Bucuresti";
-        document.querySelector("#manual-location").classList.add("is-focused");
-
-        var img = new Image();
-        img.src =
-          "https://maps.googleapis.com/maps/api/staticmap?center=" +
-          postition.coords.latitude +
-          "," +
-          postition.coords.longitude +
-          "&zoom=13&size=600x400&sensor=false&key=" +
-          gcAPIkey;
-
-        mapImg.appendChild(img);
-        locationLoader.style.display = "none";
-        locationBtn.style.display = "none";
-        mapImg.style.display = "block";
-      },
-      function(err) {
-        locationBtn.style.display = "inline-block";
-        locationLoader.style.display = "none";
-        mapImg.style.display = "none";
-        if (!sawAlert) {
-          alert("Browserul nu a putut obtine locatia, adaug-o manual");
-          sawAlert = true;
-        }
-        fetchedLocation = { lat: 0, lng: 0 };
-        console.log(err);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 30000,
-        timeout: 27000
-      }
-    );
-  });
+function createMapImage() {
+  var img = new Image();
+  img.src =
+    "https://maps.googleapis.com/maps/api/staticmap?center=" +
+    postition.coords.latitude +
+    "," +
+    postition.coords.longitude +
+    "&zoom=13&size=600x400&sensor=false&key=" +
+    gcAPIkey;
+  return img;
 }
+
+function locationReceived(postition) {
+  fetchedLocation = {
+    lat: postition.coords.latitude,
+    lng: postition.coords.latitude
+  };
+  locationInput.value = "Bucuresti";
+  document.querySelector("#manual-location").classList.add("is-focused");
+
+  mapImg.appendChild(createMapImage(position));
+  locationLoader.style.display = "none";
+  locationBtn.style.display = "none";
+  mapImg.style.display = "block";
+}
+
+function locationInaccessible(error) {
+  locationBtn.style.display = "inline-block";
+  locationLoader.style.display = "none";
+  mapImg.style.display = "none";
+  if (!sawAlert) {
+    alert("Browserul nu a putut obtine locatia, adaug-o manual");
+    sawAlert = true;
+  }
+  fetchedLocation = { lat: 0, lng: 0 };
+  console.log(error);
+}
+
+locationBtn.addEventListener("click", function(event) {
+  if (!"geolocation" in navigator) {
+    return;
+  }
+  let options = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 27000
+  };
+
+  locationBtn.style.display = "none";
+  locationLoader.style.display = "inline-block";
+
+  navigator.geolocation.getCurrentPosition(
+    locationReceived,
+    locationInaccessible,
+    options
+  );
+});
 
 function initializeLocation() {
   if (!"geolocation" in navigator) {
