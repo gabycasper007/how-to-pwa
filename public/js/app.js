@@ -224,8 +224,10 @@ if (cards) {
     let cardBody = document.createElement("div");
     let cardTitle = document.createElement("h5");
     let cardText = document.createElement("p");
+    let cardWrap = document.createElement("div");
 
     card.className = "card";
+    cardWrap.className = "cardWrap";
 
     img.className = "card-img-top";
     img.setAttribute("src", data.image);
@@ -237,7 +239,8 @@ if (cards) {
     cardText.className = "card-text";
     cardText.textContent = data.location;
 
-    cards.appendChild(card).appendChild(img);
+    cardWrap.appendChild(card).appendChild(img);
+    cards.appendChild(cardWrap);
     card.appendChild(cardBody).appendChild(cardTitle);
     cardBody.appendChild(cardText);
   }

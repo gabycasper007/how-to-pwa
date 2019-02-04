@@ -4,9 +4,7 @@
     <div class="col">
         <h2>Zona de testare</h2>
 
-        <div id="cards"></div>
-
-        <br>
+        <div id="cards" class="row"></div>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">
