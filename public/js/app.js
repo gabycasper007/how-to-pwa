@@ -93,8 +93,8 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
-// Afiseaza notificare
-function displayNotification(response) {
+// Confirma abonare printr-o notificare
+function displayConfirmNotification(response) {
   if (response.ok) {
     let options = {
       body: "Te-ai abonat la serviciul de notificari!",
@@ -121,8 +121,8 @@ function configurePushSubscription(permission) {
         reg = sw;
         return sw.pushManager.getSubscription();
       })
-      .then(function(sub) {
-        if (sub === null) {
+      .then(function(subscription) {
+        if (subscription === null) {
           // Autentificare
           // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
           let vapidPublicKey = urlBase64ToUint8Array(
@@ -137,21 +137,23 @@ function configurePushSubscription(permission) {
           // Este deja abonat
         }
       })
-      .then(function(newSub) {
-        return fetch(SUBSCRIPTIONS_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify(newSub)
-        });
-      })
-      .then(displayNotification)
+      .then(storeSubscriptionToServer)
+      .then(displayConfirmNotification)
       .catch(function(err) {
         console.log("Eroare la abonare", err);
       });
   }
+}
+
+function storeSubscriptionToServer(subscription) {
+  return fetch(SUBSCRIPTIONS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(subscription)
+  });
 }
 
 // Inregistreaza Service Worker
