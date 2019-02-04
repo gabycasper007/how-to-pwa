@@ -195,11 +195,6 @@ if (cards) {
     }
   });
 
-  function clearCards() {
-    while (cards.hasChildNodes()) {
-      cards.removeChild(cards.lastChild);
-    }
-  }
   // Afisaza toate imaginile
   function showcards(data) {
     clearCards();
@@ -208,6 +203,13 @@ if (cards) {
         addWithLocalForage(key, data[key]);
       }
       createCard(data[key]);
+    }
+  }
+
+  // Sterge toate imaginile
+  function clearCards() {
+    while (cards.hasChildNodes()) {
+      cards.removeChild(cards.lastChild);
     }
   }
 
