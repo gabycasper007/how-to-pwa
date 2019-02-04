@@ -402,18 +402,18 @@ function createMapImage() {
   var img = new Image();
   img.src =
     "https://maps.googleapis.com/maps/api/staticmap?center=" +
-    postition.coords.latitude +
+    position.coords.latitude +
     "," +
-    postition.coords.longitude +
+    position.coords.longitude +
     "&zoom=13&size=600x400&sensor=false&key=" +
     gcAPIkey;
   return img;
 }
 
-function locationReceived(postition) {
+function locationReceived(position) {
   fetchedLocation = {
-    lat: postition.coords.latitude,
-    lng: postition.coords.latitude
+    lat: position.coords.latitude,
+    lng: position.coords.latitude
   };
   locationInput.value = "Bucuresti";
   document.querySelector("#manual-location").classList.add("is-focused");
