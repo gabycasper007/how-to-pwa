@@ -44,9 +44,9 @@ function askUserToInstallPWA() {
       console.log(choiceResult.outcome);
 
       if (choiceResult.outcome === "dismissed") {
-        console.log("User cancelled installation");
+        console.log("Utilizatorul a anulat instalarea");
       } else {
-        console.log("User added to home screen");
+        console.log("Utilizatorul a instalat aplicatia");
       }
     });
     deferredPrompt = null;
@@ -170,7 +170,7 @@ if ("serviceWorker" in navigator) {
 
 // Amana bannerul pentru instalarea aplicatiei
 window.addEventListener("beforeinstallprompt", function(event) {
-  console.log("beforeinstallprompt fired");
+  console.log("Browserul a incercat afisarea bannerului de instalare");
   event.preventDefault();
   deferredPrompt = event;
   return false;
