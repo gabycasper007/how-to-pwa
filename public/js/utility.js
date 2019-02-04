@@ -2,7 +2,8 @@
 // https://localforage.github.io/localForage
 
 // URL Firebase
-const POSTS_URL = "https://how-to-pwa.firebaseio.com/posts.json";
+const POSTS_URL =
+  "https://how-to-pwa.firebaseio.com/posts.json?orderByValue=id";
 const SUBSCRIPTIONS_URL =
   "https://how-to-pwa.firebaseio.com/subscriptions.json";
 const FIREBASE_STORE_POST_DATA_URL =

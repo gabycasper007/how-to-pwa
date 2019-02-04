@@ -116,8 +116,8 @@ exports.storePostData = functions.https.onRequest((request, response) => {
                   webpush.sendNotification(
                     pushConfig,
                     JSON.stringify({
-                      title: "Postare noua",
-                      content: "O noua postre a fost adaugata!"
+                      title: fields.title,
+                      content: "O postare noua despre " + fields.location
                     })
                   );
                 });

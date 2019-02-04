@@ -200,12 +200,13 @@ if (cards) {
 
   // Afisaza toate imaginile
   function showcards(data) {
+    let reversed = Object.values(data).reverse();
     clearCards();
-    for (key in data) {
+    for (key in reversed) {
       if (networkDataReceived) {
-        addWithLocalForage(key, data[key]);
+        addWithLocalForage(reversed[key].id, reversed[key]);
       }
-      createCard(data[key]);
+      createCard(reversed[key]);
     }
   }
 
@@ -244,7 +245,7 @@ if (cards) {
 
 function getFormData() {
   return {
-    id: new Date().toISOString(),
+    id: -1 * new Date().getTime(),
     title: titleInput.value,
     location: locationInput.value,
     image: image,
@@ -301,7 +302,7 @@ function notifyUserAboutSync() {
 
 function createPostData() {
   let postData = new FormData();
-  let id = new Date().toISOString();
+  let id = -1 * new Date().getTime();
 
   postData.append("id", id);
   postData.append("title", titleInput.value);

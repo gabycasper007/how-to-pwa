@@ -191,7 +191,7 @@ self.addEventListener("notificationclick", function(event) {
       let client = clients.find(function(client) {
         return (client.visibilityState = "visible");
       });
-      if (client !== "undefined") {
+      if (client !== undefined) {
         client.navigate(ROOT + "testing-area/");
         client.focus();
       } else {
