@@ -94,64 +94,64 @@ if (!window.Promise) {
 }
 
 // Afiseaza notificare
-function displayNotification() {
-  let options = {
-    body: "Te-ai abonat la serviciul de notificari!",
-    icon: ROOT + "img/icons/icon-96x96.png",
-    image: ROOT + "img/pwa.png",
-    dir: "ltr",
-    lang: "ro-RO",
-    vibrate: [100, 50, 200],
-    badge: ROOT + "img/icons/icon-96x96.png",
-    tag: "confirm-notification",
-    renotify: true
-  };
-  navigator.serviceWorker.ready.then(function(sw) {
-    sw.showNotification("Abonare cu succes", options);
-  });
+function displayNotification(response) {
+  if (response.ok) {
+    let options = {
+      body: "Te-ai abonat la serviciul de notificari!",
+      icon: ROOT + "img/icons/icon-96x96.png",
+      image: ROOT + "img/pwa.png",
+      dir: "ltr",
+      lang: "ro-RO",
+      vibrate: [100, 50, 200],
+      badge: ROOT + "img/icons/icon-96x96.png",
+      tag: "confirm-notification",
+      renotify: true
+    };
+    navigator.serviceWorker.ready.then(function(sw) {
+      sw.showNotification("Abonare cu succes", options);
+    });
+  }
 }
 
-function configurePushSubscription() {
-  let reg;
-  navigator.serviceWorker.ready
-    .then(function(sw) {
-      reg = sw;
-      return sw.pushManager.getSubscription();
-    })
-    .then(function(sub) {
-      if (sub === null) {
-        // Autentificare
-        // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
-        let vapidPublicKey = urlBase64ToUint8Array(
-          "BIfl1Prv850KN3sFkYEQZXqjUDD_PaABmUVHeAQoioxv99KbAb7tmRukk-rxxg_rJ7bJvUxNLd4tKUBrnvIMcLw"
-        );
-        // Creaza noua abonare
-        return reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: vapidPublicKey
+function configurePushSubscription(permission) {
+  if (permission === "granted") {
+    let reg;
+    navigator.serviceWorker.ready
+      .then(function(sw) {
+        reg = sw;
+        return sw.pushManager.getSubscription();
+      })
+      .then(function(sub) {
+        if (sub === null) {
+          // Autentificare
+          // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
+          let vapidPublicKey = urlBase64ToUint8Array(
+            "BIfl1Prv850KN3sFkYEQZXqjUDD_PaABmUVHeAQoioxv99KbAb7tmRukk-rxxg_rJ7bJvUxNLd4tKUBrnvIMcLw"
+          );
+          // Creaza noua abonare
+          return reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: vapidPublicKey
+          });
+        } else {
+          // Este deja abonat
+        }
+      })
+      .then(function(newSub) {
+        return fetch(SUBSCRIPTIONS_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify(newSub)
         });
-      } else {
-        // Este deja abonat
-      }
-    })
-    .then(function(newSub) {
-      return fetch(SUBSCRIPTIONS_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(newSub)
+      })
+      .then(displayNotification)
+      .catch(function(err) {
+        console.log("Eroare la abonare", err);
       });
-    })
-    .then(function(response) {
-      if (response.ok) {
-        displayNotification();
-      }
-    })
-    .catch(function(err) {
-      console.log("Eroare la abonare", err);
-    });
+  }
 }
 
 // Inregistreaza Service Worker
@@ -240,61 +240,77 @@ if (cards) {
 }
 
 // Sincronizeaza datele adaugate in formular
-if (FORM) {
-  FORM.addEventListener("submit", function(event) {
-    event.preventDefault();
+FORM.addEventListener("submit", function(event) {
+  event.preventDefault();
 
-    let postData = new FormData();
-    let id = new Date().toISOString();
+  let isFormValid =
+    titleInput.value.trim() === "" || locationInput.value.trim() === "";
+  let doesBrowserSupportSync =
+    "serviceWorker" in navigator && "SyncManager" in window;
 
-    postData.append("id", id);
-    postData.append("title", titleInput.value);
-    postData.append("location", locationInput.value);
-    postData.append("rawLocationLat", fetchedLocation.lat);
-    postData.append("rawLocationLng", fetchedLocation.lng);
-    postData.append("file", image, id + ".png");
+  if (isFormValid) {
+    alert("Completeaza toate campurile!");
+    return;
+  }
 
-    if (titleInput.value.trim() === "" || locationInput.value.trim() === "") {
-      alert("Completeaza toate campurile!");
-      return;
-    }
+  let post = {
+    id: new Date().toISOString(),
+    title: titleInput.value,
+    location: locationInput.value,
+    image: image,
+    rawLocation: fetchedLocation
+  };
 
-    // Sincronizeaza datele in IndexedDB
-    // pentru a le putea trimite atunci cand utilizatorul este online
-    if ("serviceWorker" in navigator && "SyncManager" in window) {
-      navigator.serviceWorker.ready.then(function(sw) {
-        let post = {
-          id: id,
-          title: titleInput.value,
-          location: locationInput.value,
-          image: image,
-          rawLocation: fetchedLocation
-        };
+  // Sincronizeaza datele in IndexedDB
+  // pentru a le putea trimite atunci cand utilizatorul este online
+  if (doesBrowserSupportSync) {
+    navigator.serviceWorker.ready.then(function(sw) {
+      savePostForLater(sw, post);
+    });
+  } else {
+    sendDataToFirebase();
+  }
 
-        localForageSync
-          .setItem(post.id, post)
-          .then(function(value) {
-            sw.sync.register("sync-new-posts");
-          })
-          .then(function() {
-            $.snackbar({
-              content: "Postarea ta a fost salvata si va fi incarcata ulterior!"
-            });
-          })
-          .catch(function(err) {
-            console.log("Eroare sincronizare:", err);
-          });
-      });
-    } else {
-      sendData(postData);
-    }
+  closeCreatePostModal();
+});
 
-    closeCreatePostModal();
+function savePostForLater(sw, post) {
+  localForageSync
+    .setItem(post.id, post)
+    .then(emitSyncEvent(sw))
+    .then(notifyUserAboutSync)
+    .catch(function(error) {
+      console.log("Eroare sincronizare:", error);
+    });
+}
+
+function emitSyncEvent(sw) {
+  sw.sync.register("sync-new-posts");
+}
+
+function notifyUserAboutSync() {
+  $.snackbar({
+    content: "[Later] Postarea ta a fost salvata si va fi incarcata ulterior!"
   });
 }
 
+function createPostData() {
+  let postData = new FormData();
+  let id = new Date().toISOString();
+
+  postData.append("id", id);
+  postData.append("title", titleInput.value);
+  postData.append("location", locationInput.value);
+  postData.append("rawLocationLat", fetchedLocation.lat);
+  postData.append("rawLocationLng", fetchedLocation.lng);
+  postData.append("file", image, id + ".png");
+
+  return postData;
+}
+
 // Trimite date la baza de date din Firebase
-function sendData(postData) {
+function sendDataToFirebase() {
+  let postData = createPostData();
   fetch(FIREBASE_STORE_POST_DATA_URL, {
     method: "POST",
     body: postData
@@ -436,16 +452,12 @@ function initializeLocation() {
 }
 
 function initializePushNotifications() {
-  if (
-    "Notification" in window &&
-    "serviceWorker" in navigator &&
-    Notification.permission === "default"
-  ) {
+  let browserSupportsNotifications =
+    "Notification" in window && "serviceWorker" in navigator;
+  let userUndecidedAboutNotifications = Notification.permission === "default";
+
+  if (browserSupportsNotifications && userUndecidedAboutNotifications) {
     // Cere permisiunea de a afisa notificari push
-    Notification.requestPermission(function(result) {
-      if (result === "granted") {
-        configurePushSubscription();
-      }
-    });
+    Notification.requestPermission(configurePushSubscription);
   }
 }
