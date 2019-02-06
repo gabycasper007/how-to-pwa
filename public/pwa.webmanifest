@@ -1,7 +1,7 @@
 {
   "name": "Ghid PWA",
   "short_name": "PWA",
-  "start_url": "/PWA/how-to-pwa/public/index.php",
+  "start_url": "/PWA/how-to-pwa/public/",
   "display": "standalone",
   "orientation": "any",
   "scope": ".",

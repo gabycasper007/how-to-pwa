@@ -127,7 +127,7 @@ function configurePushSubscription(permission) {
           // Autentificare
           // Folosim Vapid pentru a limita accesul la notificari persoanelor neautorizate
           let vapidPublicKey = urlBase64ToUint8Array(
-            "BCmjdJomhJTLEX7JKrvHrJLOUMhzM_VAgsyaU9tmkklvZtfaXrj_aLoj8GzrYD_7U2F4vWP02zAdJy7-Bf9pgEA"
+            "BJFd3NAen-MmLhyeiWfdqJdbJJqN0uIiLf8qb97NjSRwcAlBk_BWR2DjY_4IDs3kSOKpZzQO5L-PrJ8g3WPZZC4"
           );
           // Creaza noua abonare
           return reg.pushManager.subscribe({
@@ -190,6 +190,9 @@ if (cards) {
     .then(function(data) {
       networkDataReceived = true;
       showcards(data);
+    })
+    .catch(function(error) {
+      console.log("Nu am putut obtine datele din Firebase", error);
     });
 
   localforage.iterate(function(value) {
@@ -299,7 +302,7 @@ function savePostForLater(sw, post) {
 
 function notifyUserAboutSync() {
   $.snackbar({
-    content: "[Later] Postarea ta a fost salvata si va fi incarcata ulterior!"
+    content: "Postarea ta a fost salvata si va fi incarcata ulterior!"
   });
 }
 
@@ -357,11 +360,11 @@ function initializeMedia() {
 
   navigator.mediaDevices
     .getUserMedia({
-      video: true,
-      width: 320,
-      height: 240
+      video: true
     })
     .then(function(stream) {
+      // videoPlayer.offsetHeight
+      // videoPlayer.offsetWidth
       videoPlayer.srcObject = stream;
       imagePickerArea.style.display = "none";
       videoPlayer.style.display = "block";
@@ -379,16 +382,20 @@ function initializeMedia() {
 captureBtn.addEventListener("click", function(event) {
   let context = canvasEl.getContext("2d");
 
+  canvasEl.width = videoPlayer.videoWidth;
+  canvasEl.height = videoPlayer.videoHeight;
   canvasEl.style.display = "block";
   videoPlayer.style.display = "none";
   captureBtn.style.display = "none";
 
+  context.translate(videoPlayer.videoWidth, 0);
+  context.scale(-1, 1);
   context.drawImage(
     videoPlayer,
     0,
     0,
-    canvas.width,
-    videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width)
+    videoPlayer.videoWidth,
+    videoPlayer.videoHeight
   );
 
   videoPlayer.srcObject.getVideoTracks().forEach(function(track) {
@@ -431,7 +438,7 @@ function locationReceived(position) {
 }
 
 function locationInaccessible(error) {
-  locationBtn.style.display = "inline-block";
+  //locationBtn.style.display = "inline-block";
   locationLoader.style.display = "none";
   mapImg.style.display = "none";
   if (!sawAlert) {
@@ -444,6 +451,7 @@ function locationInaccessible(error) {
 
 locationBtn.addEventListener("click", function(event) {
   if (!"geolocation" in navigator) {
+    locationBtn.style.display = "none";
     return;
   }
   let options = {
@@ -466,6 +474,13 @@ function initializeLocation() {
   if (!"geolocation" in navigator) {
     locationBtn.style.display = "none";
     mapImg.style.display = "none";
+  } else {
+    navigator.permissions.query({ name: "geolocation" }).then(function(status) {
+      if (status.state === "denied") {
+        locationBtn.style.display = "none";
+        mapImg.style.display = "none";
+      }
+    });
   }
 }
 
@@ -479,3 +494,16 @@ function initializePushNotifications() {
     Notification.requestPermission(configurePushSubscription);
   }
 }
+
+// Dispozitivul are din nou acces la internet
+// Afisez imaginile actualizate
+window.addEventListener("online", function(event) {
+  document.querySelectorAll(".figure img").forEach(function(value, key) {
+    let src = value.src;
+    value.src = src;
+  });
+  document.querySelectorAll(".card img").forEach(function(value, key) {
+    let src = value.src;
+    value.src = src;
+  });
+});

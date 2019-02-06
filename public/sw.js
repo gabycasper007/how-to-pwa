@@ -1,6 +1,6 @@
 const ROOT = "/PWA/how-to-pwa/public/";
-const CACHE_NAME = "static-pwa-2";
-const DYNAMIC_CACHE_NAME = "dynamic-pwa-2";
+const CACHE_NAME = "static-pwa-3";
+const DYNAMIC_CACHE_NAME = "dynamic-pwa-3";
 
 importScripts(ROOT + "js/localforage.min.js");
 importScripts(ROOT + "js/utility.js");
@@ -13,6 +13,9 @@ let urlsToCache = [
   "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js",
   "https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js",
   "https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js",
+  "https://fonts.gstatic.com/s/vollkorn/v8/0yb9GDoxxrvAnPhYGxkpaE0Urhg0.woff2",
+  "https://fonts.gstatic.com/s/materialicons/v42/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+  "https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2",
   ROOT + "",
   ROOT + "web-app-manifest/",
   ROOT + "service-workers/",
@@ -25,10 +28,14 @@ let urlsToCache = [
   ROOT + "offline.php",
   ROOT + "css/style.css",
   ROOT + "css/prism.css",
+  ROOT + "js/promise.js",
+  ROOT + "js/fetch.js",
   ROOT + "js/prism.js",
   ROOT + "js/localforage.min.js",
   ROOT + "js/utility.js",
-  ROOT + "js/app.js"
+  ROOT + "js/app.js",
+  ROOT + "pwa.webmanifest",
+  ROOT + "img/placeholder.gif"
 ];
 
 self.addEventListener("install", function(event) {
@@ -137,6 +144,10 @@ self.addEventListener("fetch", function(event) {
             return caches.open(CACHE_NAME).then(function(cache) {
               if (event.request.headers.get("accept").includes("text/html")) {
                 return cache.match(ROOT + "offline.php");
+              } else if (
+                event.request.headers.get("accept").includes("image")
+              ) {
+                return cache.match(ROOT + "img/placeholder.gif");
               }
             });
           });
