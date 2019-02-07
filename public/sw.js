@@ -198,8 +198,8 @@ self.addEventListener("notificationclick", function(event) {
   let notification = event.notification;
 
   event.waitUntil(
-    clients.matchAll().then(function(clients) {
-      let client = clients.find(function(client) {
+    clients.matchAll().then(function(cls) {
+      let client = cls.find(function(client) {
         return (client.visibilityState = "visible");
       });
       if (client !== undefined) {

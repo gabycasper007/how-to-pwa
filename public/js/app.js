@@ -278,6 +278,7 @@ FORM.addEventListener("submit", function(event) {
   // Sincronizeaza datele in IndexedDB
   // pentru a le putea trimite atunci cand utilizatorul este online
   if (doesBrowserSupportSync) {
+    console.log("Browser supports sync");
     navigator.serviceWorker.ready.then(function(sw) {
       savePostForLater(sw, post);
     });
@@ -290,9 +291,10 @@ FORM.addEventListener("submit", function(event) {
 
 function savePostForLater(sw, post) {
   localForageSync
-    .setItem(post.id, post)
+    .setItem(post.id.toString(), post)
     .then(function() {
-      sw.sync.register("sync-new-posts");
+      console.log("Register sync-new-posts");
+      return sw.sync.register("sync-new-posts");
     })
     .then(notifyUserAboutSync)
     .catch(function(error) {

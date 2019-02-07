@@ -23,7 +23,7 @@ var localForageSync = localforage.createInstance({
 // Adauga la IndexedDB Storage
 function addWithLocalForage(key, data) {
   return localforage
-    .setItem(key, data)
+    .setItem(key.toString(), data)
     .then(function(value) {
       // console.log("LocalForage adding: ", value);
     })
