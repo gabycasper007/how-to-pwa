@@ -89,7 +89,7 @@ self.addEventListener("fetch", function(event) {
             })
             .then(function(data) {
               for (let key in data) {
-                addWithLocalForage(key, data[key]);
+                addWithLocalForage(data[key].id, data[key]);
               }
             });
           return response;
